@@ -1,0 +1,14 @@
+{
+  "name": "mission-control-poller",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.2",
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
+  }
+}
