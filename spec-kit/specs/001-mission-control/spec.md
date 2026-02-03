@@ -5,6 +5,12 @@
 **Status**: Draft  
 **Input**: User description: "Mirror the Mission Control framework exactly (Convex + React + OpenClaw sessions + cron heartbeats + 2s notification poller). Support 10 agents but roll out activation in stages (1 → 3 → 5 → 7 → 9 → 10). TDD only. No guessing; document gaps and research."  
 
+## Development Milestones (Two-Computer Path)
+
+- **Local Dev**: build and test everything without a live OpenClaw gateway (unit/contract/UI tests).
+- **Integration Gate (MacBook with OpenClaw)**: run end-to-end `sessions_send` + Slack delivery and cron/heartbeat validation.
+- **Deployment Gate (VPS)**: deploy only after Integration Gate passes; run smoke tests only.
+
 ## System Boundary (OpenClaw vs Mission Control)
 
 ### OpenClaw Provides (Out of Scope to Build)

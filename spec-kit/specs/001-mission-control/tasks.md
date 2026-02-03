@@ -152,6 +152,13 @@
 
 ---
 
+## Integration & Deployment Gates
+
+- [ ] TG01 Integration Gate: Move to MacBook with local OpenClaw; run end-to-end Slack delivery + cron/heartbeat validation.
+- [ ] TG02 Deployment Gate: After TG01 passes, deploy to VPS and run smoke tests only.
+
+---
+
 ## Dependencies & Execution Order
 
 - Phase 1 → Phase 2 (blocking)

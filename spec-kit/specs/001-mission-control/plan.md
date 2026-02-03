@@ -19,6 +19,34 @@ Implement Mission Control as a thin coordination layer on top of OpenClaw: Conve
 **Constraints**: Slack first, Telegram disabled until explicitly requested; 10‑agent support with staged activation  
 **Scale/Scope**: Single workspace; up to 10 agents
 
+## Two-Computer Development Split
+
+**Local Development Machine (this repo)**
+- Implement and test everything that does not require a live OpenClaw gateway.
+- Convex schema/functions + contract tests.
+- Poller logic with mocked OpenClaw client (unit tests for retry/skip/backoff).
+- React UI + UI tests.
+- Standup generator logic tests.
+
+**Remote OpenClaw Machine**
+- Run OpenClaw gateway and real channels.
+- Execute end-to-end integration tests for `sessions_send` + Slack delivery.
+- Validate cron/heartbeat behavior and real delivery targets.
+
+**Handoff Trigger**
+- Move to remote testing once all local unit/contract/UI tests pass and the poller is wired to the OpenClaw client interface with mocks.
+
+## Milestones
+
+**Integration Gate (MacBook with OpenClaw)**
+- Trigger: all local unit/contract/UI tests pass.
+- Run: end-to-end OpenClaw `sessions_send` + Slack delivery, cron/heartbeat validation.
+- Outcome: stable integration baseline before any VPS deployment.
+
+**Deployment Gate (VPS)**
+- Trigger: Integration Gate passes on the MacBook.
+- Run: VPS deployment + smoke tests only (no feature development).
+
 ## Constitution Check
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*

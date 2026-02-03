@@ -12,6 +12,12 @@ This runbook covers VPS deployment of the always‑on OpenClaw Gateway plus Miss
 - **React UI**: hosted separately (target platform TBD).
 - **Slack**: enabled. **Telegram**: framework present but disabled until explicitly requested.
 
+## Two-Computer Split
+
+- **Local Development Machine**: build and test Convex + poller logic + React UI with mocks. No OpenClaw required.
+- **Remote OpenClaw Machine**: run the gateway and execute real integration tests (Slack delivery, cron, heartbeats).
+ - **VPS**: deployment only after Integration Gate passes on the MacBook; run smoke tests only.
+
 ## Prerequisites
 
 - VPS with SSH access.

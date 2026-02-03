@@ -1,50 +1,37 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# Mission Control Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Spec-Driven, TDD-First (Non-Negotiable)
+All development follows Spec-Driven Development. Tests are written first and must fail before implementation. No implementation without an explicit spec/plan/task reference.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. No Guessing, Document Gaps
+All decisions must be grounded in the Mission Control spec, OpenClaw docs, or the reference thread. If data is missing, record a GAP in research and proceed only when clarified.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Thin Coordination Layer Only
+Mission Control is a coordination layer. Do not re-implement OpenClaw runtime features. Integrate only via documented session tools (e.g., `sessions_send`).
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Mirror Reference Architecture
+Mirror the reference architecture from the Mission Control thread: Convex + React + OpenClaw cron/heartbeat + 2-second notification poller.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. Channel Delivery Constraints
+Slack delivery must work first. Telegram must remain disabled until explicitly requested after completion.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Additional Constraints
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+- Staged agent activation must follow the 1 -> 3 -> 5 -> 7 -> 9 -> 10 rollout.
+- OpenClaw gateway may run remotely (VPS); local dev must support remote gateway access.
+- Any schema or contract changes must update the relevant spec-kit contracts and tests.
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+## Development Workflow
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+- Every change must reference a task ID from `spec-kit/specs/001-mission-control/tasks.md`.
+- Tests must be authored before implementation for each story.
+- If a task cannot be completed due to missing info, create or update a GAP entry and stop.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+The constitution supersedes all other guidance. Amendments require explicit updates to this file and a note in the relevant spec/plan/research docs.
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+All reviews must verify compliance with these principles. Complexity must be justified against the spec and plan.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: TODO(RATIFICATION_DATE): confirm original adoption date | **Last Amended**: 2026-02-02
