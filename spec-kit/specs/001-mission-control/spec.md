@@ -27,7 +27,7 @@
 - Convex schema + functions for tasks, messages, activities, documents, notifications, and subscriptions.
 - React UI (Activity Feed, Task Board, Agent Cards, Document Panel, Task Detail View).
 - Notification poller daemon (Convex → OpenClaw `sessions_send` bridge, 2-second interval).
-- Daily standup generator (aggregate Convex activity + deliver summary to Telegram).
+- Daily standup generator (aggregate Convex activity + deliver summary to Slack; Telegram remains disabled).
 - Thread subscription logic (auto-subscribe on interaction).
 - Staged agent activation as an operational process (no schema changes to the post’s data model).
 
@@ -80,7 +80,7 @@ As the system, I deliver @mention and subscription notifications to agents throu
 
 ### User Story 4 - Daily Standup Summary (Priority: P2)
 
-As the operator, I receive a daily standup summary compiled from Mission Control activity and delivered to Telegram.
+As the operator, I receive a daily standup summary compiled from Mission Control activity and delivered to Slack.
 
 **Why this priority**: The post emphasizes daily standups as the visibility and accountability mechanism.
 
@@ -88,7 +88,7 @@ As the operator, I receive a daily standup summary compiled from Mission Control
 
 **Acceptance Scenarios**:
 
-1. **Given** activities for the current day, **When** the standup cron runs, **Then** a summary is posted to the configured Telegram target.
+1. **Given** activities for the current day, **When** the standup cron runs, **Then** a summary is posted to the configured Slack target.
 2. **Given** no activity for the day, **When** the standup cron runs, **Then** the summary states no completed or in-progress items.
 
 ---
@@ -142,7 +142,7 @@ As an agent, I am automatically subscribed to a task thread when I interact with
 - **FR-005**: System MUST support staged activation of agents without schema changes (operational toggles only).
 - **FR-006**: Agents MUST be able to create messages and documents through Convex functions.
 - **FR-007**: Heartbeats MUST be scheduled through OpenClaw cron (isolated sessions) as described in the post.
-- **FR-008**: System MUST generate a daily standup summary from Convex activity and deliver it to Telegram.
+- **FR-008**: System MUST generate a daily standup summary from Convex activity and deliver it to Slack.
 - **FR-009**: System MUST implement thread subscriptions that auto‑subscribe on interaction and assignment.
 - **FR-010**: Mission Control MUST integrate with OpenClaw through documented session tools (`sessions_send`) rather than re‑implementing agent runtime.
 - **FR-011**: Mission Control MUST implement Slack messaging first; Telegram delivery is disabled until explicitly requested after completion.
