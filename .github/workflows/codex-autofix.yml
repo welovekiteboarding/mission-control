@@ -1,97 +1,95 @@
-# Based on official OpenAI documentation:
-# https://developers.openai.com/codex/github-action/
+# Official OpenAI Codex Auto-Fix Workflow
+# Based on: https://github.com/openai/openai-cookbook/blob/main/examples/codex/Autofix-github-actions.ipynb
 
-name: Codex Auto-Fix
+name: Codex Auto-Fix CI Failures
 
 on:
-  pull_request_review_comment:
-    types: [created, edited]
-  workflow_dispatch:
-    inputs:
-      pr_number:
-        description: 'PR number to auto-fix'
-        required: true
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
 
 permissions:
-  contents: read
+  contents: write
   pull-requests: write
 
 jobs:
   codex-autofix:
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
     runs-on: ubuntu-latest
-    outputs:
-      final_message: ${{ steps.run_codex.outputs.final-message }}
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      FAILED_WORKFLOW_NAME: ${{ github.event.workflow_run.name }}
+      FAILED_RUN_URL: ${{ github.event.workflow_run.html_url }}
+      FAILED_HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
+      FAILED_HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+
     steps:
-      - uses: actions/checkout@v5
-        with:
-          ref: refs/pull/${{ github.event.pull_request.number }}/merge
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Pre-fetch base and head refs
+      - name: Check OpenAI API Key
         run: |
-          git fetch --no-tags origin \
-            ${{ github.event.pull_request.base.ref }} \
-            +refs/pull/${{ github.event.pull_request.number }}/head
-
-      - name: Check for infinite loop
-        id: loop-check
-        run: |
-          LAST_COMMIT=$(git log -1 --pretty=format:"%s")
-          if echo "$LAST_COMMIT" | grep -q "codex: auto-apply review feedback"; then
-            echo "should_run=false" >> $GITHUB_OUTPUT
-          else
-            echo "should_run=true" >> $GITHUB_OUTPUT
+          if [ -z "$OPENAI_API_KEY" ]; then
+            echo "OPENAI_API_KEY secret is not set."
+            exit 1
           fi
 
-      - name: Get review comments
-        id: get-comments
-        if: steps.loop-check.outputs.should_run == 'true'
+      - name: Checkout Failing Ref
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.FAILED_HEAD_SHA }}
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
         run: |
-          PR_NUMBER="${{ github.event.pull_request.number }}"
-          COMMENTS=$(gh api \
-            repos/${{ github.repository }}/pulls/$PR_NUMBER/comments \
-            --jq '.[].body' | tr '\n' '\\n')
+          if [ -f package-lock.json ]; then npm ci; else npm i; fi
 
-          mkdir -p .github/codex
-          cat > .github/codex/autofix-prompt.md << EOF
-          You are fixing code review feedback. Apply the following fixes:
-
-          $COMMENTS
-
-          Instructions:
-          1. Read each issue carefully
-          2. Fix only the issues mentioned
-          3. Use the project's code style
-          4. Commit changes with: git commit -m "codex: auto-apply review feedback"
-          EOF
-
-      - name: Run Codex
-        id: run_codex
-        if: steps.loop-check.outputs.should_run == 'true'
-        uses: openai/codex-action@v1
+      - name: Run Codex to Fix
+        uses: openai/codex-action@main
+        id: codex
         with:
-          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
-          allow-bots: true
-          prompt-file: .github/codex/autofix-prompt.md
-          output-file: codex-output.md
-          safety-strategy: drop-sudo
-          sandbox: workspace-write
+          openai_api_key: ${{ secrets.OPENAI_API_KEY }}
+          prompt: |
+            You are working in a codebase with failing tests.
 
-  post-feedback:
-    runs-on: ubuntu-latest
-    needs: codex-autofix
-    if: needs.codex-autofix.outputs.final_message != ''
-    steps:
-      - name: Post Codex feedback
-        uses: actions/github-script@v7
+            Read the repository, run the test suite to see what's failing,
+            identify the minimal change needed to make all tests pass,
+            implement only that change, and stop.
+
+            Do not refactor unrelated code or files. Keep changes small and surgical.
+          codex_args: '["--config","sandbox_mode=\\"workspace-write\\""]'
+
+      - name: Verify Tests
+        run: |
+          if [ -f package.json ]; then
+            npm test --silent || echo "Tests may still be failing"
+          fi
+
+      - name: Create Pull Request with Fixes
+        if: success()
+        uses: peter-evans/create-pull-request@v6
         with:
-          github-token: ${{ github.token }}
-          script: |
-            await github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.payload.pull_request.number,
-              body: process.env.CODEX_FINAL_MESSAGE,
-            });
-        env:
-          CODEX_FINAL_MESSAGE: ${{ needs.codex-autofix.outputs.final_message }}
+          commit-message: "fix(ci): auto-fix failing tests via Codex
+
+          - Applied fixes to resolve CI failures
+          - Minimal changes to make tests pass
+          - Please review before merging
+
+          Co-authored-by: Codex <codex-auto-fix[bot]@users.noreply.github.com>"
+          branch: codex/auto-fix-${{ github.event.workflow_run.run_id }}
+          base: ${{ env.FAILED_HEAD_BRANCH }}
+          title: "Auto-fix failing CI via Codex"
+          body: |
+            Codex automatically generated this PR in response to a CI failure on workflow `${{ env.FAILED_WORKFLOW_NAME }}`.
+
+            **Failed run:** ${{ env.FAILED_RUN_URL }}
+            **Head branch:** `${{ env.FAILED_HEAD_BRANCH }}`
+
+            This PR contains minimal changes intended solely to make the CI pass.
+
+            Please review the changes carefully before merging.
+          labels: codex, auto-fix
+          draft: false
