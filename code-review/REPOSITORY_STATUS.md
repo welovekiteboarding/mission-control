@@ -132,7 +132,7 @@ This document shows exactly where we are in the development lifecycle. Update th
 │                                                                  │
 │  Fixes Applied (commits 5bb07f8, ad6bff4, dc56255, 1e104b7,   │
 │                 c70b521, 88d837b, 82c519f, 83abc3d, 78810ea,   │
-│                 b08224c):                                          │
+│                 b08224c, edf5e96):                                │
 │                                                                  │
 │  Fix 1 (5bb07f8): Correct GitHub Event Triggers                │
 │    - Changed: pull_request → pull_request_review               │
@@ -171,6 +171,11 @@ This document shows exactly where we are in the development lifecycle. Update th
 │    - Problem: Not using official template structure           │
 │    - Solution: Rewrite to match official docs line-for-line   │
 │    - Reference: developers.openai.com/codex/github-action/    │
+│                                                                  │
+│  Fix 10 (edf5e96): Add allow-bots for Bot-Triggered Workflow  │
+│    - Problem: Bot has 'none' permission, action rejected       │
+│    - Solution: Add allow-bots: true parameter                 │
+│    - Reason: Official template for human events, not bot       │
 │                                                                  │
 │  Current State:                                                 │
 │    - All triggers working correctly                            │
