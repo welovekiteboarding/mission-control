@@ -100,52 +100,82 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Step 3: Decode review comments for use in Codex prompt
-      - name: Prepare decoded review comments
+      # Step 3: Decode and format review comments for AI processing
+      - name: Prepare review comments
         id: prepare-comments
         if: steps.loop-check.outputs.should_run == 'true'
         run: |
           # Decode base64-encoded comments
           COMMENTS_DECODED=$(echo "${{ steps.review-comments.outputs.comments }}" | base64 --decode)
 
-          # Extract comment bodies from JSON using jq, preserve formatting
-          COMMENT_TEXT=$(echo "$COMMENTS_DECODED" | jq -r '.[].body' | sed 's/`/\\`/g' | tr '\n' '`')
+          # Extract comment bodies and format for prompt
+          COMMENT_TEXT=$(echo "$COMMENTS_DECODED" | jq -r '.[] | "- \(.body)"' | sed 's/`/\\`/g')
 
-          # Output the decoded comment text for use in prompt
-          # Using EOF delimiter to handle multi-line content safely
           {
             echo 'comments<<EOF'
             echo "$COMMENT_TEXT"
             echo 'EOF'
           } >> $GITHUB_OUTPUT
 
-          echo "comments_prepared=true" >> $GITHUB_OUTPUT
-
-      # Step 4: Run Codex to apply fixes (using official openai/codex-action)
-      - name: Run Codex to apply fixes
+      # Step 4: Apply fixes using OpenAI API directly
+      - name: Apply AI fixes
         id: apply-fixes
-        uses: openai/codex-action@v1
         if: steps.loop-check.outputs.should_run == 'true'
-        with:
-          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
-          allow-bots: true
-          prompt: |
-            You are working on fixing issues identified in code review for PR #${{ steps.pr-details.outputs.number }}.
+        run: |
+          # Read files that need fixing based on review comments
+          FILES_TO_FIX=$(gh api \
+            repos/${{ github.repository }}/pulls/$PR_NUMBER/comments \
+            --jq '.[].path' | sort -u)
 
-            ## Review Feedback
+          # For each file, read its content and prepare for fix
+          echo "📝 Files to fix: $FILES_TO_FIX"
 
-            ${{ steps.prepare-comments.outputs.comments }}
+          # Build a simple prompt for the OpenAI API
+          REVIEW_FEEDBACK="${{ steps.prepare-comments.outputs.comments }}"
 
-            ## Instructions
+          # Use OpenAI API to get fix instructions
+          RESPONSE=$(curl -s https://api.openai.com/v1/chat/completions \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer ${{ secrets.OPENAI_API_KEY }}" \
+            -d '{
+              "model": "gpt-4o",
+              "messages": [
+                {
+                  "role": "system",
+                  "content": "You are a code fixing assistant. Respond ONLY with valid shell commands that fix the reported issues. No explanations, only commands."
+                },
+                {
+                  "role": "user",
+                  "content": "Review feedback:\n'"$REVIEW_FEEDBACK"'\n\nGenerate shell commands to fix these issues. Return only the commands, one per line."
+                }
+              ],
+              "max_tokens": 500,
+              "temperature": 0
+            }')
 
-            1. Read each piece of feedback carefully
-            2. Locate the file and line(s) that need fixing
-            3. Apply the fix following the project's code style
-            4. Only fix issues mentioned in the review
-            5. Use conventional commit messages: "fix: description"
+          echo "🤖 AI Response: $RESPONSE"
 
-            IMPORTANT: After applying fixes, commit them with: git commit -m "codex: auto-apply review feedback"
-          sandbox: workspace-write
+          # Check if we got a valid response
+          if echo "$RESPONSE" | jq -e '.choices[0].message.content' > /dev/null; then
+            FIX_COMMANDS=$(echo "$RESPONSE" | jq -r '.choices[0].message.content')
+
+            # Execute the fix commands
+            echo "$FIX_COMMANDS" | while read -r cmd; do
+              if [ -n "$cmd" ] && [[ ! "$cmd" =~ ^# ]]; then
+                echo "Running: $cmd"
+                eval "$cmd" || echo "Command failed: $cmd"
+              fi
+            done
+
+            # Check if any changes were made
+            if [ -n "$(git status --porcelain)" ]; then
+              echo "changes=true" >> $GITHUB_OUTPUT
+            else
+              echo "changes=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "changes=false" >> $GITHUB_OUTPUT
+          fi
 
       # Step 5: Safety check before pushing
       - name: Safety check - review changes
