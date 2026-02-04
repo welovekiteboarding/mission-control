@@ -84,3 +84,7 @@ Ground Mission Control’s architecture in verified OpenClaw documentation and r
 ## Next Research Needed
 
 - Verify OpenClaw CLI/RPC examples for `sessions_send` usage in scripts (if any exist in docs or repo). If absent, document that as acceptable gap and standardize on gateway tool calls.
+
+- **GAP-005**: No existing TypeScript test runner or project structure found for root-level utilities.
+  - Sources checked: repo root, frontend/, backend/.
+  - Resolution: Added minimal node:test-based spec but did not run; need test runner decision.
