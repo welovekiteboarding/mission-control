@@ -89,15 +89,14 @@ jobs:
         run: |
           PR_NUMBER="${{ steps.pr-details.outputs.number }}"
 
-          # Fetch review comments from API for safety (handles special characters properly)
-          # Using jq to safely extract and output each comment
-          gh api \
+          # Fetch and encode review comments (base64 handles special characters safely)
+          COMMENTS_JSON=$(gh api \
             repos/${{ github.repository }}/pulls/$PR_NUMBER/comments \
-            --jq '.[].body' 2>/dev/null | while read -r comment; do
-              echo "review<<EOF"
-              printf '%s\n' "$comment"
-              echo "EOF"
-            done >> $GITHUB_OUTPUT
+            --jq '.' 2>/dev/null || echo '[]')
+
+          echo "comments<<EOF" >> $GITHUB_OUTPUT
+          echo "$COMMENTS_JSON" | base64 >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -106,6 +105,12 @@ jobs:
         id: create-task
         if: steps.loop-check.outputs.should_run == 'true'
         run: |
+          # Decode base64-encoded comments
+          COMMENTS_DECODED=$(echo "${{ steps.review-comments.outputs.comments }}" | base64 --decode)
+
+          # Extract comment bodies from JSON using jq
+          COMMENT_TEXT=$(echo "$COMMENTS_DECODED" | jq -r '.[].body' | tr '\n' '\\n')
+
           cat > /tmp/codex-task.md << 'EOTASK'
           # Auto-Fix Code Review Feedback
 
@@ -113,9 +118,12 @@ jobs:
 
           ## Review Feedback
 
-          ${{ steps.review-comments.outputs.review }}
+          EOTASK
 
-          ${{ steps.review-comments.outputs.comments }}
+          # Append the comments (already safely decoded)
+          echo "$COMMENT_TEXT" >> /tmp/codex-task.md
+
+          cat >> /tmp/codex-task.md << 'EOTASK'
 
           ## Instructions
 
