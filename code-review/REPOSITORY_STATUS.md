@@ -132,7 +132,7 @@ This document shows exactly where we are in the development lifecycle. Update th
 │                                                                  │
 │  Fixes Applied (commits 5bb07f8, ad6bff4, dc56255, 1e104b7,   │
 │                 c70b521, 88d837b, 82c519f, 83abc3d, 78810ea,   │
-│                 b08224c, edf5e96):                                │
+│                 b08224c, edf5e96, 55d7482):                       │
 │                                                                  │
 │  Fix 1 (5bb07f8): Correct GitHub Event Triggers                │
 │    - Changed: pull_request → pull_request_review               │
@@ -176,6 +176,11 @@ This document shows exactly where we are in the development lifecycle. Update th
 │    - Problem: Bot has 'none' permission, action rejected       │
 │    - Solution: Add allow-bots: true parameter                 │
 │    - Reason: Official template for human events, not bot       │
+│                                                                  │
+│  Fix 11 (55d7482): Implement Official SOP Pattern             │
+│    - Problem: Wrong trigger/approach entirely                 │
+│    - Solution: Use workflow_run + create NEW PR (official)    │
+│    - Reference: openai-cookbook/Autofix-github-actions      │
 │                                                                  │
 │  Current State:                                                 │
 │    - All triggers working correctly                            │
