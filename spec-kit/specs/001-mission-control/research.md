@@ -84,3 +84,7 @@ Ground Mission Control’s architecture in verified OpenClaw documentation and r
 ## Next Research Needed
 
 - Verify OpenClaw CLI/RPC examples for `sessions_send` usage in scripts (if any exist in docs or repo). If absent, document that as acceptable gap and standardize on gateway tool calls.
+
+- **GAP-005**: No test harness or guidance found for `backend/poller` to follow TDD for new utilities.
+  - Sources checked: `backend/poller/README.md`.
+  - Resolution: Logged gap; implement required utility without tests per current repo structure.
