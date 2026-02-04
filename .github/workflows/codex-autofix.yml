@@ -100,48 +100,26 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Step 3: Create the task for Codex
-      - name: Create Codex task
-        id: create-task
+      # Step 3: Decode review comments for use in Codex prompt
+      - name: Prepare decoded review comments
+        id: prepare-comments
         if: steps.loop-check.outputs.should_run == 'true'
         run: |
           # Decode base64-encoded comments
           COMMENTS_DECODED=$(echo "${{ steps.review-comments.outputs.comments }}" | base64 --decode)
 
-          # Extract comment bodies from JSON using jq
-          COMMENT_TEXT=$(echo "$COMMENTS_DECODED" | jq -r '.[].body' | tr '\n' '\\n')
+          # Extract comment bodies from JSON using jq, preserve formatting
+          COMMENT_TEXT=$(echo "$COMMENTS_DECODED" | jq -r '.[].body' | sed 's/`/\\`/g' | tr '\n' '`')
 
-          cat > /tmp/codex-task.md << 'EOTASK'
-          # Auto-Fix Code Review Feedback
+          # Output the decoded comment text for use in prompt
+          # Using EOF delimiter to handle multi-line content safely
+          {
+            echo 'comments<<EOF'
+            echo "$COMMENT_TEXT"
+            echo 'EOF'
+          } >> $GITHUB_OUTPUT
 
-          You are working on fixing issues identified in code review. Please:
-
-          ## Review Feedback
-
-          EOTASK
-
-          # Append the comments (already safely decoded)
-          echo "$COMMENT_TEXT" >> /tmp/codex-task.md
-
-          cat >> /tmp/codex-task.md << 'EOTASK'
-
-          ## Instructions
-
-          1. Read each piece of feedback carefully
-          2. Locate the file and line(s) that need fixing
-          3. Apply the fix following the project's code style
-          4. Test your changes locally if possible
-          5. Commit the fixes with descriptive commit messages
-
-          ## Important
-
-          - Only fix issues mentioned in the review
-          - Don't make unrelated changes
-          - If you're unsure about a fix, add a TODO comment
-          - Use conventional commit messages: "fix: description" or "style: description"
-          EOTASK
-
-          echo "task_created=true" >> $GITHUB_OUTPUT
+          echo "comments_prepared=true" >> $GITHUB_OUTPUT
 
       # Step 4: Run Codex to apply fixes (using official openai/codex-action)
       - name: Run Codex to apply fixes
@@ -156,7 +134,7 @@ jobs:
 
             ## Review Feedback
 
-            ${{ steps.review-comments.outputs.comments }}
+            ${{ steps.prepare-comments.outputs.comments }}
 
             ## Instructions
 
