@@ -1,11 +1,13 @@
 # .github/workflows/codex-autofix.yml
 name: Codex Auto-Fix
 
-# Trigger: Automatically when Codex (bot) completes a PR review with feedback
+# Trigger: Automatically when Codex (bot) posts review comments
 # No manual comment needed - fully automated!
 on:
-  pull_request:
-    types: [reviewed, submitted]
+  pull_request_review:
+    types: [submitted, edited]
+  pull_request_review_comment:
+    types: [created, edited]
   # Fallback: manual trigger if needed
   workflow_dispatch:
     inputs:
@@ -24,9 +26,11 @@ jobs:
   # AND the last commit wasn't from auto-fix (prevents infinite loop)
   codex-auto-fix:
     if: |
-      ((github.event_name == 'pull_request' &&
+      ((github.event_name == 'pull_request_review' &&
        github.event.review.user.type == 'Bot' &&
        github.event.review.state != 'APPROVED') ||
+      (github.event_name == 'pull_request_review_comment' &&
+       github.event.comment.user.type == 'Bot') ||
       github.event_name == 'workflow_dispatch')
 
     runs-on: ubuntu-latest
@@ -88,10 +92,15 @@ jobs:
           PR_NUMBER="${{ steps.pr-details.outputs.number }}"
 
           # Get the review body from the event
-          if [ "${{ github.event_name }}" == "pull_request" ]; then
+          if [ "${{ github.event_name }}" == "pull_request_review" ]; then
             REVIEW_BODY="${{ github.event.review.body }}"
             echo "review<<EOF" >> $GITHUB_OUTPUT
             echo "$REVIEW_BODY" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          elif [ "${{ github.event_name }}" == "pull_request_review_comment" ]; then
+            COMMENT_BODY="${{ github.event.comment.body }}"
+            echo "review<<EOF" >> $GITHUB_OUTPUT
+            echo "$COMMENT_BODY" >> $GITHUB_OUTPUT
             echo "EOF" >> $GITHUB_OUTPUT
           else
             # Fetch from API for manual trigger
