@@ -1,4 +1,5 @@
-# Official OpenAI Codex Auto-Fix Workflow
+# OpenAI Codex Auto-Fix Workflow
+# Customized for monorepo structure
 # Based on: https://github.com/openai/openai-cookbook/blob/main/examples/codex/Autofix-github-actions.ipynb
 
 name: Codex Auto-Fix CI Failures
@@ -37,56 +38,98 @@ jobs:
           ref: ${{ env.FAILED_HEAD_SHA }}
           fetch-depth: 0
 
-      - name: Setup Node.js
+      # Detect which monorepo package(s) failed
+      - name: Detect Failing Package
+        id: detect-package
+        run: |
+          echo "Detecting which package failed..."
+
+          # Check each monorepo package for test failures
+          PACKAGES=("backend/convex" "backend/poller" "frontend")
+          FAILING_PACKAGES=()
+
+          for pkg in "${PACKAGES[@]}"; do
+            if [ -d "$pkg" ] && [ -f "$pkg/package.json" ]; then
+              echo "Checking $pkg..."
+              cd "$pkg"
+              if npm test 2>&1 | grep -q "failing\|failed\|error"; then
+                echo "  ❌ Tests failing in $pkg"
+                FAILING_PACKAGES+=("$pkg")
+              else
+                echo "  ✅ Tests passing in $pkg"
+              fi
+              cd - > /dev/null
+            fi
+          done
+
+          if [ ${#FAILING_PACKAGES[@]} -eq 0 ]; then
+            echo "No failing packages detected"
+            echo "failing_package=" >> $GITHUB_OUTPUT
+          else
+            # Use first failing package
+            FAILING_PACKAGE="${FAILING_PACKAGES[0]}"
+            echo "failing_package=$FAILING_PACKAGE" >> $GITHUB_OUTPUT
+            echo "Detected failing package: $FAILING_PACKAGE"
+          fi
+
+      - name: Setup Node.js for Failing Package
+        if: steps.detect-package.outputs.failing_package != ''
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
+          cache-dependency-path: ${{ steps.detect-package.outputs.failing_package }}/package-lock.json
 
       - name: Install Dependencies
+        if: steps.detect-package.outputs.failing_package != ''
         run: |
-          if [ -f package-lock.json ]; then npm ci; else npm i; fi
+          cd "${{ steps.detect-package.outputs.failing_package }}"
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm i
+          fi
 
       - name: Run Codex to Fix
+        if: steps.detect-package.outputs.failing_package != ''
         uses: openai/codex-action@main
         id: codex
         with:
           openai_api_key: ${{ secrets.OPENAI_API_KEY }}
           prompt: |
-            You are working in a codebase with failing tests.
+            You are working in a codebase with failing tests in the "${{ steps.detect-package.outputs.failing_package }}" directory.
 
-            Read the repository, run the test suite to see what's failing,
-            identify the minimal change needed to make all tests pass,
-            implement only that change, and stop.
+            Read the code, identify why tests are failing, and make the minimal change needed to fix the issues.
 
-            Do not refactor unrelated code or files. Keep changes small and surgical.
+            Only fix the failing tests. Do not refactor unrelated code.
           codex_args: '["--config","sandbox_mode=\\"workspace-write\\""]'
 
-      - name: Verify Tests
+      - name: Verify Tests in Failing Package
+        if: steps.detect-package.outputs.failing_package != ''
         run: |
-          if [ -f package.json ]; then
-            npm test --silent || echo "Tests may still be failing"
-          fi
+          cd "${{ steps.detect-package.outputs.failing_package }}"
+          npm test
 
       - name: Create Pull Request with Fixes
-        if: success()
+        if: success() && steps.detect-package.outputs.failing_package != ''
         uses: peter-evans/create-pull-request@v6
         with:
           commit-message: "fix(ci): auto-fix failing tests via Codex
 
-          - Applied fixes to resolve CI failures
+          - Applied fixes to resolve CI failures in ${{ steps.detect-package.outputs.failing_package }}
           - Minimal changes to make tests pass
           - Please review before merging
 
           Co-authored-by: Codex <codex-auto-fix[bot]@users.noreply.github.com>"
           branch: codex/auto-fix-${{ github.event.workflow_run.run_id }}
           base: ${{ env.FAILED_HEAD_BRANCH }}
-          title: "Auto-fix failing CI via Codex"
+          title: "Auto-fix failing CI via Codex (${{ steps.detect-package.outputs.failing_package }})"
           body: |
             Codex automatically generated this PR in response to a CI failure on workflow `${{ env.FAILED_WORKFLOW_NAME }}`.
 
             **Failed run:** ${{ env.FAILED_RUN_URL }}
             **Head branch:** `${{ env.FAILED_HEAD_BRANCH }}`
+            **Failing package:** `${{ steps.detect-package.outputs.failing_package }}`
 
             This PR contains minimal changes intended solely to make the CI pass.
 
