@@ -131,7 +131,7 @@ This document shows exactly where we are in the development lifecycle. Update th
 │  Status: ✅ FIXED (2026-02-04)                                  │
 │                                                                  │
 │  Fixes Applied (commits 5bb07f8, ad6bff4, dc56255, 1e104b7,   │
-│                 c70b521, 88d837b):                             │
+│                 c70b521, 88d837b, 82c519f):                    │
 │                                                                  │
 │  Fix 1 (5bb07f8): Correct GitHub Event Triggers                │
 │    - Changed: pull_request → pull_request_review               │
@@ -153,6 +153,10 @@ This document shows exactly where we are in the development lifecycle. Update th
 │  Fix 5 (88d837b): Allow Bot to Trigger Action                  │
 │    - Problem: Permission denied for chatgpt-codex-connector    │
 │    - Solution: Added allow-bots: true                          │
+│                                                                  │
+│  Fix 6 (82c519f): Decode Comments Before Passing to Action     │
+│    - Problem: Action received base64 instead of text          │
+│    - Solution: Decode in separate step, output decoded text    │
 │                                                                  │
 │  Current State:                                                 │
 │    - All triggers working correctly                            │
