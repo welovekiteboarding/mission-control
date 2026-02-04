@@ -71,6 +71,7 @@ jobs:
         uses: openai/codex-action@v1
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          allow-bots: true
           prompt-file: .github/codex/autofix-prompt.md
           output-file: codex-output.md
           safety-strategy: drop-sudo
