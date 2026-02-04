@@ -21,26 +21,53 @@ permissions:
 
 jobs:
   # Only run when Codex (bot) submits a review with comments
+  # AND the last commit wasn't from auto-fix (prevents infinite loop)
   codex-auto-fix:
     if: |
-      (github.event_name == 'pull_request' &&
+      ((github.event_name == 'pull_request' &&
        github.event.review.user.type == 'Bot' &&
        github.event.review.state != 'APPROVED') ||
-      github.event_name == 'workflow_dispatch'
+      github.event_name == 'workflow_dispatch')
 
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Check out the PR branch
+      # Step 0: Prevent infinite loop
+      # If the last commit was from auto-fix, stop to prevent loop
+      - name: Check for infinite loop
+        id: loop-check
+        run: |
+          git fetch origin main || true
+
+          # Get the last commit message
+          LAST_COMMIT=$(git log -1 --pretty=format:"%s")
+
+          echo "🔍 Last commit: $LAST_COMMIT"
+
+          # If the last commit was auto-fix, skip
+          if echo "$LAST_COMMIT" | grep -q "codex: auto-apply review feedback"; then
+            echo "⚠️ Loop detected - last commit was auto-fix"
+            echo "Detected auto-fix commit - stopping to prevent infinite loop"
+
+            # Set output to skip remaining steps
+            echo "should_run=false" >> $GITHUB_OUTPUT
+          else
+            echo "✅ Safe to proceed"
+            echo "should_run=true" >> $GITHUB_OUTPUT
+          fi
+
+      # Step 1: Check out the PR branch (only if safe)
       - name: Checkout PR branch
+        if: steps.loop-check.outputs.should_run == 'true'
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.issue.pull_request.head.ref }}
+          ref: ${{ github.event.pull_request.head.ref }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
       # Step 2: Get PR details and review comments
       - name: Get PR details
         id: pr-details
+        if: steps.loop-check.outputs.should_run == 'true'
         run: |
           # Handle both PR review event and manual trigger
           if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
@@ -56,12 +83,12 @@ jobs:
 
       - name: Get Codex review comments
         id: review-comments
+        if: steps.loop-check.outputs.should_run == 'true'
         run: |
           PR_NUMBER="${{ steps.pr-details.outputs.number }}"
 
-          # Get the review body and comments
+          # Get the review body from the event
           if [ "${{ github.event_name }}" == "pull_request" ]; then
-            # From the event directly
             REVIEW_BODY="${{ github.event.review.body }}"
             echo "review<<EOF" >> $GITHUB_OUTPUT
             echo "$REVIEW_BODY" >> $GITHUB_OUTPUT
@@ -70,7 +97,7 @@ jobs:
             # Fetch from API for manual trigger
             REVIEW_OUTPUT=$(gh pr view $PR_NUMBER \
               --json reviews \
-              --jq '.reviews[]? | select(.author.type == "Bot" or .author.login == "codex-bot") | .body' 2>/dev/null || echo "")
+              --jq '.reviews[]? | select(.author.type == "Bot" or .author.login == "codex[bot]") | .body' 2>/dev/null || echo "")
 
             echo "review<<EOF" >> $GITHUB_OUTPUT
             echo "$REVIEW_OUTPUT" >> $GITHUB_OUTPUT
@@ -91,6 +118,7 @@ jobs:
       # Step 3: Create the task for Codex
       - name: Create Codex task
         id: create-task
+        if: steps.loop-check.outputs.should_run == 'true'
         run: |
           cat > /tmp/codex-task.md << 'EOTASK'
           # Auto-Fix Code Review Feedback
@@ -123,17 +151,19 @@ jobs:
 
       # Step 4: Run Codex to apply fixes
       - name: Install Codex CLI
+        if: steps.loop-check.outputs.should_run == 'true'
         run: |
           curl -fsSL https://openai.com/codex/install.sh | sh
           echo "$HOME/.codex/bin" >> $GITHUB_PATH
 
       - name: Run Codex to apply fixes
         id: apply-fixes
+        if: steps.loop-check.outputs.should_run == 'true'
         run: |
           export OPENAI_API_KEY="${{ secrets.OPENAI_API_KEY }}"
 
           # Run Codex with the task
-          codex exec /tmp/codex-task.md --ask-for-approval never || codex /tmp/codex-task.md || echo "Codex completed with warnings"
+          codex exec /tmp/codex-task.md --ask-for-approval never 2>&1 || codex /tmp/codex-task.md 2>&1 || echo "Codex completed with warnings"
 
           # Check if changes were made
           if git diff --quiet; then
@@ -146,7 +176,9 @@ jobs:
 
       # Step 5: Safety check before pushing
       - name: Safety check - review changes
-        if: steps.apply-fixes.outputs.changes == 'true'
+        if: |
+          steps.loop-check.outputs.should_run == 'true' &&
+          steps.apply-fixes.outputs.changes == 'true'
         run: |
           echo "🔍 Reviewing changes..."
 
@@ -179,7 +211,9 @@ jobs:
 
       # Step 6: Commit and push fixes
       - name: Commit fixes
-        if: steps.apply-fixes.outputs.changes == 'true'
+        if: |
+          steps.loop-check.outputs.should_run == 'true' &&
+          steps.apply-fixes.outputs.changes == 'true'
         run: |
           git config --local user.email "codex-autofix[bot]@users.noreply.github.com"
           git config --local user.name "codex-autofix[bot]"
@@ -187,22 +221,26 @@ jobs:
           # Add all changes
           git add -A
 
-          # Commit
+          # Commit with marker for loop detection
           git commit -m "codex: auto-apply review feedback
 
           - Applied fixes from code review
-          - Triggered by: @${{ github.actor }}
+          - This is an auto-fix commit (will not trigger another auto-fix)
 
           Co-authored-by: Codex <codex-auto-fix[bot]@users.noreply.github.com>"
 
       - name: Push fixes
-        if: steps.apply-fixes.outputs.changes == 'true'
+        if: |
+          steps.loop-check.outputs.should_run == 'true' &&
+          steps.apply-fixes.outputs.changes == 'true'
         run: |
           git push origin ${{ steps.pr-details.outputs.branch }}
 
       # Step 7: Comment on PR
       - name: Comment success on PR
-        if: steps.apply-fixes.outputs.changes == 'true'
+        if: |
+          steps.loop-check.outputs.should_run == 'true' &&
+          steps.apply-fixes.outputs.changes == 'true'
         uses: actions/github-script@v7
         with:
           script: |
@@ -218,11 +256,16 @@ jobs:
               **Review by:** Codex Bot
               **Commit:** \`${{ github.sha }}\`
 
-              Please review the changes and merge if satisfied.`
+              Please review the changes and merge if satisfied.
+
+              ---
+              *Note: This auto-fix commit will not trigger another auto-fix to prevent infinite loops.*`
             });
 
       - name: Comment no changes on PR
-        if: steps.apply-fixes.outputs.changes == 'false'
+        if: |
+          steps.loop-check.outputs.should_run == 'true' &&
+          steps.apply-fixes.outputs.changes == 'false'
         uses: actions/github-script@v7
         with:
           script: |
@@ -236,9 +279,31 @@ jobs:
               No changes were needed. The review feedback may have already been addressed or no actionable issues were found.`
             });
 
+      - name: Comment loop detected on PR
+        if: steps.loop-check.outputs.should_run == 'false'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prNumber = "${{ github.event.pull_request.number }}";
+            if (prNumber !== "") {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body: `⚠️ **Codex auto-fix skipped**
+
+                Auto-fix was not triggered because the last commit was already an auto-fix.
+                This prevents infinite loops of auto-fix → review → auto-fix.
+
+                If you need further fixes, please address them manually or request a new review.`
+              });
+            }
+
       # Step 8: Error handling
       - name: Comment failure on PR
-        if: failure()
+        if: |
+          failure() &&
+          steps.loop-check.outputs.should_run == 'true'
         uses: actions/github-script@v7
         with:
           script: |
