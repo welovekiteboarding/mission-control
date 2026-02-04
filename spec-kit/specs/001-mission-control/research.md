@@ -81,6 +81,10 @@ Ground Mission Control’s architecture in verified OpenClaw documentation and r
   - Sources checked: Remote access docs, reference post.
   - Resolution: Support both local dev (remote gateway optional) and VPS deployment; decide per environment during implementation.
 
+- **GAP-005**: No local test harness is present for new TypeScript utilities added at the repo root, so TDD is currently blocked for `dateFormatter.ts`.
+  - Sources checked: Repository root, `frontend` directory, existing package/test configs.
+  - Resolution: Proceed with implementation-only change; add tests once a TypeScript test runner exists.
+
 ## Next Research Needed
 
 - Verify OpenClaw CLI/RPC examples for `sessions_send` usage in scripts (if any exist in docs or repo). If absent, document that as acceptable gap and standardize on gateway tool calls.
