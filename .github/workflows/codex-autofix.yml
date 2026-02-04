@@ -89,36 +89,15 @@ jobs:
         run: |
           PR_NUMBER="${{ steps.pr-details.outputs.number }}"
 
-          # Get the review body from the event
-          if [ "${{ github.event_name }}" == "pull_request_review" ]; then
-            REVIEW_BODY="${{ github.event.review.body }}"
-            echo "review<<EOF" >> $GITHUB_OUTPUT
-            echo "$REVIEW_BODY" >> $GITHUB_OUTPUT
-            echo "EOF" >> $GITHUB_OUTPUT
-          elif [ "${{ github.event_name }}" == "pull_request_review_comment" ]; then
-            COMMENT_BODY="${{ github.event.comment.body }}"
-            echo "review<<EOF" >> $GITHUB_OUTPUT
-            echo "$COMMENT_BODY" >> $GITHUB_OUTPUT
-            echo "EOF" >> $GITHUB_OUTPUT
-          else
-            # Fetch from API for manual trigger
-            REVIEW_OUTPUT=$(gh pr view $PR_NUMBER \
-              --json reviews \
-              --jq '.reviews[]? | select(.author.type == "Bot" or .author.login == "codex[bot]") | .body' 2>/dev/null || echo "")
-
-            echo "review<<EOF" >> $GITHUB_OUTPUT
-            echo "$REVIEW_OUTPUT" >> $GITHUB_OUTPUT
-            echo "EOF" >> $GITHUB_OUTPUT
-          fi
-
-          # Get all review comments (file-level)
-          REVIEW_COMMENTS=$(gh api \
+          # Fetch review comments from API for safety (handles special characters properly)
+          # Using jq to safely extract and output each comment
+          gh api \
             repos/${{ github.repository }}/pulls/$PR_NUMBER/comments \
-            --jq '.[].body' 2>/dev/null | tr '\n' '|' || echo "")
-
-          echo "comments<<EOF" >> $GITHUB_OUTPUT
-          echo "$REVIEW_COMMENTS" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+            --jq '.[].body' 2>/dev/null | while read -r comment; do
+              echo "review<<EOF"
+              printf '%s\n' "$comment"
+              echo "EOF"
+            done >> $GITHUB_OUTPUT
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
