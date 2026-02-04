@@ -81,6 +81,10 @@ Ground Mission Control’s architecture in verified OpenClaw documentation and r
   - Sources checked: Remote access docs, reference post.
   - Resolution: Support both local dev (remote gateway optional) and VPS deployment; decide per environment during implementation.
 
+- **GAP-005**: No test runner/framework is defined in the repository for TypeScript utilities.
+  - Sources checked: repository root, frontend, backend, workflows.
+  - Resolution: Add minimal TypeScript test file to document expected behavior; test execution pending runner selection.
+
 ## Next Research Needed
 
 - Verify OpenClaw CLI/RPC examples for `sessions_send` usage in scripts (if any exist in docs or repo). If absent, document that as acceptable gap and standardize on gateway tool calls.
