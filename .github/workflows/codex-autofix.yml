@@ -36,13 +36,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 0: Prevent infinite loop
+      # Step 0: Check out the PR branch first (required for git operations)
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 10  # Fetch last 10 commits to check for auto-fix loop
+
+      # Step 1: Prevent infinite loop
       # If the last commit was from auto-fix, stop to prevent loop
       - name: Check for infinite loop
         id: loop-check
         run: |
-          git fetch origin main || true
-
           # Get the last commit message
           LAST_COMMIT=$(git log -1 --pretty=format:"%s")
 
@@ -59,14 +65,6 @@ jobs:
             echo "✅ Safe to proceed"
             echo "should_run=true" >> $GITHUB_OUTPUT
           fi
-
-      # Step 1: Check out the PR branch (only if safe)
-      - name: Checkout PR branch
-        if: steps.loop-check.outputs.should_run == 'true'
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       # Step 2: Get PR details and review comments
       - name: Get PR details
