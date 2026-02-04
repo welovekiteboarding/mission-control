@@ -1,3 +1,3 @@
-# Mission Control UI
+# Mission Control Frontend
 
-React dashboard for tasks, activity, agents, and documents.
+React + Tailwind UI for Mission Control. Run `npm install` then `npm run dev`.
