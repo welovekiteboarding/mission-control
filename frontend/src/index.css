@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: "Inter", "SF Pro Display", system-ui, sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(circle at top, rgba(127, 216, 255, 0.15), transparent 45%),
+    radial-gradient(circle at 20% 20%, rgba(255, 139, 241, 0.2), transparent 40%),
+    #0b1021;
+}
+
+input,
+select,
+textarea {
+  @apply bg-aurora/70 text-slate-100 border border-white/10 rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-glow;
+}
+
+button {
+  @apply rounded-lg px-4 py-2 font-semibold transition hover:shadow-glow disabled:opacity-40 disabled:cursor-not-allowed;
+}
+
+.card {
+  @apply bg-nebula/80 border border-white/10 rounded-2xl p-5 shadow-glow backdrop-blur;
+}
+
+.section-title {
+  @apply text-sm uppercase tracking-[0.3em] text-slate-400;
+}
