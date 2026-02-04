@@ -144,9 +144,8 @@ jobs:
             4. Only fix issues mentioned in the review
             5. Use conventional commit messages: "fix: description"
 
-            Commit your changes with: git commit -m "codex: auto-apply review feedback"
+            IMPORTANT: After applying fixes, commit them with: git commit -m "codex: auto-apply review feedback"
           sandbox: workspace-write
-          codex-args: '["--ask-for-approval","never"]'
 
       # Step 5: Safety check before pushing
       - name: Safety check - review changes
