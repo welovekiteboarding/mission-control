@@ -143,30 +143,31 @@ jobs:
 
           echo "task_created=true" >> $GITHUB_OUTPUT
 
-      # Step 4: Run Codex to apply fixes
-      - name: Install Codex CLI
-        if: steps.loop-check.outputs.should_run == 'true'
-        run: |
-          curl -fsSL https://openai.com/codex/install.sh | sh
-          echo "$HOME/.codex/bin" >> $GITHUB_PATH
-
+      # Step 4: Run Codex to apply fixes (using official openai/codex-action)
       - name: Run Codex to apply fixes
         id: apply-fixes
+        uses: openai/codex-action@v1
         if: steps.loop-check.outputs.should_run == 'true'
-        run: |
-          export OPENAI_API_KEY="${{ secrets.OPENAI_API_KEY }}"
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          prompt: |
+            You are working on fixing issues identified in code review for PR #${{ steps.pr-details.outputs.number }}.
 
-          # Run Codex with the task
-          codex exec /tmp/codex-task.md --ask-for-approval never 2>&1 || codex /tmp/codex-task.md 2>&1 || echo "Codex completed with warnings"
+            ## Review Feedback
 
-          # Check if changes were made
-          if git diff --quiet; then
-            echo "changes=false" >> $GITHUB_OUTPUT
-            echo "No changes were made by Codex"
-          else
-            echo "changes=true" >> $GITHUB_OUTPUT
-            echo "Changes were applied by Codex"
-          fi
+            ${{ steps.review-comments.outputs.comments }}
+
+            ## Instructions
+
+            1. Read each piece of feedback carefully
+            2. Locate the file and line(s) that need fixing
+            3. Apply the fix following the project's code style
+            4. Only fix issues mentioned in the review
+            5. Use conventional commit messages: "fix: description"
+
+            Commit your changes with: git commit -m "codex: auto-apply review feedback"
+          sandbox: workspace-write
+          codex-args: '["--ask-for-approval","never"]'
 
       # Step 5: Safety check before pushing
       - name: Safety check - review changes
