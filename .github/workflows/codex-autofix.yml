@@ -1,0 +1,255 @@
+# .github/workflows/codex-autofix.yml
+name: Codex Auto-Fix
+
+# Trigger: Automatically when Codex (bot) completes a PR review with feedback
+# No manual comment needed - fully automated!
+on:
+  pull_request:
+    types: [reviewed, submitted]
+  # Fallback: manual trigger if needed
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'PR number to auto-fix'
+        required: true
+
+# Required permissions
+permissions:
+  contents: write        # For committing changes
+  pull-requests: write   # For commenting on PRs
+  issues: read           # For reading PR comments
+
+jobs:
+  # Only run when Codex (bot) submits a review with comments
+  codex-auto-fix:
+    if: |
+      (github.event_name == 'pull_request' &&
+       github.event.review.user.type == 'Bot' &&
+       github.event.review.state != 'APPROVED') ||
+      github.event_name == 'workflow_dispatch'
+
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the PR branch
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.issue.pull_request.head.ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # Step 2: Get PR details and review comments
+      - name: Get PR details
+        id: pr-details
+        run: |
+          # Handle both PR review event and manual trigger
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            PR_NUMBER="${{ github.event.inputs.pr_number }}"
+          else
+            PR_NUMBER="${{ github.event.pull_request.number }}"
+          fi
+
+          BRANCH="${{ github.event.pull_request.head.ref }}"
+
+          echo "number=$PR_NUMBER" >> $GITHUB_OUTPUT
+          echo "branch=$BRANCH" >> $GITHUB_OUTPUT
+
+      - name: Get Codex review comments
+        id: review-comments
+        run: |
+          PR_NUMBER="${{ steps.pr-details.outputs.number }}"
+
+          # Get the review body and comments
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            # From the event directly
+            REVIEW_BODY="${{ github.event.review.body }}"
+            echo "review<<EOF" >> $GITHUB_OUTPUT
+            echo "$REVIEW_BODY" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          else
+            # Fetch from API for manual trigger
+            REVIEW_OUTPUT=$(gh pr view $PR_NUMBER \
+              --json reviews \
+              --jq '.reviews[]? | select(.author.type == "Bot" or .author.login == "codex-bot") | .body' 2>/dev/null || echo "")
+
+            echo "review<<EOF" >> $GITHUB_OUTPUT
+            echo "$REVIEW_OUTPUT" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          fi
+
+          # Get all review comments (file-level)
+          REVIEW_COMMENTS=$(gh api \
+            repos/${{ github.repository }}/pulls/$PR_NUMBER/comments \
+            --jq '.[].body' 2>/dev/null | tr '\n' '|' || echo "")
+
+          echo "comments<<EOF" >> $GITHUB_OUTPUT
+          echo "$REVIEW_COMMENTS" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Step 3: Create the task for Codex
+      - name: Create Codex task
+        id: create-task
+        run: |
+          cat > /tmp/codex-task.md << 'EOTASK'
+          # Auto-Fix Code Review Feedback
+
+          You are working on fixing issues identified in code review. Please:
+
+          ## Review Feedback
+
+          ${{ steps.review-comments.outputs.review }}
+
+          ${{ steps.review-comments.outputs.comments }}
+
+          ## Instructions
+
+          1. Read each piece of feedback carefully
+          2. Locate the file and line(s) that need fixing
+          3. Apply the fix following the project's code style
+          4. Test your changes locally if possible
+          5. Commit the fixes with descriptive commit messages
+
+          ## Important
+
+          - Only fix issues mentioned in the review
+          - Don't make unrelated changes
+          - If you're unsure about a fix, add a TODO comment
+          - Use conventional commit messages: "fix: description" or "style: description"
+          EOTASK
+
+          echo "task_created=true" >> $GITHUB_OUTPUT
+
+      # Step 4: Run Codex to apply fixes
+      - name: Install Codex CLI
+        run: |
+          curl -fsSL https://openai.com/codex/install.sh | sh
+          echo "$HOME/.codex/bin" >> $GITHUB_PATH
+
+      - name: Run Codex to apply fixes
+        id: apply-fixes
+        run: |
+          export OPENAI_API_KEY="${{ secrets.OPENAI_API_KEY }}"
+
+          # Run Codex with the task
+          codex exec /tmp/codex-task.md --ask-for-approval never || codex /tmp/codex-task.md || echo "Codex completed with warnings"
+
+          # Check if changes were made
+          if git diff --quiet; then
+            echo "changes=false" >> $GITHUB_OUTPUT
+            echo "No changes were made by Codex"
+          else
+            echo "changes=true" >> $GITHUB_OUTPUT
+            echo "Changes were applied by Codex"
+          fi
+
+      # Step 5: Safety check before pushing
+      - name: Safety check - review changes
+        if: steps.apply-fixes.outputs.changes == 'true'
+        run: |
+          echo "🔍 Reviewing changes..."
+
+          # Count files changed
+          CHANGED_FILES=$(git diff --name-only | wc -l)
+          echo "Files changed: $CHANGED_FILES"
+
+          # Count lines changed
+          LINES_ADDED=$(git diff | grep -c "^+" || echo 0)
+          LINES_REMOVED=$(git diff | grep -c "^-" || echo 0)
+          echo "Lines added: $LINES_ADDED, removed: $LINES_REMOVED"
+
+          # Safety gates
+          if [ $CHANGED_FILES -gt 10 ]; then
+            echo "❌ Too many files changed ($CHANGED_FILES)"
+            echo "This may indicate unsafe changes."
+            exit 1
+          fi
+
+          if [ $LINES_ADDED -gt 500 ]; then
+            echo "⚠️ Large number of lines added ($LINES_ADDED)"
+            echo "Please review carefully."
+          fi
+
+          # Show the diff
+          echo "📋 Diff:"
+          git diff --color=never
+
+          echo "✅ Safety check passed"
+
+      # Step 6: Commit and push fixes
+      - name: Commit fixes
+        if: steps.apply-fixes.outputs.changes == 'true'
+        run: |
+          git config --local user.email "codex-autofix[bot]@users.noreply.github.com"
+          git config --local user.name "codex-autofix[bot]"
+
+          # Add all changes
+          git add -A
+
+          # Commit
+          git commit -m "codex: auto-apply review feedback
+
+          - Applied fixes from code review
+          - Triggered by: @${{ github.actor }}
+
+          Co-authored-by: Codex <codex-auto-fix[bot]@users.noreply.github.com>"
+
+      - name: Push fixes
+        if: steps.apply-fixes.outputs.changes == 'true'
+        run: |
+          git push origin ${{ steps.pr-details.outputs.branch }}
+
+      # Step 7: Comment on PR
+      - name: Comment success on PR
+        if: steps.apply-fixes.outputs.changes == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prNumber = ${{ steps.pr-details.outputs.number }};
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body: `✅ **Codex auto-fix applied**
+
+              Changes have been automatically applied based on the review feedback.
+
+              **Review by:** Codex Bot
+              **Commit:** \`${{ github.sha }}\`
+
+              Please review the changes and merge if satisfied.`
+            });
+
+      - name: Comment no changes on PR
+        if: steps.apply-fixes.outputs.changes == 'false'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prNumber = ${{ steps.pr-details.outputs.number }};
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body: `ℹ️ **Codex auto-fix complete**
+
+              No changes were needed. The review feedback may have already been addressed or no actionable issues were found.`
+            });
+
+      # Step 8: Error handling
+      - name: Comment failure on PR
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prNumber = ${{ steps.pr-details.outputs.number }};
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body: `❌ **Codex auto-fix failed**
+
+              The auto-fix workflow encountered an error. Please check the [workflow logs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details.
+
+              You may need to apply fixes manually.`
+            });
