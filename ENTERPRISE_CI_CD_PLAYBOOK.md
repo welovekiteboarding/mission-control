@@ -228,3 +228,31 @@ If these are not enabled, auto-fix will fail at the PR creation step with:
 **5) Auto-fix fails due to toolchain mismatch**
 - **Symptom:** different failures than CI or flaky detection
 - **Fix:** Run detection under **CI versions** (Python 3.11, Node 22).
+
+---
+
+## ✅ Simulation PR How-To (End-to-End Test)
+
+Use this to validate the full pipeline (CI fail → auto-fix PR) without touching prod code.
+
+**1) Create the simulation PR**
+- Add a single failing pytest test:
+  - `spec-kit/tests/test_simulation_ci.py`
+  - Example:
+    ```python
+    def test_ci_simulation_failure():
+        # Intentionally failing to trigger auto-fix
+        assert 1 == 2
+    ```
+- Commit message: `test(simulation): trigger codex auto-fix`
+- PR title: `Simulation: trigger Codex auto-fix pipeline`
+
+**2) Expected behavior**
+- CI fails on Python tests.
+- Auto-fix workflow runs.
+- A new PR appears: `Auto-fix failing CI via Codex (python)`.
+
+**3) Verify auto-fix PR**
+- Ensure it only flips/removes the simulation test.
+- Merge the auto-fix PR.
+- Close the simulation PR.
