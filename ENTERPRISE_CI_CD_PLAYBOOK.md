@@ -9,6 +9,16 @@ This playbook has two goals:
 
 ---
 
+## ✅ Quick Start (5 bullets)
+
+1. **CI scripts are truth**: each component has `./<component>/scripts/test.sh` and CI runs it.
+2. **Auto-fix detection mirrors CI**: install deps + run the same scripts.
+3. **Toolchain parity**: detection uses the same Python/Node versions as CI.
+4. **Codex action inputs**: use `openai-api-key` and `sandbox` (not `openai_api_key`).
+5. **GitHub settings**: Actions = Read/Write, and **Allow GitHub Actions to create PRs** enabled.
+
+---
+
 ## ✅ Current Repository Alignment (OpenClaw)
 
 ### What we have now (truth on disk)
