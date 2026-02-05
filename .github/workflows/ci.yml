@@ -3,61 +3,46 @@ name: CI
 on:
   pull_request:
   push:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
-  test:
+  test-python:
+    name: Test Python (spec-kit)
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        target:
-          - name: python
-            path: spec-kit
-            runner: python
-          - name: typescript
-            path: .
-            runner: node
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Set up Python
-        if: matrix.target.runner == 'python'
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: '3.11'
           cache: pip
           cache-dependency-path: spec-kit/pyproject.toml
 
-      - name: Install Python dependencies
-        if: matrix.target.runner == 'python'
+      - name: Install dependencies
         working-directory: spec-kit
         run: |
           pip install -e .
           pip install pytest pytest-cov
 
-      - name: Run Python tests
-        if: matrix.target.runner == 'python'
-        working-directory: spec-kit
-        run: pytest --cov=specify_cli --cov-report=xml || true
+      - name: Run tests
+        run: ./spec-kit/scripts/test.sh
+
+  test-typescript:
+    name: Test TypeScript (root)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        if: matrix.target.runner == 'node'
         uses: actions/setup-node@v4
         with:
           node-version: '22'
 
-      - name: Install TypeScript test dependencies
-        if: matrix.target.runner == 'node'
-        run: npm install -g tsx typescript
+      - name: Install tsx
+        run: npm install -g tsx
 
-      - name: Run TypeScript tests
-        if: matrix.target.runner == 'node'
-        run: |
-          if [ -n "$(find . -name '*.test.ts' -o -name '*.test.js')" ]; then
-            npx tsx --test "$(find . -name '*.test.ts' -o -name '*.test.js' | tr '\n' ' ')"
-          else
-            echo "No TypeScript tests found"
-          fi
+      - name: Run tests
+        run: ./scripts/test.sh
