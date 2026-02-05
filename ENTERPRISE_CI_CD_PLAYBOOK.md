@@ -256,3 +256,23 @@ Use this to validate the full pipeline (CI fail → auto-fix PR) without touchin
 - Ensure it only flips/removes the simulation test.
 - Merge the auto-fix PR.
 - Close the simulation PR.
+
+---
+
+## ✅ Finding the Auto-Fix PR (when GitHub doesn’t link it)
+
+Sometimes GitHub won’t auto-link the auto-fix PR from the simulation PR. Use these options:
+
+1. **PR list filter**
+   - Search for branches named `codex/auto-fix-<run_id>`
+   - Example: `codex/auto-fix-21724625796`
+
+2. **Checks tab on the simulation PR**
+   - Open the **Checks** tab
+   - Click **Codex Auto-Fix CI Failures**
+   - In logs, the step **“Create Pull Request with Fixes”** shows the PR URL
+
+3. **Actions list**
+   - Go to **Actions → Codex Auto-Fix CI Failures**
+   - Open the latest run for your simulation PR
+   - The PR URL appears in the “Create Pull Request with Fixes” step output
