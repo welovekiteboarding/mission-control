@@ -109,7 +109,6 @@ jobs:
 
             Only fix the failing tests. Do not refactor unrelated code.
           sandbox: workspace-write
-          codex-args: '["--config","sandbox_mode=workspace-write"]'
 
       - name: Verify Python Tests
         if: steps.detect-failure.outputs.failing_language == 'python'
@@ -129,7 +128,6 @@ jobs:
 
             Only fix the failing tests. Do not refactor unrelated code.
           sandbox: workspace-write
-          codex-args: '["--config","sandbox_mode=workspace-write"]'
 
       - name: Verify TypeScript Tests
         if: steps.detect-failure.outputs.failing_language == 'typescript'
