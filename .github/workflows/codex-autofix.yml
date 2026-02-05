@@ -97,14 +97,15 @@ jobs:
         if: steps.detect-failure.outputs.failing_language == 'python'
         uses: openai/codex-action@main
         with:
-          openai_api_key: ${{ secrets.OPENAI_API_KEY }}
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
           prompt: |
             You are working in a Python codebase with failing pytest tests in the "spec-kit" directory.
 
             Read the code, identify why tests are failing, and make the minimal change needed to fix the issues.
 
             Only fix the failing tests. Do not refactor unrelated code.
-          codex_args: '["--config","sandbox_mode=\\"workspace-write\\""]'
+          sandbox: workspace-write
+          codex-args: '["--config","sandbox_mode=\\"workspace-write\\""]'
 
       - name: Verify Python Tests
         if: steps.detect-failure.outputs.failing_language == 'python'
@@ -122,14 +123,15 @@ jobs:
         if: steps.detect-failure.outputs.failing_language == 'typescript'
         uses: openai/codex-action@main
         with:
-          openai_api_key: ${{ secrets.OPENAI_API_KEY }}
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
           prompt: |
             You are working in a TypeScript codebase with failing tests. The tests use Node.js's built-in test runner (node:test).
 
             Find all .test.ts files, run them with `npx tsx --test`, identify why tests are failing, and make the minimal change needed to fix the issues.
 
             Only fix the failing tests. Do not refactor unrelated code.
-          codex_args: '["--config","sandbox_mode=\\"workspace-write\\""]'
+          sandbox: workspace-write
+          codex-args: '["--config","sandbox_mode=\\"workspace-write\\""]'
 
       - name: Verify TypeScript Tests
         if: steps.detect-failure.outputs.failing_language == 'typescript'
