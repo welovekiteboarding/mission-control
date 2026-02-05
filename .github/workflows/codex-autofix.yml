@@ -38,6 +38,16 @@ jobs:
           ref: ${{ env.FAILED_HEAD_SHA }}
           fetch-depth: 0
 
+      - name: Setup Python (CI version)
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Setup Node.js (CI version)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
       # Detect which language failed by checking workflow run jobs
       - name: Detect Failing Language
         id: detect-failure
@@ -81,12 +91,6 @@ jobs:
             echo "No failing tests detected"
           fi
 
-      - name: Setup Python
-        if: steps.detect-failure.outputs.failing_language == 'python'
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
       - name: Install Python Dependencies
         if: steps.detect-failure.outputs.failing_language == 'python'
         run: |
@@ -112,12 +116,6 @@ jobs:
         run: |
           cd spec-kit
           ./scripts/test.sh
-
-      - name: Setup Node.js
-        if: steps.detect-failure.outputs.failing_language == 'typescript'
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
 
       - name: Run Codex to Fix TypeScript
         if: steps.detect-failure.outputs.failing_language == 'typescript'
