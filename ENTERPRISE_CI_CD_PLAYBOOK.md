@@ -204,3 +204,27 @@ These settings are mandatory for auto-fix to open PRs:
 
 If these are not enabled, auto-fix will fail at the PR creation step with:
 "GitHub Actions is not permitted to create or approve pull requests."
+
+---
+
+## ✅ Troubleshooting (Common Failures)
+
+**1) Auto-fix ran but no PR was created**
+- **Symptom:** "GitHub Actions is not permitted to create or approve pull requests."
+- **Fix:** Settings → Actions → General → Workflow permissions → Enable **Read and write** and **Allow GitHub Actions to create and approve pull requests**.
+
+**2) Codex action fails immediately with input warnings**
+- **Symptom:** "Unexpected input(s) 'openai_api_key', 'codex_args'"
+- **Fix:** Use **`openai-api-key`** and **`sandbox`** input names.
+
+**3) Codex action fails parsing extra args**
+- **Symptom:** "SyntaxError: Expected ',' or ']' after array element in JSON"
+- **Fix:** Remove `codex-args` unless needed; if used, pass valid JSON like `["--config","sandbox_mode=workspace-write"]`.
+
+**4) Auto-fix detects wrong language or no failures**
+- **Symptom:** "No failing tests detected" despite CI failure
+- **Fix:** Ensure detection installs deps and runs the **exact same test scripts** as CI.
+
+**5) Auto-fix fails due to toolchain mismatch**
+- **Symptom:** different failures than CI or flaky detection
+- **Fix:** Run detection under **CI versions** (Python 3.11, Node 22).
