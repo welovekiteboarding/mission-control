@@ -12,6 +12,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  actions: read
 
 jobs:
   codex-autofix:
@@ -19,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-      FAILED_WORKFLOW_RUN_ID: ${{ github.event.workflow_run.run_id }}
+      FAILED_WORKFLOW_RUN_ID: ${{ github.event.workflow_run.id }}
       FAILED_HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
       FAILED_HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
 
@@ -48,25 +49,23 @@ jobs:
 
           # Check Python tests
           echo "Checking Python tests..."
-          cd spec-kit
-          if ! pytest --tb=no -q 2>/dev/null; then
-            echo "  ❌ Python tests failing"
+          if ! ./spec-kit/scripts/test.sh; then
+            echo "  Python tests failing"
             FAILING_LANG="python"
             FAILING_PATH="spec-kit"
           else
-            echo "  ✅ Python tests passing"
+            echo "  Python tests passing"
           fi
-          cd - > /dev/null
 
           # Check TypeScript tests (only if Python didn't fail)
           if [ -z "$FAILING_LANG" ]; then
             echo "Checking TypeScript tests..."
-            if ! npx tsx --test "$(find . -name '*.test.ts' -not -path './node_modules/*' 2>/dev/null | tr '\n' ')" --tb=no 2>/dev/null; then
-              echo "  ❌ TypeScript tests failing"
+            if ! ./scripts/test.sh; then
+              echo "  TypeScript tests failing"
               FAILING_LANG="typescript"
               FAILING_PATH="."
             else
-              echo "  ✅ TypeScript tests passing"
+              echo "  TypeScript tests passing"
             fi
           fi
 
@@ -80,19 +79,11 @@ jobs:
             echo "No failing tests detected"
           fi
 
-      # Python fix path
       - name: Setup Python
         if: steps.detect-failure.outputs.failing_language == 'python'
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-
-      - name: Install Python Dependencies
-        if: steps.detect-failure.outputs.failing_language == 'python'
-        run: |
-          cd spec-kit
-          pip install -e .
-          pip install pytest
 
       - name: Run Codex to Fix Python
         if: steps.detect-failure.outputs.failing_language == 'python'
@@ -111,18 +102,13 @@ jobs:
         if: steps.detect-failure.outputs.failing_language == 'python'
         run: |
           cd spec-kit
-          pytest
+          ./scripts/test.sh
 
-      # TypeScript fix path
       - name: Setup Node.js
         if: steps.detect-failure.outputs.failing_language == 'typescript'
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-
-      - name: Install TypeScript Dependencies
-        if: steps.detect-failure.outputs.failing_language == 'typescript'
-        run: npm install -g tsx
 
       - name: Run Codex to Fix TypeScript
         if: steps.detect-failure.outputs.failing_language == 'typescript'

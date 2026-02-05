@@ -1,493 +1,180 @@
-# Enterprise CI/CD Playbook
-## Codex Code Review, Auto-Fix, and Multi-Language Testing
+# Enterprise CI/CD Playbook (Codex-Only)
+## CI Review, Auto-Fix, and Future-Proof Setup Guide
 
-**Based on production patterns from enterprise monorepo migrations.**
 **Last Updated: 2026-02-05**
 
----
-
-## 🚨 THE PROBLEM WITH OUR CURRENT SETUP
-
-### What We've Been Doing Wrong:
-
-1. **Mixed test frameworks** - Using Jest syntax with Node.js built-in test runner
-2. **Auto-fix detection gaps** - Not catching "file not found" errors
-3. **No per-language isolation** - Trying to run everything in one job
-4. **Trigger misalignment** - CI triggers != auto-fix triggers
-5. **No local/CI parity** - Developers can't run what CI runs
-
-### Root Cause:
-**We've been assembling workflows piece-by-piece without a cohesive architecture.**
+This playbook has two goals:
+1) **Align with this repo today** (OpenClaw).
+2) **Provide a reusable, step-by-step guide** to set up Codex-based automated CI review & auto-fix for any repo/stack.
 
 ---
 
-## ✅ THE ENTERPRISE SOLUTION
+## ✅ Current Repository Alignment (OpenClaw)
 
-### Core Principle: **Reusable Workflows + Shell Scripts + Container Images**
+### What we have now (truth on disk)
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                   ENTERPRISE PATTERN                       │
-├─────────────────────────────────────────────────────────────┤
-│                                                              │
-│  1. TRIGGER WORKFLOWS (per component/language)             │
-│     └─ Define WHEN workflows run                           │
-│     └─ Call reusable workflow with context                  │
-│                                                              │
-│  2. REUSABLE WORKFLOW (common-deploy.yaml)                 │
-│     └─ Define WHAT jobs run (lint, test, deploy)          │
-│     └─ Use shell scripts for implementation                 │
-│     └─ Use container images for environment                 │
-│                                                              │
-│  3. SHELL SCRIPTS (in each component)                     │
-│     └─ lint.sh, test.sh, deploy.sh                         │
-│     └─ Locally runnable → matches CI exactly               │
-│                                                              │
-│  4. CONTAINER IMAGES                                       │
-│     └─ Node image, Python image                            │
-│     └─ Used in CI AND dev containers                       │
-│                                                              │
-└─────────────────────────────────────────────────────────────┘
-```
+**CI workflow:** `.github/workflows/ci.yml`
+- Runs **Python tests** for `spec-kit` via `./spec-kit/scripts/test.sh`
+- Runs **TypeScript tests** via `./scripts/test.sh`
 
-**Source:** [An example CI/CD setup for a monorepo using vanilla GitHub Actions](https://www.generalreasoning.com/blog/2025/03/22/github-actions-vanilla-monorepo.html)
+**Auto-fix workflow:** `.github/workflows/codex-autofix.yml`
+- Triggers on **CI** workflow run failures
+- Detects failing language by **re-running tests**
+- Uses **Codex** to fix and opens a PR
+
+### Known current issues
+1. **Auto-fix re-runs tests without installing deps first** (Python/TS). This can mis-detect failures.
+2. **TypeScript detection runs an invalid command** (uses a pytest flag and a broken quote).
+3. **Auto-fix re-runs tests differently than CI**, so failures can be misclassified.
+4. **Cloud agents submit broken PRs on purpose** (for testing), but those should be marked/tested safely.
+
+### Alignment principle for this repo
+- **CI** remains the source of truth.
+- **Auto-fix** must **mimic CI** exactly when detecting failures.
+- **Codex fixes only failing tests** in the relevant scope.
 
 ---
 
-## 📁 PROPER DIRECTORY STRUCTURE
+## ✅ Step-by-Step: Set Up Codex CI Review + Auto-Fix (Any Repo)
 
-```
-./
-├── .github/
-│   └── workflows/
-│       ├── common-deploy.yaml          # Reusable workflow
-│       ├── typescript-trigger.yaml     # TypeScript CI trigger
-│       ├── python-trigger.yaml         # Python CI trigger
-│       └── codex-autofix.yaml          # Auto-fix workflow
-│
-├── typescript/
-│   ├── scripts/
-│   │   ├── lint.sh                    # TypeScript linting
-│   │   └── test.sh                    # TypeScript tests
-│   ├── src/
-│   └── package.json
-│
-├── python/
-│   ├── scripts/
-│   │   ├── lint.sh                    # Python linting
-│   │   └── test.sh                    # Python tests
-│   ├── src/
-│   └── pyproject.toml
-│
-└── images/
-    ├── node.Dockerfile                # Node container
-    └── python.Dockerfile              # Python container
-```
+This is the **future reference guide** for any stack.
+
+### Phase 0 — Preflight Inventory (do this first)
+1. **List test entry points** by component (frontend, backend, infra, etc.).
+2. **Choose the CI truth command** per component (e.g., `npm test`, `pytest`, `go test ./...`).
+3. **Ensure each component has a script** you can run locally:
+   - `./scripts/test.sh`, `./backend/scripts/test.sh`, etc.
+4. **Confirm install steps** for each component (e.g., `npm ci`, `pip install -e .`).
+
+If any of these are missing, add them first. This is non-negotiable for stable auto-fix.
 
 ---
 
-## 🔧 STEP 1: CREATE REUSABLE WORKFLOW
+### Phase 1 — CI Design (works for any stack)
 
-**File:** `.github/workflows/common-deploy.yaml`
+**Goal:** CI is deterministic, minimal, and mirrors local usage.
 
+**Recommended structure:** one workflow with component jobs, each job runs:
+1. checkout
+2. install deps
+3. run `./component/scripts/test.sh`
+
+Template (component job pattern):
 ```yaml
-name: common-deploy
-
-on:
-  workflow_call:
-    inputs:
-      ci_path:
-        description: 'Working directory (e.g., ./typescript)'
-        required: true
-        type: string
-      ci_environment:
-        description: 'GitHub environment'
-        required: true
-        type: string
-      ci_image:
-        description: 'Container image'
-        required: true
-        type: string
-      run_lint:
-        required: true
-        type: boolean
-      run_test:
-        required: true
-        type: boolean
-
-permissions:
-  contents: read
-  id-token: write
-
-env:
-  ENVIRONMENT: ${{ inputs.ci_environment }}
-
 jobs:
-  lint:
-    if: ${{ inputs.run_lint }}
+  test-<component>:
     runs-on: ubuntu-latest
-    container:
-      image: ${{ inputs.ci_image }}
     steps:
       - uses: actions/checkout@v4
-      - name: Lint
-        run: ./scripts/lint.sh
-        working-directory: ${{ inputs.ci_path }}
-
-  test:
-    if: ${{ inputs.run_test }}
-    runs-on: ubuntu-latest
-    container:
-      image: ${{ inputs.ci_image }}
-    steps:
-      - uses: actions/checkout@v4
-      - name: Test
-        run: ./scripts/test.sh
-        working-directory: ${{ inputs.ci_path }}
+      - name: Install deps
+        run: <install command>
+      - name: Run tests
+        run: ./<component>/scripts/test.sh
 ```
+
+**Why this matters:** Auto-fix should re-run the *same scripts*.
 
 ---
 
-## 🔧 STEP 2: CREATE TRIGGER WORKFLOWS
+### Phase 2 — Codex Auto-Fix Workflow (workflow_run)
 
-**File:** `.github/workflows/typescript-trigger.yaml`
+**Goal:** When CI fails, Codex:
+1) detects the failing component
+2) runs Codex fix
+3) verifies
+4) opens a PR
 
+**Required behavior:**
+- Detection step **must** match CI install + test commands.
+- Codex fix must operate only in the failing component scope.
+
+Template structure:
 ```yaml
-name: typescript-ci
-
-on:
-  pull_request:
-    paths:
-      - "typescript/**"
-      - ".github/workflows/typescript-trigger.yaml"
-      - ".github/workflows/common-deploy.yaml"
-  push:
-    branches: [main]
-    paths:
-      - "typescript/**"
-      - ".github/workflows/typescript-trigger.yaml"
-      - ".github/workflows/common-deploy.yaml"
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
-  cancel-in-progress: true
-
-jobs:
-  pr:
-    if: github.event_name == 'pull_request'
-    uses: ./.github/workflows/common-deploy.yaml
-    secrets: inherit
-    with:
-      ci_path: ./typescript
-      ci_environment: pr
-      ci_image: node:22
-      run_lint: true
-      run_test: true
-
-  main:
-    if: github.event_name == 'push'
-    uses: ./.github/workflows/common-deploy.yaml
-    secrets: inherit
-    with:
-      ci_path: ./typescript
-      ci_environment: production
-      ci_image: node:22
-      run_lint: true
-      run_test: true
-```
-
-**File:** `.github/workflows/python-trigger.yaml`
-
-```yaml
-name: python-ci
-
-on:
-  pull_request:
-    paths:
-      - "python/**"
-      - ".github/workflows/python-trigger.yaml"
-      - ".github/workflows/common-deploy.yaml"
-  push:
-    branches: [main]
-    paths:
-      - "python/**"
-      - ".github/workflows/python-trigger.yaml"
-      - ".github/workflows/common-deploy.yaml"
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
-  cancel-in-progress: true
-
-jobs:
-  pr:
-    if: github.event_name == 'pull_request'
-    uses: ./.github/workflows/common-deploy.yaml
-    secrets: inherit
-    with:
-      ci_path: ./python
-      ci_environment: pr
-      ci_image: python:3.11
-      run_lint: true
-      run_test: true
-
-  main:
-    if: github.event_name == 'push'
-    uses: ./.github/workflows/common-deploy.yaml
-    secrets: inherit
-    with:
-      ci_path: ./python
-      ci_environment: production
-      ci_image: python:3.11
-      run_lint: true
-      run_test: true
-```
-
----
-
-## 🔧 STEP 3: CREATE SHELL SCRIPTS
-
-**File:** `typescript/scripts/lint.sh`
-
-```bash
-#!/bin/bash
-set -e
-
-echo "Running TypeScript linter..."
-
-# Run ESLint
-npm run lint || true
-
-# Run TypeScript compiler check
-npx tsc --noEmit
-
-echo "Lint complete."
-```
-
-**File:** `typescript/scripts/test.sh`
-
-```bash
-#!/bin/bash
-set -e
-
-echo "Running TypeScript tests..."
-
-# Use Node.js built-in test runner
-npx tsx --test "$(find . -name '*.test.ts' | tr '\n' ' ')"
-
-echo "Tests complete."
-```
-
-**File:** `typescript/package.json`
-
-```json
-{
-  "name": "typescript",
-  "version": "1.0.0",
-  "type": "module",
-  "scripts": {
-    "lint": "eslint .",
-    "test": "tsx --test '**/*.test.ts'"
-  },
-  "devDependencies": {
-    "@types/node": "^22.0.0",
-    "eslint": "^9.0.0",
-    "tsx": "^4.19.0",
-    "typescript": "^5.6.0"
-  }
-}
-```
-
----
-
-## 🔧 STEP 4: FIX AUTO-FIX DETECTION
-
-**The Problem:** Auto-fix workflow doesn't catch "file not found" errors.
-
-**The Solution:** Check exit codes, not just grep patterns.
-
-**File:** `.github/workflows/codex-autofix.yml`
-
-```yaml
-name: Codex Auto-Fix CI Failures
-
 on:
   workflow_run:
-    workflows: ["typescript-ci", "python-ci"]
+    workflows: ["CI"]
     types: [completed]
-
-permissions:
-  contents: write
-  pull-requests: write
 
 jobs:
   codex-autofix:
     if: ${{ github.event.workflow_run.conclusion == 'failure' }}
     runs-on: ubuntu-latest
-    env:
-      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.workflow_run.head_sha }}
 
-      - name: Detect Failing Job
-        id: detect
+      - name: Detect failing component
         run: |
-          # Get the failing job from the workflow run
-          WORKFLOW_NAME="${{ github.event.workflow_run.name }}"
-
-          if [[ "$WORKFLOW_NAME" == "typescript-ci" ]]; then
-            echo "language=typescript" >> $GITHUB_OUTPUT
-            echo "path=./typescript" >> $GITHUB_OUTPUT
-          elif [[ "$WORKFLOW_NAME" == "python-ci" ]]; then
-            echo "language=python" >> $GITHUB_OUTPUT
-            echo "path=./python" >> $GITHUB_OUTPUT
-          else
-            echo "No matching workflow found"
-            exit 1
-          fi
-
-      - name: Setup Node.js
-        if: steps.detect.outputs.language == 'typescript'
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-
-      - name: Install TypeScript Dependencies
-        if: steps.detect.outputs.language == 'typescript'
-        run: |
-          cd "${{ steps.detect.outputs.path }}"
-          npm ci
-
-      - name: Setup Python
-        if: steps.detect.outputs.language == 'python'
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Install Python Dependencies
-        if: steps.detect.outputs.language == 'python'
-        run: |
-          cd "${{ steps.detect.outputs.path }}"
-          pip install -e .
-          pip install pytest
+          # Install deps + run tests for each component (same as CI)
+          # First failure sets FAILING_COMPONENT and FAILING_PATH
 
       - name: Run Codex to Fix
         uses: openai/codex-action@main
         with:
           openai_api_key: ${{ secrets.OPENAI_API_KEY }}
           prompt: |
-            You are working in a ${{ steps.detect.outputs.language }} codebase with failing tests in "${{ steps.detect.outputs.path }}".
+            You are working in <component> with failing tests in <path>.
+            Fix only the failing tests. Do not refactor unrelated code.
 
-            Read the test output, identify why tests are failing, and make the minimal change needed to fix them.
+      - name: Verify tests
+        run: ./<component>/scripts/test.sh
 
-            Only fix the failing tests. Do not refactor unrelated code.
-          codex_args: '["--config","sandbox_mode=\\"workspace-write\\""]'
-
-      - name: Verify Tests
-        run: |
-          cd "${{ steps.detect.outputs.path }}"
-          if [[ "${{ steps.detect.outputs.language }}" == "typescript" ]]; then
-            npx tsx --test "$(find . -name '*.test.ts' | tr '\n' ' ')"
-          else
-            pytest
-          fi
-
-      - name: Create Fix PR
+      - name: Create PR
         uses: peter-evans/create-pull-request@v6
-        with:
-          commit-message: "fix(ci): auto-fix failing tests
-
-          Co-authored-by: Codex <codex-auto-fix[bot]@users.noreply.github.com>"
-          branch: codex/auto-fix-${{ github.event.workflow_run.run_id }}
-          base: ${{ github.event.workflow_run.head_branch }}
-          title: "Auto-fix failing CI via Codex (${{ steps.detect.outputs.language }})"
-          body: |
-            Auto-generated fix for CI failures in `${{ github.event.workflow_run.name }}`.
-          labels: codex, auto-fix
 ```
 
 ---
 
-## 🎯 KEY ENTERPRISE PATTERNS
+### Phase 3 — Codex Cloud Agent PRs (Intentional Failures)
 
-### 1. **One Trigger Per Language/Component**
-- ✅ Separate workflow files for TypeScript, Python, etc.
-- ✅ Each trigger defines `paths:` filter
-- ✅ Each trigger calls reusable workflow
+**Current reality:** cloud agents sometimes submit intentionally broken PRs to test the full auto-fix loop.
 
-### 2. **Reusable Common Workflow**
-- ✅ Single source of truth for CI jobs
-- ✅ Prevents drift between environments
-- ✅ Easy to maintain and update
-
-### 3. **Shell Scripts for Implementation**
-- ✅ Locally runnable (developers can test before push)
-- ✅ Same commands in CI and local
-- ✅ Language-specific logic in scripts, not YAML
-
-### 4. **Container Images for Environment Parity**
-- ✅ CI uses same Node/Python versions as developers
-- ✅ Dev containers match CI exactly
-- ✅ No "works on my machine" issues
-
-### 5. **Workflow-Specific Auto-Fix**
-- ✅ Auto-fix triggers on specific workflow, not generic "CI"
-- ✅ Language detection via workflow name
-- ✅ Proper exit code handling
+Recommended:
+1. **Let CI and auto-fix run** on those PRs so the loop is exercised end-to-end.
+2. If you need to suppress auto-fix for specific tests, use a **temporary skip label**, but only when required.
+3. For intentional breakage, keep it minimal and scoped so Codex can fix it quickly.
 
 ---
 
-## 📊 COMPARISON: OLD vs NEW
-
-| Aspect | OLD (Broken) | NEW (Enterprise) |
-|--------|--------------|------------------|
-| Triggers | Single CI workflow | Separate triggers per language |
-| Test Framework | Mixed (Jest + tsx) | Consistent per language |
-| Detection | Grep error patterns | Workflow name + exit codes |
-| Local Testing | ❌ Can't run CI locally | ✅ `./scripts/test.sh` works |
-| Environment Parity | ❌ Setup actions | ✅ Container images |
-| Auto-Fix | Generic detection | Workflow-specific |
+### Phase 4 — Rollout Checklist
+1. Create test scripts per component.
+2. Wire CI to those scripts.
+3. Wire Codex auto-fix to those scripts.
+4. Verify a failing PR triggers auto-fix.
+5. Verify a "simulation" PR still triggers auto-fix (unless explicitly skipped).
 
 ---
 
-## 🚀 IMPLEMENTATION CHECKLIST
+## ✅ OpenClaw: Updated CI/CD Blueprint (Aligned with Current Repo)
 
-### Phase 1: Structure
-- [ ] Create `typescript/` and `python/` directories
-- [ ] Move TypeScript files to `typescript/`
-- [ ] Move Python files to `python/`
-- [ ] Create `scripts/` subdirectories
-- [ ] Create `lint.sh` and `test.sh` in each
+### CI (current and correct)
+**File:** `.github/workflows/ci.yml`
+Jobs:
+- `test-python` runs `./spec-kit/scripts/test.sh`
+- `test-typescript` runs `./scripts/test.sh`
 
-### Phase 2: Workflows
-- [ ] Create `common-deploy.yaml` (reusable)
-- [ ] Create `typescript-trigger.yaml`
-- [ ] Create `python-trigger.yaml`
-- [ ] Delete old `ci.yml`
-
-### Phase 3: Auto-Fix
-- [ ] Update `codex-autofix.yml` with workflow-specific detection
-- [ ] Test with failing PR
-
-### Phase 4: Verify
-- [ ] Run `./typescript/scripts/test.sh` locally
-- [ ] Run `./python/scripts/test.sh` locally
-- [ ] Open PR and verify CI passes
-- [ ] Create failing PR and verify auto-fix works
+### Auto-fix (should be aligned)
+**File:** `.github/workflows/codex-autofix.yml`
+Expected changes:
+1. **Detection step should install deps first** and run the **same test scripts**:
+   - Python: `pip install -e .` + `pip install pytest pytest-cov` then `./spec-kit/scripts/test.sh`
+   - TypeScript: `npm install -g tsx` then `./scripts/test.sh`
+2. **Remove invalid flags** in TypeScript detection.
+3. **Optional**: skip auto-fix for labeled simulations only when needed.
 
 ---
 
-## 📚 SOURCES
+## ✅ Quick Reference (Codex-Only Setup)
 
-1. [An example CI/CD setup for a monorepo using vanilla GitHub Actions](https://www.generalreasoning.com/blog/2025/03/22/github-actions-vanilla-monorepo.html) - **Primary source for this playbook**
-2. [GitHub Actions CI/CD Best Practices](https://github.com/github/awesome-copilot/blob/main/instructions/github-actions-ci-cd-best-practices.instructions.md)
-3. [Scaling GitHub Actions Reusability in the Enterprise](https://wellarchitected.github.io/library/collaboration/recommendations/scaling-actions-reusability/)
-4. [Automating Code Quality and Security Fixes with Codex](https://developers.openai.com/cookbook/examples/codex/secure_quality_gitlab)
-5. [Codex Workflows](https://developers.openai.com/codex/workflows/)
+**Always true rules:**
+1. CI scripts are the source of truth.
+2. Auto-fix detection must run the same scripts.
+3. Codex only fixes failing tests in scope.
+4. Label-based opt-out only if you explicitly want to bypass auto-fix.
 
 ---
 
-**This is how enterprises do it.**
+## Sources (internal)
+- This playbook is aligned to repository state as of 2026-02-05.
+- External references intentionally omitted to keep this repo self-contained.

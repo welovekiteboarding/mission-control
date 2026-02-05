@@ -37,9 +37,12 @@ Work style: concise, direct, minimal tokens. Be explicit about next actions and 
 - No amend unless asked.
 - Big review: `git --no-pager diff --color=never`.
 - If user asks for PR review, focus on bugs, risks, missing tests.
+ - Cloud tasks preflight: run `git remote -v`. If no remote, add origin or switch to local updates.
+- Simulation PRs may be intentionally broken to exercise auto-fix; do not disable auto-fix unless explicitly requested.
 
 ## Build / Test
 - Run relevant tests before handoff.
+- Auto-fix detection must mirror CI test scripts.
 - If tests are blocked, state why and what is missing.
 
 ## Docs
