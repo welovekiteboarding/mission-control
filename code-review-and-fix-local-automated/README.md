@@ -198,6 +198,9 @@ git worktree prune
    - User: `$CODEX_HOME/skills` (default `~/.codex/skills`)
    - System: `/etc/codex/skills`
 
+8. **Guardrail for empty trees:** In prompts, add a first line like
+   `If there are no tracked changes (git status --short clean), exit and report "No tracked changes".`
+
 ---
 
 ## Preferred Local Workflow (with Git/PRs)

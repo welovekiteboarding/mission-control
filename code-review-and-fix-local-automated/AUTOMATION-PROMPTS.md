@@ -26,6 +26,7 @@ Report findings to Triage.
 **Sandbox**: Read-only
 **Prompt**:
 ```
+If there are no tracked changes (git status --short clean), exit and report "No tracked changes".
 Review all uncommitted changes in this repository. Check for:
 1. Obvious bugs
 2. Security vulnerabilities
@@ -62,6 +63,7 @@ Report findings to Triage with package names and recommended versions.
 **Sandbox**: Workspace-write
 **Prompt**:
 ```
+If there are no tracked changes (git status --short clean), exit and report "No tracked changes".
 Review uncommitted changes. If you find issues that can be automatically fixed:
 1. Create a branch named codex-auto-fix-{timestamp}
 2. Apply the fixes
