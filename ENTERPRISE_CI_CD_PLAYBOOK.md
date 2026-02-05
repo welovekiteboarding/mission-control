@@ -22,11 +22,11 @@ This playbook has two goals:
 - Detects failing language by **re-running tests**
 - Uses **Codex** to fix and opens a PR
 
-### Known current issues
-1. **Auto-fix re-runs tests without installing deps first** (Python/TS). This can mis-detect failures.
-2. **TypeScript detection runs an invalid command** (uses a pytest flag and a broken quote).
-3. **Auto-fix re-runs tests differently than CI**, so failures can be misclassified.
-4. **Cloud agents submit broken PRs on purpose** (for testing), but those should be marked/tested safely.
+### Known current issues (resolved in current workflow)
+1. **Auto-fix must install deps before detection** to avoid misclassification.
+2. **Detection must mirror CI scripts**, not ad-hoc commands.
+3. **Auto-fix must use CI toolchain versions** (Python 3.11, Node 22) for parity.
+4. **PR creation requires GitHub Actions permission** (must be enabled in repo settings).
 
 ### Alignment principle for this repo
 - **CI** remains the source of truth.
@@ -88,7 +88,7 @@ jobs:
 - Detection step **must** match CI install + test commands.
 - Codex fix must operate only in the failing component scope.
 
-Template structure:
+Template structure (with required inputs):
 ```yaml
 on:
   workflow_run:
@@ -112,10 +112,11 @@ jobs:
       - name: Run Codex to Fix
         uses: openai/codex-action@main
         with:
-          openai_api_key: ${{ secrets.OPENAI_API_KEY }}
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
           prompt: |
             You are working in <component> with failing tests in <path>.
             Fix only the failing tests. Do not refactor unrelated code.
+          sandbox: workspace-write
 
       - name: Verify tests
         run: ./<component>/scripts/test.sh
@@ -157,11 +158,12 @@ Jobs:
 ### Auto-fix (should be aligned)
 **File:** `.github/workflows/codex-autofix.yml`
 Expected changes:
-1. **Detection step should install deps first** and run the **same test scripts**:
-   - Python: `pip install -e .` + `pip install pytest pytest-cov` then `./spec-kit/scripts/test.sh`
-   - TypeScript: `npm install -g tsx` then `./scripts/test.sh`
-2. **Remove invalid flags** in TypeScript detection.
-3. **Optional**: skip auto-fix for labeled simulations only when needed.
+1. **Detection must install deps first** and run the **same test scripts**:
+   - Python: `pip install -e spec-kit pytest pytest-cov` then `./spec-kit/scripts/test.sh`
+   - TypeScript: `./scripts/test.sh`
+2. **Use CI toolchain versions** for detection (Python 3.11, Node 22).
+3. **Use correct Codex Action inputs**: `openai-api-key`, `sandbox`.
+4. **Enable GitHub Actions PR creation** in repo settings.
 
 ---
 
@@ -170,11 +172,25 @@ Expected changes:
 **Always true rules:**
 1. CI scripts are the source of truth.
 2. Auto-fix detection must run the same scripts.
-3. Codex only fixes failing tests in scope.
-4. Label-based opt-out only if you explicitly want to bypass auto-fix.
+3. Auto-fix must run under the same toolchain versions as CI.
+4. Codex only fixes failing tests in scope.
+5. Auto-fix PR creation requires GitHub Actions permission.
 
 ---
 
 ## Sources (internal)
 - This playbook is aligned to repository state as of 2026-02-05.
 - External references intentionally omitted to keep this repo self-contained.
+
+---
+
+## ✅ GitHub Settings Checklist (Required)
+
+These settings are mandatory for auto-fix to open PRs:
+
+1. **Settings → Actions → General → Workflow permissions**
+   - **Read and write permissions**
+   - **Allow GitHub Actions to create and approve pull requests** = ON
+
+If these are not enabled, auto-fix will fail at the PR creation step with:
+"GitHub Actions is not permitted to create or approve pull requests."
