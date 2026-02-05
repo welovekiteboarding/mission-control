@@ -122,13 +122,19 @@ This document shows exactly where we are in the development lifecycle. Update th
 │                                                                  │
 │  Workflow 1: CI Pipeline                                         │
 │  File: .github/workflows/ci.yml                                  │
-│  Status: ✅ WORKING                                              │
+│  Status: ✅ MIGRATED TO PYTHON (2026-02-04)                     │
 │  Triggers: pull_request, push                                   │
-│  Function: Runs tests on backend/convex, backend/poller, frontend│
+│  Function: Runs pytest tests on spec-kit Python package         │
 │                                                                  │
 │  Workflow 2: Codex Auto-Fix                                     │
 │  File: .github/workflows/codex-autofix.yml                      │
-│  Status: ✅ FIXED (2026-02-04)                                  │
+│  Status: ✅ MIGRATED TO PYTHON (2026-02-04)                     │
+│                                                                  │
+│  Migration (commit c8cd42f):                                     │
+│    - Changed from Node.js monorepo to Python package structure   │
+│    - Replaced npm/test commands with pytest                     │
+│    - Updated setup-node to setup-python                         │
+│    - Package detection now targets spec-kit/                    │
 │                                                                  │
 │  Fixes Applied (commits 5bb07f8, ad6bff4, dc56255, 1e104b7,   │
 │                 c70b521, 88d837b, 82c519f, 83abc3d, 78810ea,   │
