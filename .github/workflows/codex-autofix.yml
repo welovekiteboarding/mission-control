@@ -49,6 +49,8 @@ jobs:
 
           # Check Python tests
           echo "Checking Python tests..."
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -e spec-kit pytest pytest-cov
           if ! ./spec-kit/scripts/test.sh; then
             echo "  Python tests failing"
             FAILING_LANG="python"
@@ -84,6 +86,12 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+
+      - name: Install Python Dependencies
+        if: steps.detect-failure.outputs.failing_language == 'python'
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -e spec-kit pytest pytest-cov
 
       - name: Run Codex to Fix Python
         if: steps.detect-failure.outputs.failing_language == 'python'
