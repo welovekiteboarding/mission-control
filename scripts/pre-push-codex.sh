@@ -1,22 +1,26 @@
 #!/bin/bash
 
 # Pre-push guard with Codex auto-fix fallback.
-# - Runs the same tests as CI.
-# - If tests fail, invoke Codex to fix and rerun tests.
-# - If still failing, block the push.
+# Runs the same tests as CI. If tests fail, invokes Codex to fix and rerun tests.
+# Aborts push if tests still fail.
 
 ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"
 
-# Skip if no tracked changes
-if [ -z "$(git status --short --untracked-files=no)" ]; then
-  echo "[pre-push] No tracked changes; skipping tests."
-  exit 0
-fi
+# Always run tests (even if working tree is clean) to enforce the guard.
 
 run_tests() {
   ./spec-kit/scripts/test.sh
+  local spec_status=$?
+
   ./scripts/test.sh
+  local ts_status=$?
+
+  # Return non-zero if any test command failed
+  if [ $spec_status -ne 0 ] || [ $ts_status -ne 0 ]; then
+    return 1
+  fi
+  return 0
 }
 
 echo "[pre-push] Running tests..."
