@@ -21,6 +21,25 @@ $skill-installer gh-fix-ci
 
 ---
 
+## Repo Test Gates (Current)
+
+```bash
+# Local pre-push always runs this
+./scripts/test.sh
+
+# Local pre-push runs this only if pushed commits touch spec-kit/**
+./spec-kit/scripts/test.sh
+```
+
+```bash
+# CI parity check (run individually; no root ci:all script exists)
+bash ./backend/convex/scripts/test.sh
+bash ./backend/poller/scripts/test.sh
+bash ./frontend/scripts/test.sh
+```
+
+---
+
 ## Automation Templates
 
 ### 1. Daily Health Check

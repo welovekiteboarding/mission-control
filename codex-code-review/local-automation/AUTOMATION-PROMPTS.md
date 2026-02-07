@@ -78,8 +78,9 @@ If no issues found, report "No issues found" to Triage.
 
 Add tests to the prompt when appropriate:
 ```
-After fixes, run: ./spec-kit/scripts/test.sh && ./scripts/test.sh
-If tests fail, include the failure summary in Triage.
+After fixes, always run: ./scripts/test.sh
+If git diff --name-only @{u}...HEAD includes paths under spec-kit/, also run: ./spec-kit/scripts/test.sh
+If tests fail, include failure summary in Triage.
 ```
 
 ### Test Coverage Check

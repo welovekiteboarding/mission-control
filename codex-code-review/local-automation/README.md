@@ -13,6 +13,19 @@
 
 ---
 
+## Current Repo CI/Hook Behavior (Mission Control)
+
+These are the current, live rules in this repository:
+
+1. **Local pre-push hook**: `/scripts/pre-push-codex.sh`
+2. **Always runs**: `./scripts/test.sh`
+3. **Conditionally runs**: `./spec-kit/scripts/test.sh` only when pushed commit range includes `spec-kit/**`
+4. **CI workflow**: `/.github/workflows/ci.yml`
+5. **CI gate for Python job**: `Test Python (spec-kit)` runs only when changed paths include `spec-kit/**` (via `dorny/paths-filter`)
+6. **No root aggregate script**: there is no `npm test` or `npm run ci:all` at repo root
+
+---
+
 ## What Codex Mac App Provides (Facts from Official Docs)
 
 ### 1. Built-in Automations
@@ -222,16 +235,22 @@ Add a pre-push script (or manual alias) that:
 #!/bin/bash
 set -e
 
-# 1) run the same tests as CI
-./spec-kit/scripts/test.sh
+# 1) always run root TypeScript tests
 ./scripts/test.sh
 
-# 2) if tests fail, run Codex fix locally
-if [ $? -ne 0 ]; then
-  codex exec "Tests failed. Fix the issues, rerun ./spec-kit/scripts/test.sh and ./scripts/test.sh, and create branch codex-auto-fix-{timestamp}." --sandbox workspace-write
+# 2) run spec-kit tests only when pushed changes touch spec-kit/
+if git rev-parse --abbrev-ref --symbolic-full-name @{u} >/dev/null 2>&1; then
+  if git diff --name-only @{u}...HEAD | grep -q '^spec-kit/'; then
+    ./spec-kit/scripts/test.sh
+  fi
 fi
 
-# 3) optional: run a quick review
+# 3) if tests fail, run Codex fix locally
+if [ $? -ne 0 ]; then
+  codex exec "Tests failed. Fix issues, rerun ./scripts/test.sh, and if spec-kit changed rerun ./spec-kit/scripts/test.sh. Create branch codex-auto-fix-{timestamp}." --sandbox workspace-write
+fi
+
+# 4) optional: run a quick review
 codex exec "Review staged changes for bugs/security; report succinctly." --sandbox read-only
 ```
 

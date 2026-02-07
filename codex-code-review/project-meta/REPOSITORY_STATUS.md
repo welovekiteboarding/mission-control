@@ -1,14 +1,34 @@
 # OpenClaw Repository Status Map
 
-**Last Updated: 2026-02-04**
+**Last Updated: 2026-02-07**
 
-This document shows exactly where we are in the development lifecycle. Update this file as work progresses.
+This document is retained as a research/reference artifact.
+For live project status and process rules, use:
+- `/Users/welovekiteboarding/Documents/Development/openclaw/spec-kit/specs/001-mission-control/spec.md`
+- `/Users/welovekiteboarding/Documents/Development/openclaw/spec-kit/specs/001-mission-control/plan.md`
+- `/Users/welovekiteboarding/Documents/Development/openclaw/spec-kit/specs/001-mission-control/tasks.md`
+- `/Users/welovekiteboarding/Documents/Development/openclaw/.github/workflows/ci.yml`
+- `/Users/welovekiteboarding/Documents/Development/openclaw/scripts/pre-push-codex.sh`
 
 ---
 
-## 📍 Current Position
+## Current Factual Snapshot (2026-02-07)
 
-**PHASE 1: PLANNING** ← YOU ARE HERE
+1. Mission Control implementation PRs `#1`, `#2`, `#3`, `#5`, `#6` were merged.
+2. PRs `#7` and `#8` were closed.
+3. CI now conditionally runs Python `spec-kit` tests only when `spec-kit/**` files change.
+4. Local pre-push hook now mirrors CI behavior:
+   - always runs `./scripts/test.sh`
+   - runs `./spec-kit/scripts/test.sh` only when pushed commit range includes `spec-kit/**`
+5. `AGENTS.MD` exists and is actively used.
+
+---
+
+## Historical Snapshot (kept for reference)
+
+The section below reflects an earlier planning-stage snapshot and is not the live status.
+
+**PHASE 1: PLANNING** (historical snapshot)
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                    SOFTWARE DEVELOPMENT LIFECYCLE                │
@@ -47,7 +67,7 @@ This document shows exactly where we are in the development lifecycle. Update th
 
 ---
 
-## 🎯 What This Means
+## 🎯 What This Meant (Historical)
 
 **You are here**: We have completed the requirements gathering and feasibility assessment. We are currently creating design documents and preparing to move into the design phase.
 
@@ -70,7 +90,7 @@ This document shows exactly where we are in the development lifecycle. Update th
 
 ---
 
-## 📊 Repository Health Overview
+## 📊 Repository Health Overview (Historical)
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -113,7 +133,7 @@ This document shows exactly where we are in the development lifecycle. Update th
 
 ---
 
-## 🔍 Code Review Automation Status
+## 🔍 Code Review Automation Status (Historical)
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
