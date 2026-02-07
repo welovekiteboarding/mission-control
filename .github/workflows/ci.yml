@@ -6,8 +6,27 @@ on:
     branches: [main]
 
 jobs:
+  changes:
+    name: Detect changed paths
+    runs-on: ubuntu-latest
+    outputs:
+      spec_kit: ${{ steps.filter.outputs.spec_kit }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check changed files
+        id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            spec_kit:
+              - 'spec-kit/**'
+
   test-python:
     name: Test Python (spec-kit)
+    needs: changes
+    if: needs.changes.outputs.spec_kit == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
