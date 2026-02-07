@@ -85,6 +85,10 @@ Ground Mission Control’s architecture in verified OpenClaw documentation and r
   - Sources checked: Mission Control spec/plan/tasks, repo workflows.
   - Resolution: Default to running auto-fix even for simulation PRs; use label-based opt-out only when explicitly needed.
 
+- **GAP-006**: Source gist content for the requested Codex Mac app skill is not accessible via the provided HTML URL; raw content is required. Additionally, desired integration scope for `beautiful-mermaid` (how it should be used within the skill) is unspecified.
+  - Sources checked: User-provided gist URL and repo URL only.
+  - Resolution: Request raw gist URL or pasted content, and clarify expected skill behavior/usage with `beautiful-mermaid`.
+
 ## Next Research Needed
 
 - Verify OpenClaw CLI/RPC examples for `sessions_send` usage in scripts (if any exist in docs or repo). If absent, document that as acceptable gap and standardize on gateway tool calls.
