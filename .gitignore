@@ -5,3 +5,4 @@ node_modules/
 .code/
 .windsurf/
 .windsurfrules
+spec-kit/.coverage
