@@ -1,3 +1,3 @@
 # Notification Poller
 
-Node.js service that polls Convex for undelivered notifications and delivers via OpenClaw `sessions_send`.
+Node.js service that polls Convex for undelivered notifications and delivers via OpenClaw `sessions_send`...
