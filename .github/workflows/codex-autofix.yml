@@ -1,0 +1,161 @@
+# OpenAI Codex Auto-Fix Workflow
+# Customized for actual repository structure
+# Based on: https://github.com/openai/openai-cookbook/blob/main/examples/codex/Autofix-github-actions.ipynb
+
+name: Codex Auto-Fix CI Failures
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: read
+
+jobs:
+  codex-autofix:
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    runs-on: ubuntu-latest
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      FAILED_WORKFLOW_RUN_ID: ${{ github.event.workflow_run.id }}
+      FAILED_HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
+      FAILED_HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+
+    steps:
+      - name: Check OpenAI API Key
+        run: |
+          if [ -z "$OPENAI_API_KEY" ]; then
+            echo "OPENAI_API_KEY secret is not set."
+            exit 1
+          fi
+
+      - name: Checkout Failing Ref
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.FAILED_HEAD_SHA }}
+          fetch-depth: 0
+
+      - name: Setup Python (CI version)
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Setup Node.js (CI version)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # Detect which language failed by checking workflow run jobs
+      - name: Detect Failing Language
+        id: detect-failure
+        run: |
+          echo "Detecting which tests failed..."
+
+          FAILING_LANG=""
+          FAILING_PATH=""
+
+          # Check Python tests
+          echo "Checking Python tests..."
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -e spec-kit pytest pytest-cov
+          if ! ./spec-kit/scripts/test.sh; then
+            echo "  Python tests failing"
+            FAILING_LANG="python"
+            FAILING_PATH="spec-kit"
+          else
+            echo "  Python tests passing"
+          fi
+
+          # Check TypeScript tests (only if Python didn't fail)
+          if [ -z "$FAILING_LANG" ]; then
+            echo "Checking TypeScript tests..."
+            if ! ./scripts/test.sh; then
+              echo "  TypeScript tests failing"
+              FAILING_LANG="typescript"
+              FAILING_PATH="."
+            else
+              echo "  TypeScript tests passing"
+            fi
+          fi
+
+          if [ -n "$FAILING_LANG" ]; then
+            echo "failing_language=$FAILING_LANG" >> $GITHUB_OUTPUT
+            echo "failing_path=$FAILING_PATH" >> $GITHUB_OUTPUT
+            echo "Detected failing language: $FAILING_LANG in $FAILING_PATH"
+          else
+            echo "failing_language=" >> $GITHUB_OUTPUT
+            echo "failing_path=" >> $GITHUB_OUTPUT
+            echo "No failing tests detected"
+          fi
+
+      - name: Install Python Dependencies
+        if: steps.detect-failure.outputs.failing_language == 'python'
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -e spec-kit pytest pytest-cov
+
+      - name: Run Codex to Fix Python
+        if: steps.detect-failure.outputs.failing_language == 'python'
+        uses: openai/codex-action@main
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          prompt: |
+            You are working in a Python codebase with failing pytest tests in the "spec-kit" directory.
+
+            Read the code, identify why tests are failing, and make the minimal change needed to fix the issues.
+
+            Only fix the failing tests. Do not refactor unrelated code.
+          sandbox: workspace-write
+
+      - name: Verify Python Tests
+        if: steps.detect-failure.outputs.failing_language == 'python'
+        run: |
+          cd spec-kit
+          ./scripts/test.sh
+
+      - name: Run Codex to Fix TypeScript
+        if: steps.detect-failure.outputs.failing_language == 'typescript'
+        uses: openai/codex-action@main
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          prompt: |
+            You are working in a TypeScript codebase with failing tests. The tests use Node.js's built-in test runner (node:test).
+
+            Find all .test.ts files, run them with `npx tsx --test`, identify why tests are failing, and make the minimal change needed to fix the issues.
+
+            Only fix the failing tests. Do not refactor unrelated code.
+          sandbox: workspace-write
+
+      - name: Verify TypeScript Tests
+        if: steps.detect-failure.outputs.failing_language == 'typescript'
+        run: ./scripts/test.sh
+
+      - name: Create Pull Request with Fixes
+        if: steps.detect-failure.outputs.failing_language != ''
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "fix(ci): auto-fix failing tests via Codex
+
+          - Applied fixes to resolve CI failures (${{ steps.detect-failure.outputs.failing_language }})
+          - Minimal changes to make tests pass
+          - Please review before merging
+
+          Co-authored-by: Codex <codex-auto-fix[bot]@users.noreply.github.com>"
+          branch: codex/auto-fix-${{ env.FAILED_WORKFLOW_RUN_ID }}
+          base: ${{ env.FAILED_HEAD_BRANCH }}
+          title: "Auto-fix failing CI via Codex (${{ steps.detect-failure.outputs.failing_language }})"
+          body: |
+            Codex automatically generated this PR in response to a CI failure.
+
+            **Failed workflow run ID:** ${{ env.FAILED_WORKFLOW_RUN_ID }}
+            **Head branch:** `${{ env.FAILED_HEAD_BRANCH }}`
+            **Failing language:** `${{ steps.detect-failure.outputs.failing_language }}`
+
+            This PR contains minimal changes intended solely to make the CI pass.
+
+            Please review the changes carefully before merging.
+          labels: codex, auto-fix
+          draft: false

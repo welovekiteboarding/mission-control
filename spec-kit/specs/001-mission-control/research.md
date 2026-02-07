@@ -81,6 +81,10 @@ Ground Mission Control’s architecture in verified OpenClaw documentation and r
   - Sources checked: Remote access docs, reference post.
   - Resolution: Support both local dev (remote gateway optional) and VPS deployment; decide per environment during implementation.
 
+- **GAP-005**: CI/CD policy for "simulation" PRs (cloud agents intentionally submitting broken code) is not defined in Mission Control specs.
+  - Sources checked: Mission Control spec/plan/tasks, repo workflows.
+  - Resolution: Default to running auto-fix even for simulation PRs; use label-based opt-out only when explicitly needed.
+
 ## Next Research Needed
 
 - Verify OpenClaw CLI/RPC examples for `sessions_send` usage in scripts (if any exist in docs or repo). If absent, document that as acceptable gap and standardize on gateway tool calls.
