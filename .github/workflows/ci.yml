@@ -80,7 +80,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: backend/poller
-        run: npm ci
+        run: npm install
 
       - name: Run tests
         run: bash ./backend/poller/scripts/test.sh
@@ -99,7 +99,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: frontend
-        run: npm ci
+        run: npm install
 
       - name: Run tests
         run: bash ./frontend/scripts/test.sh
