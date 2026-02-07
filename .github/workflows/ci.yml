@@ -69,7 +69,6 @@ jobs:
   test-backend-poller:
     name: Test Backend (poller)
     runs-on: ubuntu-latest
-    if: ${{ hashFiles('backend/poller/package.json') != '' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -81,15 +80,16 @@ jobs:
 
       - name: Install dependencies
         working-directory: backend/poller
+        if: ${{ hashFiles('backend/poller/package.json') != '' }}
         run: npm install
 
       - name: Run tests
+        if: ${{ hashFiles('backend/poller/package.json') != '' }}
         run: bash ./backend/poller/scripts/test.sh
 
   test-frontend:
     name: Test Frontend
     runs-on: ubuntu-latest
-    if: ${{ hashFiles('frontend/package.json') != '' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -101,7 +101,9 @@ jobs:
 
       - name: Install dependencies
         working-directory: frontend
+        if: ${{ hashFiles('frontend/package.json') != '' }}
         run: npm install
 
       - name: Run tests
+        if: ${{ hashFiles('frontend/package.json') != '' }}
         run: bash ./frontend/scripts/test.sh
