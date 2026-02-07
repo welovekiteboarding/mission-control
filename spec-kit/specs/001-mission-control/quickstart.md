@@ -1,6 +1,6 @@
 # Quickstart — Mission Control Validation
 
-These steps validate core behavior after implementation. Execute in order. Use local-only steps first, then remote OpenClaw steps on the second machine.
+These steps validate core behavior after implementation. Execute in order. Use local-only steps first, then remote OpenClaw steps on the second machine. Treat this list as a living checklist during rollout.
 
 ## Local Validation (no OpenClaw gateway required)
 
