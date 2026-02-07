@@ -1,0 +1,105 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  test-python:
+    name: Test Python (spec-kit)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: spec-kit/pyproject.toml
+
+      - name: Install dependencies
+        working-directory: spec-kit
+        run: |
+          pip install -e .
+          pip install pytest pytest-cov
+
+      - name: Run tests
+        run: ./spec-kit/scripts/test.sh
+
+  test-typescript:
+    name: Test TypeScript (root)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install tsx
+        run: npm install -g tsx
+
+      - name: Run tests
+        run: ./scripts/test.sh
+
+  test-backend-convex:
+    name: Test Backend (convex)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        working-directory: backend/convex
+        run: npm ci
+
+      - name: Run tests
+        run: bash ./backend/convex/scripts/test.sh
+
+  test-backend-poller:
+    name: Test Backend (poller)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        working-directory: backend/poller
+        run: npm ci
+
+      - name: Run tests
+        run: bash ./backend/poller/scripts/test.sh
+
+  test-frontend:
+    name: Test Frontend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Run tests
+        run: bash ./frontend/scripts/test.sh
