@@ -1,0 +1,16 @@
+{
+  "name": "mission-control-convex",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "convex": "^1.31.7",
+    "convex-test": "^0.0.41",
+    "typescript": "^5.5.4",
+    "vitest": "^2.0.5"
+  }
+}
