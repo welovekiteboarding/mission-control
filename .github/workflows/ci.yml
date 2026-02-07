@@ -46,3 +46,60 @@ jobs:
 
       - name: Run tests
         run: ./scripts/test.sh
+
+  test-backend-convex:
+    name: Test Backend (convex)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        working-directory: backend/convex
+        run: npm ci
+
+      - name: Run tests
+        run: ./backend/convex/scripts/test.sh
+
+  test-backend-poller:
+    name: Test Backend (poller)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        working-directory: backend/poller
+        run: npm ci
+
+      - name: Run tests
+        run: ./backend/poller/scripts/test.sh
+
+  test-frontend:
+    name: Test Frontend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Run tests
+        run: ./frontend/scripts/test.sh
