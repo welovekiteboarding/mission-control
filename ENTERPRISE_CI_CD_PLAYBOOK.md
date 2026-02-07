@@ -16,6 +16,7 @@ This playbook has two goals:
 3. **Toolchain parity**: detection uses the same Python/Node versions as CI.
 4. **Codex action inputs**: use `openai-api-key` and `sandbox` (not `openai_api_key`).
 5. **GitHub settings**: Actions = Read/Write, and **Allow GitHub Actions to create PRs** enabled.
+6. **Local hooks**: pre-push runs CI scripts + Codex auto-fix if tests fail; pre-commit runs a non-blocking Codex review.
 
 ---
 
