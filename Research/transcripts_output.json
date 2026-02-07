@@ -1,0 +1,26 @@
+{
+  "Video #5: CLI Commands & Resuming Sessions": {
+    "video_id": "jAaF58zobxE",
+    "url": "https://www.youtube.com/watch?v=jAaF58zobxE",
+    "error": "\nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=jAaF58zobxE! This is most likely caused by:\n\nThe video is no longer available\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!",
+    "transcript": null
+  },
+  "Video #6: Using the AGENTS.md file": {
+    "video_id": "w3Oi4LzWkqg",
+    "url": "https://www.youtube.com/watch?v=w3Oi4LzWkqg",
+    "error": "\nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=w3Oi4LzWkqg! This is most likely caused by:\n\nThe video is no longer available\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!",
+    "transcript": null
+  },
+  "Video #7: Codex IDE Extension": {
+    "video_id": "6vF-YvE-qJQ",
+    "url": "https://www.youtube.com/watch?v=6vF-YvE-qJQ",
+    "error": "\nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=6vF-YvE-qJQ! This is most likely caused by:\n\nThe video is no longer available\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!",
+    "transcript": null
+  },
+  "Video #8: Context, Reasoning & TODO's": {
+    "video_id": "DwMEeqw_hvI",
+    "url": "https://www.youtube.com/watch?v=DwMEeqw_hvI",
+    "error": "\nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=DwMEeqw_hvI! This is most likely caused by:\n\nThe video is no longer available\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!",
+    "transcript": null
+  }
+}

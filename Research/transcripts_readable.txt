@@ -1,0 +1,28 @@
+
+================================================================================
+Video #5: CLI Commands & Resuming Sessions
+URL: https://www.youtube.com/watch?v=htNz7uazonY
+ERROR: Failed to parse JSON: Expecting value: line 1 column 1 (char 0)
+Output was: NA
+
+
+================================================================================
+Video #6: Using the AGENTS.md file
+URL: https://www.youtube.com/watch?v=NlNuoH5PPl4
+ERROR: Failed to parse JSON: Expecting value: line 1 column 1 (char 0)
+Output was: NA
+
+
+================================================================================
+Video #7: Codex IDE Extension
+URL: https://www.youtube.com/watch?v=6vF-YvE-qJQ
+ERROR: yt-dlp failed: ERROR: [youtube] 6vF-YvE-qJQ: Video unavailable
+
+
+
+================================================================================
+Video #8: Context, Reasoning & TODO's
+URL: https://www.youtube.com/watch?v=kbv6Rn7lHkI
+ERROR: Failed to parse JSON: Expecting value: line 1 column 1 (char 0)
+Output was: NA
+

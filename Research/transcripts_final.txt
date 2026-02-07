@@ -1,0 +1,2172 @@
+
+================================================================================
+Video #5: CLI Commands & Resuming Sessions
+URL: https://www.youtube.com/watch?v=htNz7uazonY
+Total Segments: 379
+
+TRANSCRIPT:
+--------------------------------------------------------------------------------
+[00:00:00.640] (1.43s) All right, then. So, we've got the Codex
+[00:00:02.070] (0.01s) All right, then. So, we've got the Codex
+[00:00:02.080] (1.91s) All right, then. So, we've got the Codex
+CLI up and running now, which we started
+[00:00:03.990] (0.01s) CLI up and running now, which we started
+[00:00:04.000] (1.51s) CLI up and running now, which we started
+using in the previous lesson to make
+[00:00:05.510] (0.01s) using in the previous lesson to make
+[00:00:05.520] (1.83s) using in the previous lesson to make
+changes to the project on a new branch.
+[00:00:07.349] (0.01s) changes to the project on a new branch.
+[00:00:07.359] (1.67s) changes to the project on a new branch.
+Now, I've since pushed that branch up to
+[00:00:09.030] (0.01s) Now, I've since pushed that branch up to
+[00:00:09.040] (1.75s) Now, I've since pushed that branch up to
+GitHub and merged it, and I pulled down
+[00:00:10.790] (0.01s) GitHub and merged it, and I pulled down
+[00:00:10.800] (1.35s) GitHub and merged it, and I pulled down
+the most recent version of the main
+[00:00:12.150] (0.01s) the most recent version of the main
+[00:00:12.160] (1.43s) the most recent version of the main
+branch as well, which I'm on now, so
+[00:00:13.589] (0.01s) branch as well, which I'm on now, so
+[00:00:13.599] (2.23s) branch as well, which I'm on now, so
+everything's up to date. So, in this
+[00:00:15.829] (0.01s) everything's up to date. So, in this
+[00:00:15.839] (1.03s) everything's up to date. So, in this
+lesson, we're going to look at some of
+[00:00:16.870] (0.01s) lesson, we're going to look at some of
+[00:00:16.880] (1.51s) lesson, we're going to look at some of
+the built-in commands that come with the
+[00:00:18.390] (0.01s) the built-in commands that come with the
+[00:00:18.400] (2.47s) the built-in commands that come with the
+Codex CLI. And again, if you've ever
+[00:00:20.870] (0.01s) Codex CLI. And again, if you've ever
+[00:00:20.880] (1.91s) Codex CLI. And again, if you've ever
+used Claude Code, it's a pretty similar
+[00:00:22.790] (0.01s) used Claude Code, it's a pretty similar
+[00:00:22.800] (1.43s) used Claude Code, it's a pretty similar
+experience to their own commands, or
+[00:00:24.230] (0.01s) experience to their own commands, or
+[00:00:24.240] (1.27s) experience to their own commands, or
+slash commands as they're called,
+[00:00:25.509] (0.01s) slash commands as they're called,
+[00:00:25.519] (1.59s) slash commands as they're called,
+because each command starts with a
+[00:00:27.109] (0.01s) because each command starts with a
+[00:00:27.119] (2.07s) because each command starts with a
+slash. And it's exactly the same in the
+[00:00:29.189] (0.01s) slash. And it's exactly the same in the
+[00:00:29.199] (2.55s) slash. And it's exactly the same in the
+Codex CLI. Each built-in command starts
+[00:00:31.750] (0.01s) Codex CLI. Each built-in command starts
+[00:00:31.760] (2.63s) Codex CLI. Each built-in command starts
+with a forward slash. Now I'm just going
+[00:00:34.389] (0.01s) with a forward slash. Now I'm just going
+[00:00:34.399] (1.67s) with a forward slash. Now I'm just going
+to exit the current codec session by
+[00:00:36.069] (0.01s) to exit the current codec session by
+[00:00:36.079] (2.39s) to exit the current codec session by
+pressingtrl + c. And when I do that,
+[00:00:38.470] (0.01s) pressingtrl + c. And when I do that,
+[00:00:38.480] (1.43s) pressingtrl + c. And when I do that,
+it's going to put me back in the regular
+[00:00:39.910] (0.01s) it's going to put me back in the regular
+[00:00:39.920] (1.83s) it's going to put me back in the regular
+terminal. Then I'm going to run the
+[00:00:41.750] (0.01s) terminal. Then I'm going to run the
+[00:00:41.760] (1.59s) terminal. Then I'm going to run the
+codeex command again to start a brand
+[00:00:43.350] (0.01s) codeex command again to start a brand
+[00:00:43.360] (2.95s) codeex command again to start a brand
+new session. And when I do that, the
+[00:00:46.310] (0.01s) new session. And when I do that, the
+[00:00:46.320] (1.91s) new session. And when I do that, the
+first thing codex does is suggest trying
+[00:00:48.229] (0.01s) first thing codex does is suggest trying
+[00:00:48.239] (2.31s) first thing codex does is suggest trying
+out some of these different commands. So
+[00:00:50.549] (0.01s) out some of these different commands. So
+[00:00:50.559] (2.07s) out some of these different commands. So
+the first one is the init command, which
+[00:00:52.630] (0.01s) the first one is the init command, which
+[00:00:52.640] (2.31s) the first one is the init command, which
+creates an agents.md file, which we're
+[00:00:54.950] (0.01s) creates an agents.md file, which we're
+[00:00:54.960] (1.19s) creates an agents.md file, which we're
+going to talk about, I think, in the
+[00:00:56.150] (0.01s) going to talk about, I think, in the
+[00:00:56.160] (2.15s) going to talk about, I think, in the
+next lesson. The second one is the
+[00:00:58.310] (0.01s) next lesson. The second one is the
+[00:00:58.320] (1.75s) next lesson. The second one is the
+status command which shows a bit of
+[00:01:00.069] (0.01s) status command which shows a bit of
+[00:01:00.079] (1.99s) status command which shows a bit of
+information about the current session.
+[00:01:02.069] (0.01s) information about the current session.
+[00:01:02.079] (1.91s) information about the current session.
+Then we've got the approvals command
+[00:01:03.990] (0.01s) Then we've got the approvals command
+[00:01:04.000] (1.67s) Then we've got the approvals command
+which we can use to set up automatic
+[00:01:05.670] (0.01s) which we can use to set up automatic
+[00:01:05.680] (1.83s) which we can use to set up automatic
+approvals for codecs when it comes to
+[00:01:07.510] (0.01s) approvals for codecs when it comes to
+[00:01:07.520] (1.99s) approvals for codecs when it comes to
+file edits and whatnot. And finally the
+[00:01:09.510] (0.01s) file edits and whatnot. And finally the
+[00:01:09.520] (1.75s) file edits and whatnot. And finally the
+model command which lets us choose an
+[00:01:11.270] (0.01s) model command which lets us choose an
+[00:01:11.280] (2.23s) model command which lets us choose an
+open AAI model to work with. And by
+[00:01:13.510] (0.01s) open AAI model to work with. And by
+[00:01:13.520] (2.95s) open AAI model to work with. And by
+default this is set to the GPT5 codeex
+[00:01:16.469] (0.01s) default this is set to the GPT5 codeex
+[00:01:16.479] (2.55s) default this is set to the GPT5 codeex
+model at the time of recording. There
+[00:01:19.030] (0.01s) model at the time of recording. There
+[00:01:19.040] (1.43s) model at the time of recording. There
+are other commands that we can use as
+[00:01:20.469] (0.01s) are other commands that we can use as
+[00:01:20.479] (1.99s) are other commands that we can use as
+well which we can see if we type a
+[00:01:22.469] (0.01s) well which we can see if we type a
+[00:01:22.479] (2.39s) well which we can see if we type a
+forward slash. So if we scroll down
+[00:01:24.870] (0.01s) forward slash. So if we scroll down
+[00:01:24.880] (2.39s) forward slash. So if we scroll down
+here, we can see some more like the new
+[00:01:27.270] (0.01s) here, we can see some more like the new
+[00:01:27.280] (2.71s) here, we can see some more like the new
+command to start a new session. There's
+[00:01:29.990] (0.01s) command to start a new session. There's
+[00:01:30.000] (2.39s) command to start a new session. There's
+the compact command to squash the chat
+[00:01:32.390] (0.01s) the compact command to squash the chat
+[00:01:32.400] (2.15s) the compact command to squash the chat
+history into a compact summary to reduce
+[00:01:34.550] (0.01s) history into a compact summary to reduce
+[00:01:34.560] (2.15s) history into a compact summary to reduce
+the overall session context. And this is
+[00:01:36.710] (0.01s) the overall session context. And this is
+[00:01:36.720] (2.07s) the overall session context. And this is
+useful because as your sessions go on
+[00:01:38.789] (0.01s) useful because as your sessions go on
+[00:01:38.799] (2.07s) useful because as your sessions go on
+for longer, the context of the session
+[00:01:40.870] (0.01s) for longer, the context of the session
+[00:01:40.880] (2.07s) for longer, the context of the session
+accumulates and gets a bit bloated. And
+[00:01:42.950] (0.01s) accumulates and gets a bit bloated. And
+[00:01:42.960] (1.91s) accumulates and gets a bit bloated. And
+when that happens, it can affect AI
+[00:01:44.870] (0.01s) when that happens, it can affect AI
+[00:01:44.880] (1.43s) when that happens, it can affect AI
+decision-making when it comes to code
+[00:01:46.310] (0.01s) decision-making when it comes to code
+[00:01:46.320] (2.07s) decision-making when it comes to code
+edits. And you can also eventually hit
+[00:01:48.389] (0.01s) edits. And you can also eventually hit
+[00:01:48.399] (1.51s) edits. And you can also eventually hit
+the context limit, which is how much
+[00:01:49.910] (0.01s) the context limit, which is how much
+[00:01:49.920] (2.47s) the context limit, which is how much
+context an AI model can process at any
+[00:01:52.389] (0.01s) context an AI model can process at any
+[00:01:52.399] (3.03s) context an AI model can process at any
+time. So this compact command is really
+[00:01:55.429] (0.01s) time. So this compact command is really
+[00:01:55.439] (1.91s) time. So this compact command is really
+useful if you have these long running
+[00:01:57.350] (0.01s) useful if you have these long running
+[00:01:57.360] (2.07s) useful if you have these long running
+sessions to prevent context buildup and
+[00:01:59.429] (0.01s) sessions to prevent context buildup and
+[00:01:59.439] (2.23s) sessions to prevent context buildup and
+bloat. We've also got the diff command
+[00:02:01.670] (0.01s) bloat. We've also got the diff command
+[00:02:01.680] (1.99s) bloat. We've also got the diff command
+for showing git diffs directly in the
+[00:02:03.670] (0.01s) for showing git diffs directly in the
+[00:02:03.680] (2.55s) for showing git diffs directly in the
+terminal. We've got the mention command
+[00:02:06.230] (0.01s) terminal. We've got the mention command
+[00:02:06.240] (2.31s) terminal. We've got the mention command
+to add files as context to a prompt. And
+[00:02:08.550] (0.01s) to add files as context to a prompt. And
+[00:02:08.560] (1.67s) to add files as context to a prompt. And
+this is actually just the same as using
+[00:02:10.229] (0.01s) this is actually just the same as using
+[00:02:10.239] (2.39s) this is actually just the same as using
+the at sign which is much quicker than
+[00:02:12.630] (0.01s) the at sign which is much quicker than
+[00:02:12.640] (1.91s) the at sign which is much quicker than
+running this command. So I'm not sure
+[00:02:14.550] (0.01s) running this command. So I'm not sure
+[00:02:14.560] (1.83s) running this command. So I'm not sure
+why they've added this one in unless I'm
+[00:02:16.390] (0.01s) why they've added this one in unless I'm
+[00:02:16.400] (2.47s) why they've added this one in unless I'm
+missing something. There's the MCP
+[00:02:18.869] (0.01s) missing something. There's the MCP
+[00:02:18.879] (2.63s) missing something. There's the MCP
+command which lists out all the MCP
+[00:02:21.510] (0.01s) command which lists out all the MCP
+[00:02:21.520] (1.83s) command which lists out all the MCP
+servers configured for Codex in this
+[00:02:23.350] (0.01s) servers configured for Codex in this
+[00:02:23.360] (1.67s) servers configured for Codex in this
+project. And we'll talk more about MCP
+[00:02:25.030] (0.01s) project. And we'll talk more about MCP
+[00:02:25.040] (2.23s) project. And we'll talk more about MCP
+servers later in the course. And then
+[00:02:27.270] (0.01s) servers later in the course. And then
+[00:02:27.280] (1.67s) servers later in the course. And then
+we've got two more. The logout command
+[00:02:28.949] (0.01s) we've got two more. The logout command
+[00:02:28.959] (2.31s) we've got two more. The logout command
+to log out of the Codex CLI and the
+[00:02:31.270] (0.01s) to log out of the Codex CLI and the
+[00:02:31.280] (1.51s) to log out of the Codex CLI and the
+quick command to quit the current
+[00:02:32.790] (0.01s) quick command to quit the current
+[00:02:32.800] (2.31s) quick command to quit the current
+session. So there's quite a few commands
+[00:02:35.110] (0.01s) session. So there's quite a few commands
+[00:02:35.120] (2.23s) session. So there's quite a few commands
+built into the Codex CLI. Not as many as
+[00:02:37.350] (0.01s) built into the Codex CLI. Not as many as
+[00:02:37.360] (2.23s) built into the Codex CLI. Not as many as
+Claude Code, but I do think OpenAI will
+[00:02:39.589] (0.01s) Claude Code, but I do think OpenAI will
+[00:02:39.599] (1.91s) Claude Code, but I do think OpenAI will
+be adding to this list as they flesh out
+[00:02:41.509] (0.01s) be adding to this list as they flesh out
+[00:02:41.519] (2.15s) be adding to this list as they flesh out
+the product even more. Okay, so let's
+[00:02:43.670] (0.01s) the product even more. Okay, so let's
+[00:02:43.680] (1.83s) the product even more. Okay, so let's
+try using a couple of these commands
+[00:02:45.509] (0.01s) try using a couple of these commands
+[00:02:45.519] (1.91s) try using a couple of these commands
+then. First of all, I'm going to use the
+[00:02:47.430] (0.01s) then. First of all, I'm going to use the
+[00:02:47.440] (2.79s) then. First of all, I'm going to use the
+forward slash status command to give us
+[00:02:50.229] (0.01s) forward slash status command to give us
+[00:02:50.239] (1.35s) forward slash status command to give us
+some information about the current
+[00:02:51.589] (0.01s) some information about the current
+[00:02:51.599] (1.75s) some information about the current
+session that we're in. And when we hit
+[00:02:53.350] (0.01s) session that we're in. And when we hit
+[00:02:53.360] (1.99s) session that we're in. And when we hit
+enter, we should see a bunch of details
+[00:02:55.350] (0.01s) enter, we should see a bunch of details
+[00:02:55.360] (1.67s) enter, we should see a bunch of details
+all formatted quite nicely in my
+[00:02:57.030] (0.01s) all formatted quite nicely in my
+[00:02:57.040] (1.99s) all formatted quite nicely in my
+opinion. We've got workspace information
+[00:02:59.030] (0.01s) opinion. We've got workspace information
+[00:02:59.040] (2.23s) opinion. We've got workspace information
+which lists the working directory, the
+[00:03:01.270] (0.01s) which lists the working directory, the
+[00:03:01.280] (1.91s) which lists the working directory, the
+approval mode, the sandbox, which is
+[00:03:03.190] (0.01s) approval mode, the sandbox, which is
+[00:03:03.200] (1.75s) approval mode, the sandbox, which is
+basically where and how Codeex is
+[00:03:04.949] (0.01s) basically where and how Codeex is
+[00:03:04.959] (1.99s) basically where and how Codeex is
+allowed to play. In this case, it has
+[00:03:06.949] (0.01s) allowed to play. In this case, it has
+[00:03:06.959] (2.31s) allowed to play. In this case, it has
+right access only to this workspace, and
+[00:03:09.270] (0.01s) right access only to this workspace, and
+[00:03:09.280] (1.83s) right access only to this workspace, and
+also any agent files, which we don't
+[00:03:11.110] (0.01s) also any agent files, which we don't
+[00:03:11.120] (1.67s) also any agent files, which we don't
+have yet. Below that, we've got the
+[00:03:12.790] (0.01s) have yet. Below that, we've got the
+[00:03:12.800] (2.23s) have yet. Below that, we've got the
+account information. Then we've got the
+[00:03:15.030] (0.01s) account information. Then we've got the
+[00:03:15.040] (1.51s) account information. Then we've got the
+current model that we're using along
+[00:03:16.550] (0.01s) current model that we're using along
+[00:03:16.560] (1.59s) current model that we're using along
+with some extra details about that
+[00:03:18.149] (0.01s) with some extra details about that
+[00:03:18.159] (1.91s) with some extra details about that
+model. We've got the client version
+[00:03:20.070] (0.01s) model. We've got the client version
+[00:03:20.080] (1.75s) model. We've got the client version
+which is just the version of the codec
+[00:03:21.830] (0.01s) which is just the version of the codec
+[00:03:21.840] (2.39s) which is just the version of the codec
+cli we're using. And then finally we've
+[00:03:24.229] (0.01s) cli we're using. And then finally we've
+[00:03:24.239] (1.99s) cli we're using. And then finally we've
+got the token usage at the bottom which
+[00:03:26.229] (0.01s) got the token usage at the bottom which
+[00:03:26.239] (2.23s) got the token usage at the bottom which
+is a representation of how much we've
+[00:03:28.470] (0.01s) is a representation of how much we've
+[00:03:28.480] (2.15s) is a representation of how much we've
+used the AI model in terms of our own
+[00:03:30.630] (0.01s) used the AI model in terms of our own
+[00:03:30.640] (3.35s) used the AI model in terms of our own
+input the prompts and the AI's output.
+[00:03:33.990] (0.01s) input the prompts and the AI's output.
+[00:03:34.000] (2.47s) input the prompts and the AI's output.
+So that's the status command. Let's try
+[00:03:36.470] (0.01s) So that's the status command. Let's try
+[00:03:36.480] (2.23s) So that's the status command. Let's try
+another one like the model command. So
+[00:03:38.710] (0.01s) another one like the model command. So
+[00:03:38.720] (2.47s) another one like the model command. So
+just forward slash then model then hit
+[00:03:41.190] (0.01s) just forward slash then model then hit
+[00:03:41.200] (1.59s) just forward slash then model then hit
+enter. And when we do that, we can see
+[00:03:42.789] (0.01s) enter. And when we do that, we can see
+[00:03:42.799] (2.71s) enter. And when we do that, we can see
+that currently we have the GPT5 codecs
+[00:03:45.509] (0.01s) that currently we have the GPT5 codecs
+[00:03:45.519] (2.71s) that currently we have the GPT5 codecs
+with medium reasoning selected. And in
+[00:03:48.229] (0.01s) with medium reasoning selected. And in
+[00:03:48.239] (2.63s) with medium reasoning selected. And in
+fact, all of these models are GPT5
+[00:03:50.869] (0.01s) fact, all of these models are GPT5
+[00:03:50.879] (2.15s) fact, all of these models are GPT5
+variations at the time of recording. And
+[00:03:53.030] (0.01s) variations at the time of recording. And
+[00:03:53.040] (1.43s) variations at the time of recording. And
+we can use different degrees of
+[00:03:54.470] (0.01s) we can use different degrees of
+[00:03:54.480] (2.55s) we can use different degrees of
+reasoning with these models. I'm going
+[00:03:57.030] (0.01s) reasoning with these models. I'm going
+[00:03:57.040] (1.59s) reasoning with these models. I'm going
+to stick with the current selection and
+[00:03:58.630] (0.01s) to stick with the current selection and
+[00:03:58.640] (2.79s) to stick with the current selection and
+just hit escape for now. Next, let's try
+[00:04:01.429] (0.01s) just hit escape for now. Next, let's try
+[00:04:01.439] (2.55s) just hit escape for now. Next, let's try
+the forward slash approvals command,
+[00:04:03.990] (0.01s) the forward slash approvals command,
+[00:04:04.000] (1.67s) the forward slash approvals command,
+which is where we can select different
+[00:04:05.670] (0.01s) which is where we can select different
+[00:04:05.680] (2.15s) which is where we can select different
+approval modes for this project. Right
+[00:04:07.830] (0.01s) approval modes for this project. Right
+[00:04:07.840] (1.83s) approval modes for this project. Right
+now it's on auto, which means it can
+[00:04:09.670] (0.01s) now it's on auto, which means it can
+[00:04:09.680] (2.15s) now it's on auto, which means it can
+read files, make edits, and run commands
+[00:04:11.830] (0.01s) read files, make edits, and run commands
+[00:04:11.840] (2.31s) read files, make edits, and run commands
+automatically within this workspace. If
+[00:04:14.149] (0.01s) automatically within this workspace. If
+[00:04:14.159] (2.47s) automatically within this workspace. If
+you switch it to read only, then Codeex
+[00:04:16.629] (0.01s) you switch it to read only, then Codeex
+[00:04:16.639] (1.75s) you switch it to read only, then Codeex
+can only read the files and answer
+[00:04:18.390] (0.01s) can only read the files and answer
+[00:04:18.400] (1.27s) can only read the files and answer
+questions about them. And it's going to
+[00:04:19.670] (0.01s) questions about them. And it's going to
+[00:04:19.680] (1.51s) questions about them. And it's going to
+need your approval before it does
+[00:04:21.189] (0.01s) need your approval before it does
+[00:04:21.199] (2.15s) need your approval before it does
+anything else. Full access is where you
+[00:04:23.350] (0.01s) anything else. Full access is where you
+[00:04:23.360] (1.67s) anything else. Full access is where you
+give Codex full access to do what it
+[00:04:25.030] (0.01s) give Codex full access to do what it
+[00:04:25.040] (2.07s) give Codex full access to do what it
+wants with automatic network access as
+[00:04:27.110] (0.01s) wants with automatic network access as
+[00:04:27.120] (2.31s) wants with automatic network access as
+well. I'm going to stick with auto again
+[00:04:29.430] (0.01s) well. I'm going to stick with auto again
+[00:04:29.440] (2.55s) well. I'm going to stick with auto again
+and hit escape to go back. So that's
+[00:04:31.990] (0.01s) and hit escape to go back. So that's
+[00:04:32.000] (1.83s) and hit escape to go back. So that's
+just a few of the commands and we might
+[00:04:33.830] (0.01s) just a few of the commands and we might
+[00:04:33.840] (1.75s) just a few of the commands and we might
+be using a few more as we go forward.
+[00:04:35.590] (0.01s) be using a few more as we go forward.
+[00:04:35.600] (1.83s) be using a few more as we go forward.
+But for now, I want to use the quick
+[00:04:37.430] (0.01s) But for now, I want to use the quick
+[00:04:37.440] (1.59s) But for now, I want to use the quick
+command to quit the current codec
+[00:04:39.030] (0.01s) command to quit the current codec
+[00:04:39.040] (2.07s) command to quit the current codec
+session so that we can get dumped back
+[00:04:41.110] (0.01s) session so that we can get dumped back
+[00:04:41.120] (2.39s) session so that we can get dumped back
+into the regular terminal. Okay. So,
+[00:04:43.510] (0.01s) into the regular terminal. Okay. So,
+[00:04:43.520] (1.19s) into the regular terminal. Okay. So,
+there's one more thing I'd like to show
+[00:04:44.710] (0.01s) there's one more thing I'd like to show
+[00:04:44.720] (1.59s) there's one more thing I'd like to show
+you in this lesson, and that is how to
+[00:04:46.310] (0.01s) you in this lesson, and that is how to
+[00:04:46.320] (2.55s) you in this lesson, and that is how to
+resume a previous session. So, I think
+[00:04:48.870] (0.01s) resume a previous session. So, I think
+[00:04:48.880] (2.87s) resume a previous session. So, I think
+so far in this project using the CLI,
+[00:04:51.749] (0.01s) so far in this project using the CLI,
+[00:04:51.759] (2.55s) so far in this project using the CLI,
+we've made maybe two sessions, possibly
+[00:04:54.310] (0.01s) we've made maybe two sessions, possibly
+[00:04:54.320] (1.99s) we've made maybe two sessions, possibly
+three, I think just two. But normally in
+[00:04:56.310] (0.01s) three, I think just two. But normally in
+[00:04:56.320] (1.51s) three, I think just two. But normally in
+a project, I would have a different
+[00:04:57.830] (0.01s) a project, I would have a different
+[00:04:57.840] (2.31s) a project, I would have a different
+session for every distinct feature I
+[00:05:00.150] (0.01s) session for every distinct feature I
+[00:05:00.160] (2.23s) session for every distinct feature I
+want Codeex or whatever other Aentic
+[00:05:02.390] (0.01s) want Codeex or whatever other Aentic
+[00:05:02.400] (2.39s) want Codeex or whatever other Aentic
+coding agent I'm using to work on. So
+[00:05:04.790] (0.01s) coding agent I'm using to work on. So
+[00:05:04.800] (2.39s) coding agent I'm using to work on. So
+that might be 10, 11, 12, 13, 14
+[00:05:07.189] (0.01s) that might be 10, 11, 12, 13, 14
+[00:05:07.199] (2.63s) that might be 10, 11, 12, 13, 14
+sessions. And sometimes I might want to
+[00:05:09.830] (0.01s) sessions. And sometimes I might want to
+[00:05:09.840] (1.75s) sessions. And sometimes I might want to
+go back to some of the older sessions to
+[00:05:11.590] (0.01s) go back to some of the older sessions to
+[00:05:11.600] (2.47s) go back to some of the older sessions to
+continue working on that feature. So in
+[00:05:14.070] (0.01s) continue working on that feature. So in
+[00:05:14.080] (2.15s) continue working on that feature. So in
+codeex to resume a session, we can just
+[00:05:16.230] (0.01s) codeex to resume a session, we can just
+[00:05:16.240] (2.55s) codeex to resume a session, we can just
+type codeex in here. And then after
+[00:05:18.790] (0.01s) type codeex in here. And then after
+[00:05:18.800] (2.63s) type codeex in here. And then after
+that, resume and then press enter. And
+[00:05:21.430] (0.01s) that, resume and then press enter. And
+[00:05:21.440] (1.35s) that, resume and then press enter. And
+when we do that, we're going to get all
+[00:05:22.790] (0.01s) when we do that, we're going to get all
+[00:05:22.800] (1.59s) when we do that, we're going to get all
+of the different sessions we've had with
+[00:05:24.390] (0.01s) of the different sessions we've had with
+[00:05:24.400] (1.35s) of the different sessions we've had with
+this particular project. Now, there's
+[00:05:25.749] (0.01s) this particular project. Now, there's
+[00:05:25.759] (1.75s) this particular project. Now, there's
+only been two here, but there might be
+[00:05:27.510] (0.01s) only been two here, but there might be
+[00:05:27.520] (1.99s) only been two here, but there might be
+more, like I said. So we can just key up
+[00:05:29.510] (0.01s) more, like I said. So we can just key up
+[00:05:29.520] (2.15s) more, like I said. So we can just key up
+and down and select one of these using
+[00:05:31.670] (0.01s) and down and select one of these using
+[00:05:31.680] (1.59s) and down and select one of these using
+enter, and we'll go back into that
+[00:05:33.270] (0.01s) enter, and we'll go back into that
+[00:05:33.280] (1.83s) enter, and we'll go back into that
+session. You can also search as well. So
+[00:05:35.110] (0.01s) session. You can also search as well. So
+[00:05:35.120] (2.15s) session. You can also search as well. So
+for example, if I search the
+[00:05:37.270] (0.01s) for example, if I search the
+[00:05:37.280] (1.67s) for example, if I search the
+description. So for example, summary,
+[00:05:38.950] (0.01s) description. So for example, summary,
+[00:05:38.960] (1.59s) description. So for example, summary,
+which is what we did before. We wanted a
+[00:05:40.550] (0.01s) which is what we did before. We wanted a
+[00:05:40.560] (2.79s) which is what we did before. We wanted a
+summary of something. Oops, there we go.
+[00:05:43.350] (0.01s) summary of something. Oops, there we go.
+[00:05:43.360] (2.63s) summary of something. Oops, there we go.
+Summary. We can see it filters out the
+[00:05:45.990] (0.01s) Summary. We can see it filters out the
+[00:05:46.000] (2.23s) Summary. We can see it filters out the
+rest of the sessions, but leaves me with
+[00:05:48.230] (0.01s) rest of the sessions, but leaves me with
+[00:05:48.240] (1.51s) rest of the sessions, but leaves me with
+this one. So I could just press enter
+[00:05:49.749] (0.01s) this one. So I could just press enter
+[00:05:49.759] (2.15s) this one. So I could just press enter
+now to be dumped back into that
+[00:05:51.909] (0.01s) now to be dumped back into that
+[00:05:51.919] (2.39s) now to be dumped back into that
+particular session. Now, as of yet, at
+[00:05:54.310] (0.01s) particular session. Now, as of yet, at
+[00:05:54.320] (1.67s) particular session. Now, as of yet, at
+the time of recording this video, I
+[00:05:55.990] (0.01s) the time of recording this video, I
+[00:05:56.000] (1.59s) the time of recording this video, I
+don't think there's a way built into the
+[00:05:57.590] (0.01s) don't think there's a way built into the
+[00:05:57.600] (4.07s) don't think there's a way built into the
+Codeex CLI to delete old sessions, but
+[00:06:01.670] (0.01s) Codeex CLI to delete old sessions, but
+[00:06:01.680] (1.19s) Codeex CLI to delete old sessions, but
+I'm sure it's going to come in the
+[00:06:02.870] (0.01s) I'm sure it's going to come in the
+[00:06:02.880] (1.59s) I'm sure it's going to come in the
+future. And like I said before, I feel
+[00:06:04.469] (0.01s) future. And like I said before, I feel
+[00:06:04.479] (1.67s) future. And like I said before, I feel
+like Codeex as a whole is still trying
+[00:06:06.150] (0.01s) like Codeex as a whole is still trying
+[00:06:06.160] (1.67s) like Codeex as a whole is still trying
+to find its feet a little bit and the
+[00:06:07.830] (0.01s) to find its feet a little bit and the
+[00:06:07.840] (2.15s) to find its feet a little bit and the
+CLI tool does feel maybe a little bit
+[00:06:09.990] (0.01s) CLI tool does feel maybe a little bit
+[00:06:10.000] (2.15s) CLI tool does feel maybe a little bit
+unfinished, but because all these
+[00:06:12.150] (0.01s) unfinished, but because all these
+[00:06:12.160] (1.35s) unfinished, but because all these
+different providers are just so
+[00:06:13.510] (0.01s) different providers are just so
+[00:06:13.520] (1.67s) different providers are just so
+desperate to get their tools out onto
+[00:06:15.189] (0.01s) desperate to get their tools out onto
+[00:06:15.199] (1.75s) desperate to get their tools out onto
+the market as quickly as possible, we're
+[00:06:16.950] (0.01s) the market as quickly as possible, we're
+[00:06:16.960] (1.43s) the market as quickly as possible, we're
+going to see this kind of thing across
+[00:06:18.390] (0.01s) going to see this kind of thing across
+[00:06:18.400] (2.55s) going to see this kind of thing across
+the spectrum. Anyway, now we know how to
+[00:06:20.950] (0.01s) the spectrum. Anyway, now we know how to
+[00:06:20.960] (2.39s) the spectrum. Anyway, now we know how to
+use commands and resume previous
+[00:06:23.350] (0.01s) use commands and resume previous
+[00:06:23.360] (1.91s) use commands and resume previous
+sessions. Next up, we're going to talk a
+[00:06:25.270] (0.01s) sessions. Next up, we're going to talk a
+[00:06:25.280] (3.92s) sessions. Next up, we're going to talk a
+little bit about the agent files.
+
+
+================================================================================
+Video #6: Using the AGENTS.md file
+URL: https://www.youtube.com/watch?v=NlNuoH5PPl4
+Total Segments: 257
+
+TRANSCRIPT:
+--------------------------------------------------------------------------------
+[00:00:00.960] (1.59s) Okay then my friends in the previous
+[00:00:02.550] (0.01s) Okay then my friends in the previous
+[00:00:02.560] (1.91s) Okay then my friends in the previous
+lesson we talked about commands which
+[00:00:04.470] (0.01s) lesson we talked about commands which
+[00:00:04.480] (2.71s) lesson we talked about commands which
+come baked into the Codex CLI tool and
+[00:00:07.190] (0.01s) come baked into the Codex CLI tool and
+[00:00:07.200] (1.67s) come baked into the Codex CLI tool and
+one of those commands was the init
+[00:00:08.870] (0.01s) one of those commands was the init
+[00:00:08.880] (2.55s) one of those commands was the init
+command which generates an agents.md
+[00:00:11.430] (0.01s) command which generates an agents.md
+[00:00:11.440] (2.15s) command which generates an agents.md
+file for us in this project. Now we're
+[00:00:13.589] (0.01s) file for us in this project. Now we're
+[00:00:13.599] (1.43s) file for us in this project. Now we're
+going to run this command shortly but
+[00:00:15.030] (0.01s) going to run this command shortly but
+[00:00:15.040] (1.83s) going to run this command shortly but
+just very quickly first of all I want to
+[00:00:16.870] (0.01s) just very quickly first of all I want to
+[00:00:16.880] (1.75s) just very quickly first of all I want to
+talk about what an agents file actually
+[00:00:18.630] (0.01s) talk about what an agents file actually
+[00:00:18.640] (2.87s) talk about what an agents file actually
+is and why we would use one. So you can
+[00:00:21.510] (0.01s) is and why we would use one. So you can
+[00:00:21.520] (2.47s) is and why we would use one. So you can
+think of an agents file as a bit like a
+[00:00:23.990] (0.01s) think of an agents file as a bit like a
+[00:00:24.000] (1.83s) think of an agents file as a bit like a
+readme but instead of being written for
+[00:00:25.830] (0.01s) readme but instead of being written for
+[00:00:25.840] (1.75s) readme but instead of being written for
+humans it's written for the coding
+[00:00:27.589] (0.01s) humans it's written for the coding
+[00:00:27.599] (1.91s) humans it's written for the coding
+agents that you're working with. It
+[00:00:29.509] (0.01s) agents that you're working with. It
+[00:00:29.519] (1.83s) agents that you're working with. It
+lives in your project, usually in the
+[00:00:31.349] (0.01s) lives in your project, usually in the
+[00:00:31.359] (1.83s) lives in your project, usually in the
+root folder, and it tells the agent how
+[00:00:33.190] (0.01s) root folder, and it tells the agent how
+[00:00:33.200] (2.23s) root folder, and it tells the agent how
+your codebase works, what commands it
+[00:00:35.430] (0.01s) your codebase works, what commands it
+[00:00:35.440] (1.91s) your codebase works, what commands it
+should use to build and test things,
+[00:00:37.350] (0.01s) should use to build and test things,
+[00:00:37.360] (1.91s) should use to build and test things,
+what coding styles you prefer, how your
+[00:00:39.270] (0.01s) what coding styles you prefer, how your
+[00:00:39.280] (2.07s) what coding styles you prefer, how your
+project is structured, and so forth.
+[00:00:41.350] (0.01s) project is structured, and so forth.
+[00:00:41.360] (1.83s) project is structured, and so forth.
+It's basically like a little cheat sheet
+[00:00:43.190] (0.01s) It's basically like a little cheat sheet
+[00:00:43.200] (1.75s) It's basically like a little cheat sheet
+that helps the agent slot into your
+[00:00:44.950] (0.01s) that helps the agent slot into your
+[00:00:44.960] (2.87s) that helps the agent slot into your
+workflow and code basically how you
+[00:00:47.830] (0.01s) workflow and code basically how you
+[00:00:47.840] (2.55s) workflow and code basically how you
+would like them to code. So, Codeex
+[00:00:50.389] (0.01s) would like them to code. So, Codeex
+[00:00:50.399] (2.79s) would like them to code. So, Codeex
+leans heavily into this agents.md file.
+[00:00:53.189] (0.01s) leans heavily into this agents.md file.
+[00:00:53.199] (1.83s) leans heavily into this agents.md file.
+And whenever you ask Codeex to do
+[00:00:55.029] (0.01s) And whenever you ask Codeex to do
+[00:00:55.039] (2.63s) And whenever you ask Codeex to do
+something either locally or on Codex
+[00:00:57.670] (0.01s) something either locally or on Codex
+[00:00:57.680] (1.35s) something either locally or on Codex
+cloud, it's going to look for that file
+[00:00:59.029] (0.01s) cloud, it's going to look for that file
+[00:00:59.039] (2.31s) cloud, it's going to look for that file
+in your project, if it's there, it's
+[00:01:01.349] (0.01s) in your project, if it's there, it's
+[00:01:01.359] (1.75s) in your project, if it's there, it's
+going to use any information inside that
+[00:01:03.110] (0.01s) going to use any information inside that
+[00:01:03.120] (2.55s) going to use any information inside that
+file as context within your prompts and
+[00:01:05.670] (0.01s) file as context within your prompts and
+[00:01:05.680] (2.79s) file as context within your prompts and
+any task that you give it. If you've
+[00:01:08.469] (0.01s) any task that you give it. If you've
+[00:01:08.479] (2.55s) any task that you give it. If you've
+used any other AI coding agents like
+[00:01:11.030] (0.01s) used any other AI coding agents like
+[00:01:11.040] (2.39s) used any other AI coding agents like
+Claude Code or Copilot, you have
+[00:01:13.429] (0.01s) Claude Code or Copilot, you have
+[00:01:13.439] (2.23s) Claude Code or Copilot, you have
+probably seen similar kinds of files in
+[00:01:15.670] (0.01s) probably seen similar kinds of files in
+[00:01:15.680] (1.91s) probably seen similar kinds of files in
+those things. In Clawed Code, we use a
+[00:01:17.590] (0.01s) those things. In Clawed Code, we use a
+[00:01:17.600] (1.91s) those things. In Clawed Code, we use a
+claw.md file for projectwide
+[00:01:19.510] (0.01s) claw.md file for projectwide
+[00:01:19.520] (2.87s) claw.md file for projectwide
+instructions. And in copilot, we use a
+[00:01:22.390] (0.01s) instructions. And in copilot, we use a
+[00:01:22.400] (2.31s) instructions. And in copilot, we use a
+copilot instructions markdown file for
+[00:01:24.710] (0.01s) copilot instructions markdown file for
+[00:01:24.720] (2.71s) copilot instructions markdown file for
+the same kind of uh stuff. And these all
+[00:01:27.429] (0.01s) the same kind of uh stuff. And these all
+[00:01:27.439] (1.83s) the same kind of uh stuff. And these all
+serve a similar purpose, right? In that
+[00:01:29.270] (0.01s) serve a similar purpose, right? In that
+[00:01:29.280] (3.11s) serve a similar purpose, right? In that
+they give each agent memory and concise
+[00:01:32.390] (0.01s) they give each agent memory and concise
+[00:01:32.400] (3.11s) they give each agent memory and concise
+project context. Where they differ is
+[00:01:35.510] (0.01s) project context. Where they differ is
+[00:01:35.520] (2.95s) project context. Where they differ is
+that the agents.mmd file is being pushed
+[00:01:38.469] (0.01s) that the agents.mmd file is being pushed
+[00:01:38.479] (2.55s) that the agents.mmd file is being pushed
+as a standard across different AI coding
+[00:01:41.030] (0.01s) as a standard across different AI coding
+[00:01:41.040] (2.39s) as a standard across different AI coding
+tools. So that instead of juggling these
+[00:01:43.429] (0.01s) tools. So that instead of juggling these
+[00:01:43.439] (1.51s) tools. So that instead of juggling these
+different files for different coding
+[00:01:44.950] (0.01s) different files for different coding
+[00:01:44.960] (2.23s) different files for different coding
+agents, the idea is that we can have
+[00:01:47.190] (0.01s) agents, the idea is that we can have
+[00:01:47.200] (2.79s) agents, the idea is that we can have
+just a unified agents file which could
+[00:01:49.990] (0.01s) just a unified agents file which could
+[00:01:50.000] (2.15s) just a unified agents file which could
+then be used across all of them. And
+[00:01:52.149] (0.01s) then be used across all of them. And
+[00:01:52.159] (1.19s) then be used across all of them. And
+there's already a bunch of different
+[00:01:53.350] (0.01s) there's already a bunch of different
+[00:01:53.360] (2.55s) there's already a bunch of different
+tools incorporating this agents.mmd
+[00:01:55.910] (0.01s) tools incorporating this agents.mmd
+[00:01:55.920] (2.63s) tools incorporating this agents.mmd
+file. So let's head back to the code
+[00:01:58.550] (0.01s) file. So let's head back to the code
+[00:01:58.560] (3.19s) file. So let's head back to the code
+then and use the codec cli to scaffold
+[00:02:01.749] (0.01s) then and use the codec cli to scaffold
+[00:02:01.759] (3.03s) then and use the codec cli to scaffold
+an agents file for us. Okay then. So I'm
+[00:02:04.789] (0.01s) an agents file for us. Okay then. So I'm
+[00:02:04.799] (1.99s) an agents file for us. Okay then. So I'm
+currently in a codec session and I'm
+[00:02:06.789] (0.01s) currently in a codec session and I'm
+[00:02:06.799] (1.91s) currently in a codec session and I'm
+going to use the init command to
+[00:02:08.710] (0.01s) going to use the init command to
+[00:02:08.720] (3.51s) going to use the init command to
+generate a new agents.mmd file. And when
+[00:02:12.229] (0.01s) generate a new agents.mmd file. And when
+[00:02:12.239] (1.75s) generate a new agents.mmd file. And when
+we use this command, codeex is
+[00:02:13.990] (0.01s) we use this command, codeex is
+[00:02:14.000] (2.31s) we use this command, codeex is
+automatically going to scan the codebase
+[00:02:16.309] (0.01s) automatically going to scan the codebase
+[00:02:16.319] (2.31s) automatically going to scan the codebase
+and scaffold the file for us with any
+[00:02:18.630] (0.01s) and scaffold the file for us with any
+[00:02:18.640] (2.39s) and scaffold the file for us with any
+code styles, testing preferences, and
+[00:02:21.030] (0.01s) code styles, testing preferences, and
+[00:02:21.040] (2.55s) code styles, testing preferences, and
+other things it finds. Sometimes it
+[00:02:23.589] (0.01s) other things it finds. Sometimes it
+[00:02:23.599] (1.75s) other things it finds. Sometimes it
+might add its own personal preferences
+[00:02:25.350] (0.01s) might add its own personal preferences
+[00:02:25.360] (1.83s) might add its own personal preferences
+as well. So you have to rein those in a
+[00:02:27.190] (0.01s) as well. So you have to rein those in a
+[00:02:27.200] (1.99s) as well. So you have to rein those in a
+little bit if you see those. And along
+[00:02:29.190] (0.01s) little bit if you see those. And along
+[00:02:29.200] (1.43s) little bit if you see those. And along
+the way, we might need to approve
+[00:02:30.630] (0.01s) the way, we might need to approve
+[00:02:30.640] (1.43s) the way, we might need to approve
+certain commands as well. But then after
+[00:02:32.070] (0.01s) certain commands as well. But then after
+[00:02:32.080] (1.67s) certain commands as well. But then after
+a few moments, it's going to make it for
+[00:02:33.750] (0.01s) a few moments, it's going to make it for
+[00:02:33.760] (1.75s) a few moments, it's going to make it for
+us and place it in the root of our
+[00:02:35.509] (0.01s) us and place it in the root of our
+[00:02:35.519] (2.95s) us and place it in the root of our
+project. Okay, so it looks like it's
+[00:02:38.470] (0.01s) project. Okay, so it looks like it's
+[00:02:38.480] (1.59s) project. Okay, so it looks like it's
+done it. Let's go and have a look over
+[00:02:40.070] (0.01s) done it. Let's go and have a look over
+[00:02:40.080] (2.31s) done it. Let's go and have a look over
+here at this new file. And you can see
+[00:02:42.390] (0.01s) here at this new file. And you can see
+[00:02:42.400] (2.39s) here at this new file. And you can see
+it's written some fairly comprehensive
+[00:02:44.790] (0.01s) it's written some fairly comprehensive
+[00:02:44.800] (2.31s) it's written some fairly comprehensive
+guidelines. It's a little lean, but you
+[00:02:47.110] (0.01s) guidelines. It's a little lean, but you
+[00:02:47.120] (2.07s) guidelines. It's a little lean, but you
+can always add to this later. So we have
+[00:02:49.190] (0.01s) can always add to this later. So we have
+[00:02:49.200] (1.59s) can always add to this later. So we have
+different headings for different things.
+[00:02:50.790] (0.01s) different headings for different things.
+[00:02:50.800] (1.83s) different headings for different things.
+So for example, the project structure
+[00:02:52.630] (0.01s) So for example, the project structure
+[00:02:52.640] (1.99s) So for example, the project structure
+and module organization talks about
+[00:02:54.630] (0.01s) and module organization talks about
+[00:02:54.640] (2.79s) and module organization talks about
+where different things live. So we have
+[00:02:57.430] (0.01s) where different things live. So we have
+[00:02:57.440] (2.39s) where different things live. So we have
+the app which lives inside this folder
+[00:02:59.830] (0.01s) the app which lives inside this folder
+[00:02:59.840] (2.23s) the app which lives inside this folder
+and then we have different route
+[00:03:02.070] (0.01s) and then we have different route
+[00:03:02.080] (2.79s) and then we have different route
+segments like this. We also have the
+[00:03:04.869] (0.01s) segments like this. We also have the
+[00:03:04.879] (2.31s) segments like this. We also have the
+layout and the global CSS file. Reusable
+[00:03:07.190] (0.01s) layout and the global CSS file. Reusable
+[00:03:07.200] (2.71s) layout and the global CSS file. Reusable
+UI components live here. Okay. So that
+[00:03:09.910] (0.01s) UI components live here. Okay. So that
+[00:03:09.920] (2.23s) UI components live here. Okay. So that
+all looks pretty good. Uh we've got some
+[00:03:12.149] (0.01s) all looks pretty good. Uh we've got some
+[00:03:12.159] (1.67s) all looks pretty good. Uh we've got some
+building testing and development
+[00:03:13.830] (0.01s) building testing and development
+[00:03:13.840] (2.87s) building testing and development
+commands down here which all look quite
+[00:03:16.710] (0.01s) commands down here which all look quite
+[00:03:16.720] (2.39s) commands down here which all look quite
+accurate. Yep. Then we have some coding
+[00:03:19.110] (0.01s) accurate. Yep. Then we have some coding
+[00:03:19.120] (2.23s) accurate. Yep. Then we have some coding
+style and naming conventions. It says
+[00:03:21.350] (0.01s) style and naming conventions. It says
+[00:03:21.360] (3.11s) style and naming conventions. It says
+use Pascal case like this. Okay. So
+[00:03:24.470] (0.01s) use Pascal case like this. Okay. So
+[00:03:24.480] (1.67s) use Pascal case like this. Okay. So
+basically this is all generic stuff but
+[00:03:26.149] (0.01s) basically this is all generic stuff but
+[00:03:26.159] (3.75s) basically this is all generic stuff but
+all it's doing is looking at our current
+[00:03:29.910] (0.01s) all it's doing is looking at our current
+[00:03:29.920] (2.47s) all it's doing is looking at our current
+uh project as it is at the moment and
+[00:03:32.390] (0.01s) uh project as it is at the moment and
+[00:03:32.400] (2.55s) uh project as it is at the moment and
+inferring the guidelines from there and
+[00:03:34.949] (0.01s) inferring the guidelines from there and
+[00:03:34.959] (1.67s) inferring the guidelines from there and
+it all looks quite accurate at the
+[00:03:36.630] (0.01s) it all looks quite accurate at the
+[00:03:36.640] (1.83s) it all looks quite accurate at the
+moment. It's got some testing guidelines
+[00:03:38.470] (0.01s) moment. It's got some testing guidelines
+[00:03:38.480] (2.55s) moment. It's got some testing guidelines
+down here as well and it talks about
+[00:03:41.030] (0.01s) down here as well and it talks about
+[00:03:41.040] (2.95s) down here as well and it talks about
+this test folder to put the test inside
+[00:03:43.990] (0.01s) this test folder to put the test inside
+[00:03:44.000] (1.43s) this test folder to put the test inside
+and then at the bottom we've got some
+[00:03:45.430] (0.01s) and then at the bottom we've got some
+[00:03:45.440] (1.99s) and then at the bottom we've got some
+commit and pull request guidelines as
+[00:03:47.430] (0.01s) commit and pull request guidelines as
+[00:03:47.440] (3.11s) commit and pull request guidelines as
+well. Awesome. So then you should also
+[00:03:50.550] (0.01s) well. Awesome. So then you should also
+[00:03:50.560] (2.07s) well. Awesome. So then you should also
+probably commit this agents file to your
+[00:03:52.630] (0.01s) probably commit this agents file to your
+[00:03:52.640] (1.99s) probably commit this agents file to your
+GitHub repository if you want the Codex
+[00:03:54.630] (0.01s) GitHub repository if you want the Codex
+[00:03:54.640] (1.51s) GitHub repository if you want the Codex
+cloud to use it when you're running
+[00:03:56.149] (0.01s) cloud to use it when you're running
+[00:03:56.159] (2.39s) cloud to use it when you're running
+remote tasks because again whenever you
+[00:03:58.550] (0.01s) remote tasks because again whenever you
+[00:03:58.560] (1.91s) remote tasks because again whenever you
+ask it to do something on the cloud it's
+[00:04:00.470] (0.01s) ask it to do something on the cloud it's
+[00:04:00.480] (1.11s) ask it to do something on the cloud it's
+going to look for this file
+[00:04:01.589] (0.01s) going to look for this file
+[00:04:01.599] (1.59s) going to look for this file
+automatically and it's going to use it
+[00:04:03.190] (0.01s) automatically and it's going to use it
+[00:04:03.200] (2.47s) automatically and it's going to use it
+as context for that task. And for that
+[00:04:05.670] (0.01s) as context for that task. And for that
+[00:04:05.680] (1.43s) as context for that task. And for that
+reason I'm going to push this change up
+[00:04:07.110] (0.01s) reason I'm going to push this change up
+[00:04:07.120] (1.75s) reason I'm going to push this change up
+to the GitHub repo once I finish
+[00:04:08.869] (0.01s) to the GitHub repo once I finish
+[00:04:08.879] (1.35s) to the GitHub repo once I finish
+recording this video just to keep
+[00:04:10.229] (0.01s) recording this video just to keep
+[00:04:10.239] (2.39s) recording this video just to keep
+everything up to date and in sync. And
+[00:04:12.630] (0.01s) everything up to date and in sync. And
+[00:04:12.640] (1.43s) everything up to date and in sync. And
+by the way, this file isn't something
+[00:04:14.070] (0.01s) by the way, this file isn't something
+[00:04:14.080] (2.55s) by the way, this file isn't something
+you should just create and forget about.
+[00:04:16.629] (0.01s) you should just create and forget about.
+[00:04:16.639] (2.31s) you should just create and forget about.
+As your project changes and evolves, you
+[00:04:18.949] (0.01s) As your project changes and evolves, you
+[00:04:18.959] (1.91s) As your project changes and evolves, you
+should update your agent file as well
+[00:04:20.870] (0.01s) should update your agent file as well
+[00:04:20.880] (1.75s) should update your agent file as well
+with anything new the coding agent
+[00:04:22.629] (0.01s) with anything new the coding agent
+[00:04:22.639] (2.07s) with anything new the coding agent
+should know about. For example, if you
+[00:04:24.710] (0.01s) should know about. For example, if you
+[00:04:24.720] (2.23s) should know about. For example, if you
+start using particular libraries or
+[00:04:26.950] (0.01s) start using particular libraries or
+[00:04:26.960] (1.91s) start using particular libraries or
+frameworks or if you change your project
+[00:04:28.870] (0.01s) frameworks or if you change your project
+[00:04:28.880] (2.15s) frameworks or if you change your project
+structure or testing procedures, etc.
+[00:04:31.030] (0.01s) structure or testing procedures, etc.
+[00:04:31.040] (1.99s) structure or testing procedures, etc.
+Because if you don't keep the file up to
+[00:04:33.030] (0.01s) Because if you don't keep the file up to
+[00:04:33.040] (2.07s) Because if you don't keep the file up to
+date, then codeex might go off track and
+[00:04:35.110] (0.01s) date, then codeex might go off track and
+[00:04:35.120] (2.55s) date, then codeex might go off track and
+do things the old way as outlined in the
+[00:04:37.670] (0.01s) do things the old way as outlined in the
+[00:04:37.680] (1.91s) do things the old way as outlined in the
+original agents file if you don't change
+[00:04:39.590] (0.01s) original agents file if you don't change
+[00:04:39.600] (2.39s) original agents file if you don't change
+it. So definitely come back and update
+[00:04:41.990] (0.01s) it. So definitely come back and update
+[00:04:42.000] (4.00s) it. So definitely come back and update
+the file as and when you need to.
+
+
+================================================================================
+Video #7: Codex IDE Extension
+URL: https://www.youtube.com/watch?v=6vF-YvE-qJQ
+ERROR: yt-dlp failed: ERROR: [youtube] 6vF-YvE-qJQ: Video unavailable
+
+
+
+================================================================================
+Video #8: Context, Reasoning & TODO's
+URL: https://www.youtube.com/watch?v=kbv6Rn7lHkI
+Total Segments: 384
+
+TRANSCRIPT:
+--------------------------------------------------------------------------------
+[00:00:02.000] (1.91s) Okay then gang, in this lesson I want to
+[00:00:03.909] (0.01s) Okay then gang, in this lesson I want to
+[00:00:03.919] (1.51s) Okay then gang, in this lesson I want to
+talk a little bit about adding context
+[00:00:05.430] (0.01s) talk a little bit about adding context
+[00:00:05.440] (1.67s) talk a little bit about adding context
+to prompts, the different reasoning
+[00:00:07.110] (0.01s) to prompts, the different reasoning
+[00:00:07.120] (2.31s) to prompts, the different reasoning
+levels of the AI model that we can
+[00:00:09.430] (0.01s) levels of the AI model that we can
+[00:00:09.440] (1.99s) levels of the AI model that we can
+switch between and also a nice feature
+[00:00:11.430] (0.01s) switch between and also a nice feature
+[00:00:11.440] (2.47s) switch between and also a nice feature
+which lets us turn to-dos in the code to
+[00:00:13.910] (0.01s) which lets us turn to-dos in the code to
+[00:00:13.920] (2.63s) which lets us turn to-dos in the code to
+codeex tasks. Now before we start, I
+[00:00:16.550] (0.01s) codeex tasks. Now before we start, I
+[00:00:16.560] (1.11s) codeex tasks. Now before we start, I
+just want to mention I've already
+[00:00:17.670] (0.01s) just want to mention I've already
+[00:00:17.680] (1.43s) just want to mention I've already
+switched to a new branch as normal to
+[00:00:19.109] (0.01s) switched to a new branch as normal to
+[00:00:19.119] (1.43s) switched to a new branch as normal to
+work on whatever feature we're about to
+[00:00:20.550] (0.01s) work on whatever feature we're about to
+[00:00:20.560] (1.59s) work on whatever feature we're about to
+add just so we don't mess up the main
+[00:00:22.150] (0.01s) add just so we don't mess up the main
+[00:00:22.160] (2.55s) add just so we don't mess up the main
+branch. So then let's start with adding
+[00:00:24.710] (0.01s) branch. So then let's start with adding
+[00:00:24.720] (1.43s) branch. So then let's start with adding
+context which is pretty similar to how
+[00:00:26.150] (0.01s) context which is pretty similar to how
+[00:00:26.160] (2.07s) context which is pretty similar to how
+we do it in the codec cli in that we can
+[00:00:28.230] (0.01s) we do it in the codec cli in that we can
+[00:00:28.240] (2.47s) we do it in the codec cli in that we can
+use the at sign to start referencing a
+[00:00:30.710] (0.01s) use the at sign to start referencing a
+[00:00:30.720] (2.07s) use the at sign to start referencing a
+file in the project. So I could say at
+[00:00:32.790] (0.01s) file in the project. So I could say at
+[00:00:32.800] (2.07s) file in the project. So I could say at
+and then start typing a file name and
+[00:00:34.870] (0.01s) and then start typing a file name and
+[00:00:34.880] (1.51s) and then start typing a file name and
+you don't have to start typing the full
+[00:00:36.389] (0.01s) you don't have to start typing the full
+[00:00:36.399] (1.83s) you don't have to start typing the full
+path to the file. You can just start to
+[00:00:38.229] (0.01s) path to the file. You can just start to
+[00:00:38.239] (1.51s) path to the file. You can just start to
+type the name of the file if you want
+[00:00:39.750] (0.01s) type the name of the file if you want
+[00:00:39.760] (1.83s) type the name of the file if you want
+and codeex will do a search of the files
+[00:00:41.590] (0.01s) and codeex will do a search of the files
+[00:00:41.600] (1.99s) and codeex will do a search of the files
+and show you any matches. For example,
+[00:00:43.590] (0.01s) and show you any matches. For example,
+[00:00:43.600] (2.07s) and show you any matches. For example,
+I'm going to type page and codeex would
+[00:00:45.670] (0.01s) I'm going to type page and codeex would
+[00:00:45.680] (2.55s) I'm going to type page and codeex would
+show me all the files called page. So I
+[00:00:48.229] (0.01s) show me all the files called page. So I
+[00:00:48.239] (1.59s) show me all the files called page. So I
+could select one of those to add it to
+[00:00:49.830] (0.01s) could select one of those to add it to
+[00:00:49.840] (2.87s) could select one of those to add it to
+the context of my next prompt. Now,
+[00:00:52.709] (0.01s) the context of my next prompt. Now,
+[00:00:52.719] (1.99s) the context of my next prompt. Now,
+there's also another way to add files as
+[00:00:54.709] (0.01s) there's also another way to add files as
+[00:00:54.719] (2.31s) there's also another way to add files as
+context, and that is to click this plus
+[00:00:57.029] (0.01s) context, and that is to click this plus
+[00:00:57.039] (2.15s) context, and that is to click this plus
+icon down at the bottom of the chat and
+[00:00:59.189] (0.01s) icon down at the bottom of the chat and
+[00:00:59.199] (2.31s) icon down at the bottom of the chat and
+search for files that way. So, I could
+[00:01:01.510] (0.01s) search for files that way. So, I could
+[00:01:01.520] (1.83s) search for files that way. So, I could
+start typing page, and again, we'll see
+[00:01:03.349] (0.01s) start typing page, and again, we'll see
+[00:01:03.359] (1.67s) start typing page, and again, we'll see
+all the matching files in the project,
+[00:01:05.030] (0.01s) all the matching files in the project,
+[00:01:05.040] (2.15s) all the matching files in the project,
+which we can select from. Now, you can
+[00:01:07.190] (0.01s) which we can select from. Now, you can
+[00:01:07.200] (2.15s) which we can select from. Now, you can
+also add images as context by clicking
+[00:01:09.350] (0.01s) also add images as context by clicking
+[00:01:09.360] (2.55s) also add images as context by clicking
+on the add image button down here. And
+[00:01:11.910] (0.01s) on the add image button down here. And
+[00:01:11.920] (1.35s) on the add image button down here. And
+that's going to let you search your
+[00:01:13.270] (0.01s) that's going to let you search your
+[00:01:13.280] (2.39s) that's going to let you search your
+computer for them and add them in. And
+[00:01:15.670] (0.01s) computer for them and add them in. And
+[00:01:15.680] (1.99s) computer for them and add them in. And
+you can also copy and paste images into
+[00:01:17.670] (0.01s) you can also copy and paste images into
+[00:01:17.680] (1.91s) you can also copy and paste images into
+the chat as well, which is really nice.
+[00:01:19.590] (0.01s) the chat as well, which is really nice.
+[00:01:19.600] (1.75s) the chat as well, which is really nice.
+For example, I've got this screenshot
+[00:01:21.350] (0.01s) For example, I've got this screenshot
+[00:01:21.360] (3.03s) For example, I've got this screenshot
+that I took of a 3D button I just Google
+[00:01:24.390] (0.01s) that I took of a 3D button I just Google
+[00:01:24.400] (1.91s) that I took of a 3D button I just Google
+searched and I'm going to copy that
+[00:01:26.310] (0.01s) searched and I'm going to copy that
+[00:01:26.320] (2.07s) searched and I'm going to copy that
+image and then just paste it into the
+[00:01:28.390] (0.01s) image and then just paste it into the
+[00:01:28.400] (1.91s) image and then just paste it into the
+chat. When I do that, you should see
+[00:01:30.310] (0.01s) chat. When I do that, you should see
+[00:01:30.320] (1.67s) chat. When I do that, you should see
+that little preview of the image up
+[00:01:31.990] (0.01s) that little preview of the image up
+[00:01:32.000] (2.15s) that little preview of the image up
+here. Then I'm going to write the
+[00:01:34.149] (0.01s) here. Then I'm going to write the
+[00:01:34.159] (2.71s) here. Then I'm going to write the
+following prompt. Can you update
+[00:01:36.870] (0.01s) following prompt. Can you update
+[00:01:36.880] (2.39s) following prompt. Can you update
+atuttontsx?
+[00:01:39.270] (0.01s) atuttontsx?
+[00:01:39.280] (1.91s) atuttontsx?
+And we're using the at sign to add that
+[00:01:41.190] (0.01s) And we're using the at sign to add that
+[00:01:41.200] (2.63s) And we're using the at sign to add that
+button component to the context. And
+[00:01:43.830] (0.01s) button component to the context. And
+[00:01:43.840] (3.99s) button component to the context. And
+then we'll carry on and say to have a 3D
+[00:01:47.830] (0.01s) then we'll carry on and say to have a 3D
+[00:01:47.840] (4.79s) then we'll carry on and say to have a 3D
+bevel effect like in this image. Okay.
+[00:01:52.630] (0.01s) bevel effect like in this image. Okay.
+[00:01:52.640] (1.91s) bevel effect like in this image. Okay.
+So hopefully when we send this codeex is
+[00:01:54.550] (0.01s) So hopefully when we send this codeex is
+[00:01:54.560] (1.27s) So hopefully when we send this codeex is
+going to look at the image that we
+[00:01:55.830] (0.01s) going to look at the image that we
+[00:01:55.840] (2.39s) going to look at the image that we
+pasted in and apply a similar effect to
+[00:01:58.230] (0.01s) pasted in and apply a similar effect to
+[00:01:58.240] (2.23s) pasted in and apply a similar effect to
+our buttons. So I'm going to fire this
+[00:02:00.469] (0.01s) our buttons. So I'm going to fire this
+[00:02:00.479] (1.91s) our buttons. So I'm going to fire this
+off but I'll also speed up the video now
+[00:02:02.389] (0.01s) off but I'll also speed up the video now
+[00:02:02.399] (1.99s) off but I'll also speed up the video now
+while Codeex does its work and then I'm
+[00:02:04.389] (0.01s) while Codeex does its work and then I'm
+[00:02:04.399] (1.67s) while Codeex does its work and then I'm
+going to slow it down again when it's
+[00:02:06.069] (0.01s) going to slow it down again when it's
+[00:02:06.079] (3.59s) going to slow it down again when it's
+complete.
+[00:02:09.679] (2.07s) All right. So it's done and it's updated
+[00:02:11.750] (0.01s) All right. So it's done and it's updated
+[00:02:11.760] (1.43s) All right. So it's done and it's updated
+these two files right here. Here we can
+[00:02:13.190] (0.01s) these two files right here. Here we can
+[00:02:13.200] (1.43s) these two files right here. Here we can
+actually view all the changes by
+[00:02:14.630] (0.01s) actually view all the changes by
+[00:02:14.640] (1.67s) actually view all the changes by
+clicking on this and it shows us a
+[00:02:16.309] (0.01s) clicking on this and it shows us a
+[00:02:16.319] (2.71s) clicking on this and it shows us a
+little diff right here. So if we expand
+[00:02:19.030] (0.01s) little diff right here. So if we expand
+[00:02:19.040] (1.83s) little diff right here. So if we expand
+this and scroll down, we can see there's
+[00:02:20.869] (0.01s) this and scroll down, we can see there's
+[00:02:20.879] (2.71s) this and scroll down, we can see there's
+been quite a lot of CSS added. We've got
+[00:02:23.589] (0.01s) been quite a lot of CSS added. We've got
+[00:02:23.599] (3.03s) been quite a lot of CSS added. We've got
+a button bevel class now. And if we
+[00:02:26.630] (0.01s) a button bevel class now. And if we
+[00:02:26.640] (1.67s) a button bevel class now. And if we
+scroll right down, you can see it's also
+[00:02:28.309] (0.01s) scroll right down, you can see it's also
+[00:02:28.319] (2.47s) scroll right down, you can see it's also
+updated the button.tsx file. It
+[00:02:30.790] (0.01s) updated the button.tsx file. It
+[00:02:30.800] (3.03s) updated the button.tsx file. It
+virtually rewrote the whole thing. So
+[00:02:33.830] (0.01s) virtually rewrote the whole thing. So
+[00:02:33.840] (1.83s) virtually rewrote the whole thing. So
+what I'm going to do now is close this
+[00:02:35.670] (0.01s) what I'm going to do now is close this
+[00:02:35.680] (2.63s) what I'm going to do now is close this
+and just preview this in the browser.
+[00:02:38.309] (0.01s) and just preview this in the browser.
+[00:02:38.319] (1.51s) and just preview this in the browser.
+All right. So, let's head to the form,
+[00:02:39.830] (0.01s) All right. So, let's head to the form,
+[00:02:39.840] (1.59s) All right. So, let's head to the form,
+which is where this button component was
+[00:02:41.430] (0.01s) which is where this button component was
+[00:02:41.440] (3.27s) which is where this button component was
+rendered. And scroll down. And yeah, it
+[00:02:44.710] (0.01s) rendered. And scroll down. And yeah, it
+[00:02:44.720] (2.31s) rendered. And scroll down. And yeah, it
+looks okay. I can see the 3D effect at
+[00:02:47.030] (0.01s) looks okay. I can see the 3D effect at
+[00:02:47.040] (1.75s) looks okay. I can see the 3D effect at
+the bottom. I would probably do this
+[00:02:48.790] (0.01s) the bottom. I would probably do this
+[00:02:48.800] (1.99s) the bottom. I would probably do this
+differently. Probably the colors and
+[00:02:50.790] (0.01s) differently. Probably the colors and
+[00:02:50.800] (1.75s) differently. Probably the colors and
+make that a dark green instead of a
+[00:02:52.550] (0.01s) make that a dark green instead of a
+[00:02:52.560] (1.91s) make that a dark green instead of a
+gray. Uh, but you know what? It's got
+[00:02:54.470] (0.01s) gray. Uh, but you know what? It's got
+[00:02:54.480] (2.39s) gray. Uh, but you know what? It's got
+the general idea. And maybe I'd just go
+[00:02:56.869] (0.01s) the general idea. And maybe I'd just go
+[00:02:56.879] (1.67s) the general idea. And maybe I'd just go
+back and prompt again and say, can you
+[00:02:58.550] (0.01s) back and prompt again and say, can you
+[00:02:58.560] (1.75s) back and prompt again and say, can you
+update this and that? And it would look
+[00:03:00.309] (0.01s) update this and that? And it would look
+[00:03:00.319] (2.47s) update this and that? And it would look
+better. Okay, so that's adding context
+[00:03:02.790] (0.01s) better. Okay, so that's adding context
+[00:03:02.800] (1.59s) better. Okay, so that's adding context
+to prompts. And next up, I want to
+[00:03:04.390] (0.01s) to prompts. And next up, I want to
+[00:03:04.400] (1.11s) to prompts. And next up, I want to
+quickly talk about the different
+[00:03:05.509] (0.01s) quickly talk about the different
+[00:03:05.519] (1.51s) quickly talk about the different
+reasoning effort levels that we can
+[00:03:07.030] (0.01s) reasoning effort levels that we can
+[00:03:07.040] (1.91s) reasoning effort levels that we can
+choose from. So, you can find these
+[00:03:08.949] (0.01s) choose from. So, you can find these
+[00:03:08.959] (1.83s) choose from. So, you can find these
+levels in this menu down here. And by
+[00:03:10.790] (0.01s) levels in this menu down here. And by
+[00:03:10.800] (1.99s) levels in this menu down here. And by
+default, the reasoning level is set to
+[00:03:12.790] (0.01s) default, the reasoning level is set to
+[00:03:12.800] (1.43s) default, the reasoning level is set to
+medium, which is what I've been keeping
+[00:03:14.229] (0.01s) medium, which is what I've been keeping
+[00:03:14.239] (2.15s) medium, which is what I've been keeping
+it on for most of the time. But you can
+[00:03:16.390] (0.01s) it on for most of the time. But you can
+[00:03:16.400] (2.63s) it on for most of the time. But you can
+also dial this down or crank it up. And
+[00:03:19.030] (0.01s) also dial this down or crank it up. And
+[00:03:19.040] (1.75s) also dial this down or crank it up. And
+the lower the reasoning, the faster the
+[00:03:20.790] (0.01s) the lower the reasoning, the faster the
+[00:03:20.800] (2.31s) the lower the reasoning, the faster the
+model works, and we get results quicker
+[00:03:23.110] (0.01s) model works, and we get results quicker
+[00:03:23.120] (2.07s) model works, and we get results quicker
+because codec spends less time thinking
+[00:03:25.190] (0.01s) because codec spends less time thinking
+[00:03:25.200] (1.43s) because codec spends less time thinking
+and planning about what it's going to
+[00:03:26.630] (0.01s) and planning about what it's going to
+[00:03:26.640] (2.31s) and planning about what it's going to
+do. But the flip side of that is the
+[00:03:28.949] (0.01s) do. But the flip side of that is the
+[00:03:28.959] (1.83s) do. But the flip side of that is the
+results are sometimes less reliable, and
+[00:03:30.789] (0.01s) results are sometimes less reliable, and
+[00:03:30.799] (2.63s) results are sometimes less reliable, and
+it might miss edge cases. The highest
+[00:03:33.430] (0.01s) it might miss edge cases. The highest
+[00:03:33.440] (1.99s) it might miss edge cases. The highest
+reasoning level does more planning and
+[00:03:35.430] (0.01s) reasoning level does more planning and
+[00:03:35.440] (2.15s) reasoning level does more planning and
+more thinking. So it takes much longer
+[00:03:37.589] (0.01s) more thinking. So it takes much longer
+[00:03:37.599] (2.15s) more thinking. So it takes much longer
+to get results and it consumes more
+[00:03:39.750] (0.01s) to get results and it consumes more
+[00:03:39.760] (2.23s) to get results and it consumes more
+tokens as well generally, but it also
+[00:03:41.990] (0.01s) tokens as well generally, but it also
+[00:03:42.000] (2.07s) tokens as well generally, but it also
+leads to more reliable results most of
+[00:03:44.070] (0.01s) leads to more reliable results most of
+[00:03:44.080] (2.63s) leads to more reliable results most of
+the time. So what level should you
+[00:03:46.710] (0.01s) the time. So what level should you
+[00:03:46.720] (2.31s) the time. So what level should you
+choose? Well, I personally think it all
+[00:03:49.030] (0.01s) choose? Well, I personally think it all
+[00:03:49.040] (2.07s) choose? Well, I personally think it all
+depends on the task you're asking Codeex
+[00:03:51.110] (0.01s) depends on the task you're asking Codeex
+[00:03:51.120] (2.31s) depends on the task you're asking Codeex
+to run. If it's a really simple edit or
+[00:03:53.430] (0.01s) to run. If it's a really simple edit or
+[00:03:53.440] (2.07s) to run. If it's a really simple edit or
+refactor, the minimal or low reasoning
+[00:03:55.509] (0.01s) refactor, the minimal or low reasoning
+[00:03:55.519] (1.99s) refactor, the minimal or low reasoning
+levels might be good enough. For most
+[00:03:57.509] (0.01s) levels might be good enough. For most
+[00:03:57.519] (1.83s) levels might be good enough. For most
+tasks that are a little large in scope,
+[00:03:59.350] (0.01s) tasks that are a little large in scope,
+[00:03:59.360] (1.67s) tasks that are a little large in scope,
+you could stick with the medium level.
+[00:04:01.030] (0.01s) you could stick with the medium level.
+[00:04:01.040] (2.07s) you could stick with the medium level.
+And for much more complex tasks which
+[00:04:03.110] (0.01s) And for much more complex tasks which
+[00:04:03.120] (1.59s) And for much more complex tasks which
+require a lot of thought and planning,
+[00:04:04.710] (0.01s) require a lot of thought and planning,
+[00:04:04.720] (1.83s) require a lot of thought and planning,
+definitely crank it up to high. And
+[00:04:06.550] (0.01s) definitely crank it up to high. And
+[00:04:06.560] (1.67s) definitely crank it up to high. And
+again, generally speaking, the higher
+[00:04:08.229] (0.01s) again, generally speaking, the higher
+[00:04:08.239] (1.91s) again, generally speaking, the higher
+the reasoning level, the more tokens it
+[00:04:10.149] (0.01s) the reasoning level, the more tokens it
+[00:04:10.159] (2.39s) the reasoning level, the more tokens it
+will consume. So for simple tasks,
+[00:04:12.550] (0.01s) will consume. So for simple tasks,
+[00:04:12.560] (1.83s) will consume. So for simple tasks,
+definitely don't be selecting the high
+[00:04:14.390] (0.01s) definitely don't be selecting the high
+[00:04:14.400] (1.83s) definitely don't be selecting the high
+reasoning effort level. I'm going to
+[00:04:16.229] (0.01s) reasoning effort level. I'm going to
+[00:04:16.239] (1.59s) reasoning effort level. I'm going to
+keep it on medium, which is what I found
+[00:04:17.830] (0.01s) keep it on medium, which is what I found
+[00:04:17.840] (2.47s) keep it on medium, which is what I found
+to be a decent balance for most tasks I
+[00:04:20.310] (0.01s) to be a decent balance for most tasks I
+[00:04:20.320] (2.39s) to be a decent balance for most tasks I
+run. Okay. So, there's one more thing I
+[00:04:22.710] (0.01s) run. Okay. So, there's one more thing I
+[00:04:22.720] (1.35s) run. Okay. So, there's one more thing I
+want to show you in this lesson, and
+[00:04:24.070] (0.01s) want to show you in this lesson, and
+[00:04:24.080] (1.59s) want to show you in this lesson, and
+it's a nice little feature that Codeex
+[00:04:25.670] (0.01s) it's a nice little feature that Codeex
+[00:04:25.680] (2.07s) it's a nice little feature that Codeex
+added to the extension, and that is to
+[00:04:27.749] (0.01s) added to the extension, and that is to
+[00:04:27.759] (2.15s) added to the extension, and that is to
+turn to-do comments in the code into
+[00:04:29.909] (0.01s) turn to-do comments in the code into
+[00:04:29.919] (2.63s) turn to-do comments in the code into
+tasks that Codeex can work on. So, it
+[00:04:32.550] (0.01s) tasks that Codeex can work on. So, it
+[00:04:32.560] (1.43s) tasks that Codeex can work on. So, it
+might be that you're fleshing out your
+[00:04:33.990] (0.01s) might be that you're fleshing out your
+[00:04:34.000] (1.75s) might be that you're fleshing out your
+application and you leave little to-do
+[00:04:35.749] (0.01s) application and you leave little to-do
+[00:04:35.759] (1.19s) application and you leave little to-do
+comments in your code in different
+[00:04:36.950] (0.01s) comments in your code in different
+[00:04:36.960] (1.83s) comments in your code in different
+places to remind you to come back and do
+[00:04:38.790] (0.01s) places to remind you to come back and do
+[00:04:38.800] (2.15s) places to remind you to come back and do
+certain things later. For example, if I
+[00:04:40.950] (0.01s) certain things later. For example, if I
+[00:04:40.960] (1.91s) certain things later. For example, if I
+open up the homepage component of this
+[00:04:42.870] (0.01s) open up the homepage component of this
+[00:04:42.880] (2.15s) open up the homepage component of this
+application, I already have a to-do in
+[00:04:45.030] (0.01s) application, I already have a to-do in
+[00:04:45.040] (2.55s) application, I already have a to-do in
+here, which says to-do, add a recent
+[00:04:47.590] (0.01s) here, which says to-do, add a recent
+[00:04:47.600] (2.47s) here, which says to-do, add a recent
+pair section here. And now I've
+[00:04:50.070] (0.01s) pair section here. And now I've
+[00:04:50.080] (2.79s) pair section here. And now I've
+installed the Codex extension. I can see
+[00:04:52.870] (0.01s) installed the Codex extension. I can see
+[00:04:52.880] (1.83s) installed the Codex extension. I can see
+this option above the to-do which says
+[00:04:54.710] (0.01s) this option above the to-do which says
+[00:04:54.720] (2.07s) this option above the to-do which says
+implement with Codex. So I can just
+[00:04:56.790] (0.01s) implement with Codex. So I can just
+[00:04:56.800] (2.07s) implement with Codex. So I can just
+click on this text to fight off a new
+[00:04:58.870] (0.01s) click on this text to fight off a new
+[00:04:58.880] (2.15s) click on this text to fight off a new
+local task where Codex works on this
+[00:05:01.030] (0.01s) local task where Codex works on this
+[00:05:01.040] (2.55s) local task where Codex works on this
+to-do for me. Now when I do that, Codex
+[00:05:03.590] (0.01s) to-do for me. Now when I do that, Codex
+[00:05:03.600] (1.67s) to-do for me. Now when I do that, Codex
+automatically starts up a new chat
+[00:05:05.270] (0.01s) automatically starts up a new chat
+[00:05:05.280] (2.15s) automatically starts up a new chat
+session with a prompt that incorporates
+[00:05:07.430] (0.01s) session with a prompt that incorporates
+[00:05:07.440] (2.87s) session with a prompt that incorporates
+the to-do in the code and it tells Codex
+[00:05:10.310] (0.01s) the to-do in the code and it tells Codex
+[00:05:10.320] (2.15s) the to-do in the code and it tells Codex
+to replace the comment with the
+[00:05:12.469] (0.01s) to replace the comment with the
+[00:05:12.479] (2.87s) to replace the comment with the
+implementation of this task. So then I'm
+[00:05:15.350] (0.01s) implementation of this task. So then I'm
+[00:05:15.360] (1.83s) implementation of this task. So then I'm
+going to let Codex run through this and
+[00:05:17.189] (0.01s) going to let Codex run through this and
+[00:05:17.199] (3.99s) going to let Codex run through this and
+I'll speed up the video until it's done.
+[00:05:21.189] (0.01s) I'll speed up the video until it's done.
+[00:05:21.199] (1.83s) I'll speed up the video until it's done.
+All right. So now that's finished and we
+[00:05:23.029] (0.01s) All right. So now that's finished and we
+[00:05:23.039] (2.31s) All right. So now that's finished and we
+can see all the changes directly here in
+[00:05:25.350] (0.01s) can see all the changes directly here in
+[00:05:25.360] (2.71s) can see all the changes directly here in
+the page. All this big green line is
+[00:05:28.070] (0.01s) the page. All this big green line is
+[00:05:28.080] (1.67s) the page. All this big green line is
+where Codeex has added new lines of
+[00:05:29.749] (0.01s) where Codeex has added new lines of
+[00:05:29.759] (2.39s) where Codeex has added new lines of
+code. So this is the section right here
+[00:05:32.150] (0.01s) code. So this is the section right here
+[00:05:32.160] (2.55s) code. So this is the section right here
+and these are the objects that we're
+[00:05:34.710] (0.01s) and these are the objects that we're
+[00:05:34.720] (1.51s) and these are the objects that we're
+going to be mapping through down here to
+[00:05:36.230] (0.01s) going to be mapping through down here to
+[00:05:36.240] (1.59s) going to be mapping through down here to
+output a bit of template for each one
+[00:05:37.830] (0.01s) output a bit of template for each one
+[00:05:37.840] (2.07s) output a bit of template for each one
+for each pair. So it all looks okay to
+[00:05:39.909] (0.01s) for each pair. So it all looks okay to
+[00:05:39.919] (1.43s) for each pair. So it all looks okay to
+me, but let's see what it looks like in
+[00:05:41.350] (0.01s) me, but let's see what it looks like in
+[00:05:41.360] (2.15s) me, but let's see what it looks like in
+a browser. So let's scroll down a little
+[00:05:43.510] (0.01s) a browser. So let's scroll down a little
+[00:05:43.520] (1.43s) a browser. So let's scroll down a little
+bit. We've got the popular pairs which
+[00:05:44.950] (0.01s) bit. We've got the popular pairs which
+[00:05:44.960] (1.35s) bit. We've got the popular pairs which
+was already there. Then this new
+[00:05:46.310] (0.01s) was already there. Then this new
+[00:05:46.320] (2.15s) was already there. Then this new
+section, the recent pairs, which looks
+[00:05:48.469] (0.01s) section, the recent pairs, which looks
+[00:05:48.479] (1.91s) section, the recent pairs, which looks
+almost identical but with a different
+[00:05:50.390] (0.01s) almost identical but with a different
+[00:05:50.400] (1.43s) almost identical but with a different
+background. So yeah, I think that looks
+[00:05:51.830] (0.01s) background. So yeah, I think that looks
+[00:05:51.840] (2.31s) background. So yeah, I think that looks
+pretty good. So then that is a nice
+[00:05:54.150] (0.01s) pretty good. So then that is a nice
+[00:05:54.160] (1.67s) pretty good. So then that is a nice
+little extra feature that Codex throws
+[00:05:55.830] (0.01s) little extra feature that Codex throws
+[00:05:55.840] (1.83s) little extra feature that Codex throws
+into the mix because it means we can now
+[00:05:57.670] (0.01s) into the mix because it means we can now
+[00:05:57.680] (1.99s) into the mix because it means we can now
+add to-dos into the code manually as we
+[00:05:59.670] (0.01s) add to-dos into the code manually as we
+[00:05:59.680] (2.07s) add to-dos into the code manually as we
+code, which Codex can then pick up at a
+[00:06:01.749] (0.01s) code, which Codex can then pick up at a
+[00:06:01.759] (1.35s) code, which Codex can then pick up at a
+later time if you don't want to work on
+[00:06:03.110] (0.01s) later time if you don't want to work on
+[00:06:03.120] (2.63s) later time if you don't want to work on
+those right away. And again, as I keep
+[00:06:05.749] (0.01s) those right away. And again, as I keep
+[00:06:05.759] (1.51s) those right away. And again, as I keep
+mentioning in this course, now we've
+[00:06:07.270] (0.01s) mentioning in this course, now we've
+[00:06:07.280] (1.75s) mentioning in this course, now we've
+added a new feature, it might be a good
+[00:06:09.029] (0.01s) added a new feature, it might be a good
+[00:06:09.039] (1.83s) added a new feature, it might be a good
+time to make commits or push changes up
+[00:06:10.870] (0.01s) time to make commits or push changes up
+[00:06:10.880] (1.91s) time to make commits or push changes up
+to GitHub if we're happy. And I keep
+[00:06:12.790] (0.01s) to GitHub if we're happy. And I keep
+[00:06:12.800] (1.75s) to GitHub if we're happy. And I keep
+going on about pushing changes to GitHub
+[00:06:14.550] (0.01s) going on about pushing changes to GitHub
+[00:06:14.560] (2.55s) going on about pushing changes to GitHub
+for two reasons. First, I think version
+[00:06:17.110] (0.01s) for two reasons. First, I think version
+[00:06:17.120] (2.07s) for two reasons. First, I think version
+control is absolutely essential when
+[00:06:19.189] (0.01s) control is absolutely essential when
+[00:06:19.199] (1.67s) control is absolutely essential when
+we're working with AI because without
+[00:06:20.870] (0.01s) we're working with AI because without
+[00:06:20.880] (2.47s) we're working with AI because without
+it, any AI coding agent can wreck your
+[00:06:23.350] (0.01s) it, any AI coding agent can wreck your
+[00:06:23.360] (1.99s) it, any AI coding agent can wreck your
+codebase very quickly. And second,
+[00:06:25.350] (0.01s) codebase very quickly. And second,
+[00:06:25.360] (1.59s) codebase very quickly. And second,
+because when you're working with Codex
+[00:06:26.950] (0.01s) because when you're working with Codex
+[00:06:26.960] (1.99s) because when you're working with Codex
+Cloud, it relies on you having an
+[00:06:28.950] (0.01s) Cloud, it relies on you having an
+[00:06:28.960] (2.23s) Cloud, it relies on you having an
+up-to-date GitHub repository so it can
+[00:06:31.189] (0.01s) up-to-date GitHub repository so it can
+[00:06:31.199] (2.31s) up-to-date GitHub repository so it can
+run tasks on it remotely. Anyway, I'm
+[00:06:33.510] (0.01s) run tasks on it remotely. Anyway, I'm
+[00:06:33.520] (1.19s) run tasks on it remotely. Anyway, I'm
+going to commit and push all those
+[00:06:34.710] (0.01s) going to commit and push all those
+[00:06:34.720] (1.67s) going to commit and push all those
+changes after this video. And in the
+[00:06:36.390] (0.01s) changes after this video. And in the
+[00:06:36.400] (1.35s) changes after this video. And in the
+next lesson, we'll talk a little bit
+[00:06:37.749] (0.01s) next lesson, we'll talk a little bit
+[00:06:37.759] (3.60s) next lesson, we'll talk a little bit
+about MCP servers.
+
+
+================================================================================
+Video #7: Codex IDE Extension
+URL: https://www.youtube.com/watch?v=bZ-5CfD2LRU
+Total Segments: 401
+
+TRANSCRIPT:
+--------------------------------------------------------------------------------
+[00:00:00.800] (1.83s) All right then gang. So far we have
+[00:00:02.629] (0.01s) All right then gang. So far we have
+[00:00:02.639] (2.07s) All right then gang. So far we have
+looked at Codex cloud to run tasks
+[00:00:04.710] (0.01s) looked at Codex cloud to run tasks
+[00:00:04.720] (2.39s) looked at Codex cloud to run tasks
+remotely, code review to review code
+[00:00:07.110] (0.01s) remotely, code review to review code
+[00:00:07.120] (2.23s) remotely, code review to review code
+changes in poll request on GitHub and
+[00:00:09.350] (0.01s) changes in poll request on GitHub and
+[00:00:09.360] (2.31s) changes in poll request on GitHub and
+the Codex CLI to work locally on a
+[00:00:11.669] (0.01s) the Codex CLI to work locally on a
+[00:00:11.679] (2.07s) the Codex CLI to work locally on a
+project. Now I want to look at the
+[00:00:13.749] (0.01s) project. Now I want to look at the
+[00:00:13.759] (2.15s) project. Now I want to look at the
+fourth Codex tool which is the codeex
+[00:00:15.910] (0.01s) fourth Codex tool which is the codeex
+[00:00:15.920] (1.99s) fourth Codex tool which is the codeex
+IDE extension and that can be plugged
+[00:00:17.910] (0.01s) IDE extension and that can be plugged
+[00:00:17.920] (3.27s) IDE extension and that can be plugged
+into VS Code Cursor Windsurf and VS Code
+[00:00:21.189] (0.01s) into VS Code Cursor Windsurf and VS Code
+[00:00:21.199] (2.39s) into VS Code Cursor Windsurf and VS Code
+Insiders. And this extension is very
+[00:00:23.590] (0.01s) Insiders. And this extension is very
+[00:00:23.600] (1.75s) Insiders. And this extension is very
+much in the same vein as something like
+[00:00:25.349] (0.01s) much in the same vein as something like
+[00:00:25.359] (2.95s) much in the same vein as something like
+the copilot extension for VS Code where
+[00:00:28.310] (0.01s) the copilot extension for VS Code where
+[00:00:28.320] (2.39s) the copilot extension for VS Code where
+you have a more visual interface to chat
+[00:00:30.710] (0.01s) you have a more visual interface to chat
+[00:00:30.720] (2.63s) you have a more visual interface to chat
+with the AI and fire off code changes,
+[00:00:33.350] (0.01s) with the AI and fire off code changes,
+[00:00:33.360] (2.07s) with the AI and fire off code changes,
+but under the hood, it basically has the
+[00:00:35.430] (0.01s) but under the hood, it basically has the
+[00:00:35.440] (2.31s) but under the hood, it basically has the
+same functionality as the CLI tool in
+[00:00:37.750] (0.01s) same functionality as the CLI tool in
+[00:00:37.760] (2.31s) same functionality as the CLI tool in
+that it allows us to work locally on a
+[00:00:40.069] (0.01s) that it allows us to work locally on a
+[00:00:40.079] (3.43s) that it allows us to work locally on a
+project with codecs. And again, at the
+[00:00:43.510] (0.01s) project with codecs. And again, at the
+[00:00:43.520] (2.15s) project with codecs. And again, at the
+time of recording, it's marked as
+[00:00:45.670] (0.01s) time of recording, it's marked as
+[00:00:45.680] (2.63s) time of recording, it's marked as
+experimental for Windows. Now, I've used
+[00:00:48.310] (0.01s) experimental for Windows. Now, I've used
+[00:00:48.320] (2.39s) experimental for Windows. Now, I've used
+it on both a Mac and Windows. And aside
+[00:00:50.709] (0.01s) it on both a Mac and Windows. And aside
+[00:00:50.719] (1.91s) it on both a Mac and Windows. And aside
+from the occasional jitter and some
+[00:00:52.630] (0.01s) from the occasional jitter and some
+[00:00:52.640] (2.95s) from the occasional jitter and some
+problems with MCP servers, I've not had
+[00:00:55.590] (0.01s) problems with MCP servers, I've not had
+[00:00:55.600] (1.91s) problems with MCP servers, I've not had
+any other major problems using it on
+[00:00:57.510] (0.01s) any other major problems using it on
+[00:00:57.520] (2.23s) any other major problems using it on
+Windows. That much being said, I feel
+[00:00:59.750] (0.01s) Windows. That much being said, I feel
+[00:00:59.760] (2.07s) Windows. That much being said, I feel
+like the experience definitely feels
+[00:01:01.830] (0.01s) like the experience definitely feels
+[00:01:01.840] (2.07s) like the experience definitely feels
+smoother on a Mac. And for some of the
+[00:01:03.910] (0.01s) smoother on a Mac. And for some of the
+[00:01:03.920] (1.91s) smoother on a Mac. And for some of the
+next few videos, I'll be switching to my
+[00:01:05.830] (0.01s) next few videos, I'll be switching to my
+[00:01:05.840] (2.47s) next few videos, I'll be switching to my
+Mac for the recordings. Just be aware
+[00:01:08.310] (0.01s) Mac for the recordings. Just be aware
+[00:01:08.320] (1.59s) Mac for the recordings. Just be aware
+that this is still considered
+[00:01:09.910] (0.01s) that this is still considered
+[00:01:09.920] (2.63s) that this is still considered
+experimental on Windows. So then, let's
+[00:01:12.550] (0.01s) experimental on Windows. So then, let's
+[00:01:12.560] (1.99s) experimental on Windows. So then, let's
+go back to the code and start using the
+[00:01:14.550] (0.01s) go back to the code and start using the
+[00:01:14.560] (2.07s) go back to the code and start using the
+Codeex extension. The first thing you
+[00:01:16.630] (0.01s) Codeex extension. The first thing you
+[00:01:16.640] (1.91s) Codeex extension. The first thing you
+need to do is search for the extension.
+[00:01:18.550] (0.01s) need to do is search for the extension.
+[00:01:18.560] (2.47s) need to do is search for the extension.
+And I would search for OpenAI Codeex
+[00:01:21.030] (0.01s) And I would search for OpenAI Codeex
+[00:01:21.040] (1.83s) And I would search for OpenAI Codeex
+because if you just search for Codeex on
+[00:01:22.870] (0.01s) because if you just search for Codeex on
+[00:01:22.880] (1.27s) because if you just search for Codeex on
+its own, then a bunch of other
+[00:01:24.149] (0.01s) its own, then a bunch of other
+[00:01:24.159] (2.55s) its own, then a bunch of other
+extensions come up first. So it's this
+[00:01:26.710] (0.01s) extensions come up first. So it's this
+[00:01:26.720] (2.71s) extensions come up first. So it's this
+one right here that you want to install.
+[00:01:29.429] (0.01s) one right here that you want to install.
+[00:01:29.439] (1.51s) one right here that you want to install.
+Once you've done that, you should see
+[00:01:30.950] (0.01s) Once you've done that, you should see
+[00:01:30.960] (2.39s) Once you've done that, you should see
+the OpenAI logo over here, which you can
+[00:01:33.350] (0.01s) the OpenAI logo over here, which you can
+[00:01:33.360] (2.63s) the OpenAI logo over here, which you can
+click on to open the Codeex panel. Now,
+[00:01:35.990] (0.01s) click on to open the Codeex panel. Now,
+[00:01:36.000] (1.83s) click on to open the Codeex panel. Now,
+when you first do this, you're going to
+[00:01:37.830] (0.01s) when you first do this, you're going to
+[00:01:37.840] (2.47s) when you first do this, you're going to
+need to log in to your ChatgPT account,
+[00:01:40.310] (0.01s) need to log in to your ChatgPT account,
+[00:01:40.320] (2.63s) need to log in to your ChatgPT account,
+much like we did with the Codex CLI. And
+[00:01:42.950] (0.01s) much like we did with the Codex CLI. And
+[00:01:42.960] (1.43s) much like we did with the Codex CLI. And
+if you click on this button, it's going
+[00:01:44.390] (0.01s) if you click on this button, it's going
+[00:01:44.400] (1.83s) if you click on this button, it's going
+to take you to a signin page where you
+[00:01:46.230] (0.01s) to take you to a signin page where you
+[00:01:46.240] (2.15s) to take you to a signin page where you
+can do that. So, I'm just going to sign
+[00:01:48.389] (0.01s) can do that. So, I'm just going to sign
+[00:01:48.399] (2.15s) can do that. So, I'm just going to sign
+into my account off screen. Once I've
+[00:01:50.550] (0.01s) into my account off screen. Once I've
+[00:01:50.560] (1.51s) into my account off screen. Once I've
+done that, we should see a little
+[00:01:52.069] (0.01s) done that, we should see a little
+[00:01:52.079] (2.63s) done that, we should see a little
+onboarding sequence inside this panel.
+[00:01:54.710] (0.01s) onboarding sequence inside this panel.
+[00:01:54.720] (2.15s) onboarding sequence inside this panel.
+So, I'm just going to click on next for
+[00:01:56.870] (0.01s) So, I'm just going to click on next for
+[00:01:56.880] (2.31s) So, I'm just going to click on next for
+all of these until we finally get to the
+[00:01:59.190] (0.01s) all of these until we finally get to the
+[00:01:59.200] (2.39s) all of these until we finally get to the
+chat screen. And it's from here that we
+[00:02:01.590] (0.01s) chat screen. And it's from here that we
+[00:02:01.600] (2.07s) chat screen. And it's from here that we
+can either start chatting with Codeex or
+[00:02:03.670] (0.01s) can either start chatting with Codeex or
+[00:02:03.680] (2.23s) can either start chatting with Codeex or
+setting it to work on the code. So,
+[00:02:05.910] (0.01s) setting it to work on the code. So,
+[00:02:05.920] (1.91s) setting it to work on the code. So,
+we've got the chat window right here
+[00:02:07.830] (0.01s) we've got the chat window right here
+[00:02:07.840] (1.99s) we've got the chat window right here
+where we write any prompts. We've also
+[00:02:09.830] (0.01s) where we write any prompts. We've also
+[00:02:09.840] (1.83s) where we write any prompts. We've also
+got a couple of buttons down here to
+[00:02:11.670] (0.01s) got a couple of buttons down here to
+[00:02:11.680] (2.07s) got a couple of buttons down here to
+control context, which we'll see later.
+[00:02:13.750] (0.01s) control context, which we'll see later.
+[00:02:13.760] (1.67s) control context, which we'll see later.
+At the bottom, we can also select the
+[00:02:15.430] (0.01s) At the bottom, we can also select the
+[00:02:15.440] (1.91s) At the bottom, we can also select the
+mode and toggle between the same three
+[00:02:17.350] (0.01s) mode and toggle between the same three
+[00:02:17.360] (2.23s) mode and toggle between the same three
+options we saw in the CLI, which is
+[00:02:19.589] (0.01s) options we saw in the CLI, which is
+[00:02:19.599] (1.99s) options we saw in the CLI, which is
+agent mode for the project edits, chat
+[00:02:21.589] (0.01s) agent mode for the project edits, chat
+[00:02:21.599] (1.67s) agent mode for the project edits, chat
+mode just for chatting, and then agent
+[00:02:23.270] (0.01s) mode just for chatting, and then agent
+[00:02:23.280] (2.23s) mode just for chatting, and then agent
+with full access, including the internet
+[00:02:25.510] (0.01s) with full access, including the internet
+[00:02:25.520] (2.55s) with full access, including the internet
+and files outside of the project. We're
+[00:02:28.070] (0.01s) and files outside of the project. We're
+[00:02:28.080] (1.99s) and files outside of the project. We're
+going to select chat for now, just so we
+[00:02:30.070] (0.01s) going to select chat for now, just so we
+[00:02:30.080] (2.31s) going to select chat for now, just so we
+can ask Codeex a question in a moment.
+[00:02:32.390] (0.01s) can ask Codeex a question in a moment.
+[00:02:32.400] (1.75s) can ask Codeex a question in a moment.
+We've also got these other drop-own
+[00:02:34.150] (0.01s) We've also got these other drop-own
+[00:02:34.160] (1.67s) We've also got these other drop-own
+options, which I'm going to talk about
+[00:02:35.830] (0.01s) options, which I'm going to talk about
+[00:02:35.840] (2.63s) options, which I'm going to talk about
+over the next few lessons. Up at the
+[00:02:38.470] (0.01s) over the next few lessons. Up at the
+[00:02:38.480] (2.47s) over the next few lessons. Up at the
+top, we should see a list of any recent
+[00:02:40.949] (0.01s) top, we should see a list of any recent
+[00:02:40.959] (2.39s) top, we should see a list of any recent
+tasks we've run on Codex Cloud as well,
+[00:02:43.350] (0.01s) tasks we've run on Codex Cloud as well,
+[00:02:43.360] (2.07s) tasks we've run on Codex Cloud as well,
+which is a nice touch. And if you click
+[00:02:45.430] (0.01s) which is a nice touch. And if you click
+[00:02:45.440] (1.75s) which is a nice touch. And if you click
+on one of those, you'll see that task
+[00:02:47.190] (0.01s) on one of those, you'll see that task
+[00:02:47.200] (3.35s) on one of those, you'll see that task
+here inside the extension. Now, if I was
+[00:02:50.550] (0.01s) here inside the extension. Now, if I was
+[00:02:50.560] (1.99s) here inside the extension. Now, if I was
+to write something in this task and hit
+[00:02:52.550] (0.01s) to write something in this task and hit
+[00:02:52.560] (1.91s) to write something in this task and hit
+enter, it would actually send that reply
+[00:02:54.470] (0.01s) enter, it would actually send that reply
+[00:02:54.480] (2.31s) enter, it would actually send that reply
+up onto Codex Cloud and work remotely
+[00:02:56.790] (0.01s) up onto Codex Cloud and work remotely
+[00:02:56.800] (1.27s) up onto Codex Cloud and work remotely
+again. But we're not going to do that
+[00:02:58.070] (0.01s) again. But we're not going to do that
+[00:02:58.080] (1.91s) again. But we're not going to do that
+right now. Instead, I want to come back
+[00:02:59.990] (0.01s) right now. Instead, I want to come back
+[00:03:00.000] (1.83s) right now. Instead, I want to come back
+to the regular chat window and work
+[00:03:01.830] (0.01s) to the regular chat window and work
+[00:03:01.840] (2.55s) to the regular chat window and work
+locally. So then same as ever we're
+[00:03:04.390] (0.01s) locally. So then same as ever we're
+[00:03:04.400] (1.83s) locally. So then same as ever we're
+going to start off by asking codeex
+[00:03:06.229] (0.01s) going to start off by asking codeex
+[00:03:06.239] (2.47s) going to start off by asking codeex
+about the project and the prompt can be
+[00:03:08.710] (0.01s) about the project and the prompt can be
+[00:03:08.720] (2.95s) about the project and the prompt can be
+something like can you give me a quick
+[00:03:11.670] (0.01s) something like can you give me a quick
+[00:03:11.680] (4.15s) something like can you give me a quick
+summary of what this project is. So when
+[00:03:15.830] (0.01s) summary of what this project is. So when
+[00:03:15.840] (2.15s) summary of what this project is. So when
+we hit enter we should see that codeex
+[00:03:17.990] (0.01s) we hit enter we should see that codeex
+[00:03:18.000] (1.67s) we hit enter we should see that codeex
+starts looking through the project and
+[00:03:19.670] (0.01s) starts looking through the project and
+[00:03:19.680] (2.55s) starts looking through the project and
+gathering information. Now I actually
+[00:03:22.229] (0.01s) gathering information. Now I actually
+[00:03:22.239] (2.07s) gathering information. Now I actually
+really like the UI of this chat window
+[00:03:24.309] (0.01s) really like the UI of this chat window
+[00:03:24.319] (1.67s) really like the UI of this chat window
+and the way that Codex responds with
+[00:03:25.990] (0.01s) and the way that Codex responds with
+[00:03:26.000] (1.83s) and the way that Codex responds with
+these bullet points when you ask it to
+[00:03:27.830] (0.01s) these bullet points when you ask it to
+[00:03:27.840] (2.07s) these bullet points when you ask it to
+do something. And you can expand some of
+[00:03:29.910] (0.01s) do something. And you can expand some of
+[00:03:29.920] (2.15s) do something. And you can expand some of
+them as well to see what Codeex is doing
+[00:03:32.070] (0.01s) them as well to see what Codeex is doing
+[00:03:32.080] (2.07s) them as well to see what Codeex is doing
+or thinking under the hood which again
+[00:03:34.149] (0.01s) or thinking under the hood which again
+[00:03:34.159] (2.95s) or thinking under the hood which again
+is nice. Okay, so it looks like Codex
+[00:03:37.110] (0.01s) is nice. Okay, so it looks like Codex
+[00:03:37.120] (2.23s) is nice. Okay, so it looks like Codex
+has finished working now and we can see
+[00:03:39.350] (0.01s) has finished working now and we can see
+[00:03:39.360] (2.47s) has finished working now and we can see
+this summary it's provided. So it's
+[00:03:41.830] (0.01s) this summary it's provided. So it's
+[00:03:41.840] (2.63s) this summary it's provided. So it's
+looking at the home route first of all
+[00:03:44.470] (0.01s) looking at the home route first of all
+[00:03:44.480] (2.55s) looking at the home route first of all
+the hero CTA that's the call to action.
+[00:03:47.030] (0.01s) the hero CTA that's the call to action.
+[00:03:47.040] (2.71s) the hero CTA that's the call to action.
+We have a popular pairs list etc. We
+[00:03:49.750] (0.01s) We have a popular pairs list etc. We
+[00:03:49.760] (2.71s) We have a popular pairs list etc. We
+have the pair creation page this route.
+[00:03:52.470] (0.01s) have the pair creation page this route.
+[00:03:52.480] (2.31s) have the pair creation page this route.
+It's got some client side validation on
+[00:03:54.789] (0.01s) It's got some client side validation on
+[00:03:54.799] (2.95s) It's got some client side validation on
+the form blahy blahy blah. We have a
+[00:03:57.750] (0.01s) the form blahy blahy blah. We have a
+[00:03:57.760] (2.31s) the form blahy blahy blah. We have a
+shared layout and we have styling that
+[00:04:00.070] (0.01s) shared layout and we have styling that
+[00:04:00.080] (3.59s) shared layout and we have styling that
+leans on Tailwind v4 and also we use V
+[00:04:03.670] (0.01s) leans on Tailwind v4 and also we use V
+[00:04:03.680] (2.63s) leans on Tailwind v4 and also we use V
+test as well for testing. So yeah, it
+[00:04:06.309] (0.01s) test as well for testing. So yeah, it
+[00:04:06.319] (2.15s) test as well for testing. So yeah, it
+looks like it's gathered all the main
+[00:04:08.470] (0.01s) looks like it's gathered all the main
+[00:04:08.480] (2.71s) looks like it's gathered all the main
+points of the application. I'm not
+[00:04:11.190] (0.01s) points of the application. I'm not
+[00:04:11.200] (2.07s) points of the application. I'm not
+hugely keen on how it's presented it as
+[00:04:13.270] (0.01s) hugely keen on how it's presented it as
+[00:04:13.280] (1.91s) hugely keen on how it's presented it as
+a summary in terms of the language it's
+[00:04:15.190] (0.01s) a summary in terms of the language it's
+[00:04:15.200] (1.59s) a summary in terms of the language it's
+used. It's not very convers uh
+[00:04:16.789] (0.01s) used. It's not very convers uh
+[00:04:16.799] (1.67s) used. It's not very convers uh
+conversational or anything like that.
+[00:04:18.469] (0.01s) conversational or anything like that.
+[00:04:18.479] (1.35s) conversational or anything like that.
+However, that's just a personal
+[00:04:19.830] (0.01s) However, that's just a personal
+[00:04:19.840] (1.67s) However, that's just a personal
+preference, but it knows what everything
+[00:04:21.509] (0.01s) preference, but it knows what everything
+[00:04:21.519] (1.83s) preference, but it knows what everything
+is at least.
+[00:04:23.350] (0.01s) is at least.
+[00:04:23.360] (1.99s) is at least.
+Okay, so now let's try asking Codeex to
+[00:04:25.350] (0.01s) Okay, so now let's try asking Codeex to
+[00:04:25.360] (2.07s) Okay, so now let's try asking Codeex to
+make some changes. I want to make a
+[00:04:27.430] (0.01s) make some changes. I want to make a
+[00:04:27.440] (2.31s) make some changes. I want to make a
+reusable model component which I want to
+[00:04:29.749] (0.01s) reusable model component which I want to
+[00:04:29.759] (1.91s) reusable model component which I want to
+show when the user submits the form
+[00:04:31.670] (0.01s) show when the user submits the form
+[00:04:31.680] (2.39s) show when the user submits the form
+correctly with no errors. So the first
+[00:04:34.070] (0.01s) correctly with no errors. So the first
+[00:04:34.080] (2.47s) correctly with no errors. So the first
+thing I'll do is create a new branch and
+[00:04:36.550] (0.01s) thing I'll do is create a new branch and
+[00:04:36.560] (2.95s) thing I'll do is create a new branch and
+do all of the work on that new branch.
+[00:04:39.510] (0.01s) do all of the work on that new branch.
+[00:04:39.520] (1.67s) do all of the work on that new branch.
+And I'm going to do that by running the
+[00:04:41.189] (0.01s) And I'm going to do that by running the
+[00:04:41.199] (3.27s) And I'm going to do that by running the
+command get switch then use the C flag
+[00:04:44.469] (0.01s) command get switch then use the C flag
+[00:04:44.479] (1.75s) command get switch then use the C flag
+to create the branch. And I'm going to
+[00:04:46.230] (0.01s) to create the branch. And I'm going to
+[00:04:46.240] (2.95s) to create the branch. And I'm going to
+call it featureward slashmodal.
+[00:04:49.189] (0.01s) call it featureward slashmodal.
+[00:04:49.199] (1.43s) call it featureward slashmodal.
+Once I've done that, I'm going to go
+[00:04:50.629] (0.01s) Once I've done that, I'm going to go
+[00:04:50.639] (2.47s) Once I've done that, I'm going to go
+back to the codeex chat panel and I'm
+[00:04:53.110] (0.01s) back to the codeex chat panel and I'm
+[00:04:53.120] (1.75s) back to the codeex chat panel and I'm
+going to paste in a little prompt which
+[00:04:54.870] (0.01s) going to paste in a little prompt which
+[00:04:54.880] (2.79s) going to paste in a little prompt which
+says, "Can you make a reusable model
+[00:04:57.670] (0.01s) says, "Can you make a reusable model
+[00:04:57.680] (1.75s) says, "Can you make a reusable model
+component complete with a
+[00:04:59.430] (0.01s) component complete with a
+[00:04:59.440] (2.47s) component complete with a
+semi-transparent backdrop? The model
+[00:05:01.909] (0.01s) semi-transparent backdrop? The model
+[00:05:01.919] (2.23s) semi-transparent backdrop? The model
+should be white and allow content to be
+[00:05:04.150] (0.01s) should be white and allow content to be
+[00:05:04.160] (2.55s) should be white and allow content to be
+passed in via a slot. Clicking on a
+[00:05:06.710] (0.01s) passed in via a slot. Clicking on a
+[00:05:06.720] (2.39s) passed in via a slot. Clicking on a
+cross should trigger the model to close.
+[00:05:09.110] (0.01s) cross should trigger the model to close.
+[00:05:09.120] (2.07s) cross should trigger the model to close.
+Can you then show the model with a
+[00:05:11.189] (0.01s) Can you then show the model with a
+[00:05:11.199] (2.23s) Can you then show the model with a
+success message when a user submits the
+[00:05:13.430] (0.01s) success message when a user submits the
+[00:05:13.440] (2.47s) success message when a user submits the
+new pair form with no validation
+[00:05:15.909] (0.01s) new pair form with no validation
+[00:05:15.919] (2.71s) new pair form with no validation
+errors?" Now, in order for codeex to
+[00:05:18.629] (0.01s) errors?" Now, in order for codeex to
+[00:05:18.639] (2.95s) errors?" Now, in order for codeex to
+work on the code, we also have to change
+[00:05:21.590] (0.01s) work on the code, we also have to change
+[00:05:21.600] (4.71s) work on the code, we also have to change
+the mode down here from chat to agent.
+[00:05:26.310] (0.01s) the mode down here from chat to agent.
+[00:05:26.320] (1.51s) the mode down here from chat to agent.
+All right. So, it looks like it's worked
+[00:05:27.830] (0.01s) All right. So, it looks like it's worked
+[00:05:27.840] (1.91s) All right. So, it looks like it's worked
+now. It's created that reusable modal
+[00:05:29.749] (0.01s) now. It's created that reusable modal
+[00:05:29.759] (2.31s) now. It's created that reusable modal
+and it's wired it up to the new pair
+[00:05:32.070] (0.01s) and it's wired it up to the new pair
+[00:05:32.080] (2.23s) and it's wired it up to the new pair
+form. And down here, you can see in
+[00:05:34.310] (0.01s) form. And down here, you can see in
+[00:05:34.320] (1.43s) form. And down here, you can see in
+detail the different edits and the
+[00:05:35.749] (0.01s) detail the different edits and the
+[00:05:35.759] (2.39s) detail the different edits and the
+different files it's created. And then
+[00:05:38.150] (0.01s) different files it's created. And then
+[00:05:38.160] (1.59s) different files it's created. And then
+at the bottom, it said it's run these
+[00:05:39.749] (0.01s) at the bottom, it said it's run these
+[00:05:39.759] (2.79s) at the bottom, it said it's run these
+tests as well. It also created that test
+[00:05:42.550] (0.01s) tests as well. It also created that test
+[00:05:42.560] (2.23s) tests as well. It also created that test
+file. Now, I will say one thing. This
+[00:05:44.790] (0.01s) file. Now, I will say one thing. This
+[00:05:44.800] (2.47s) file. Now, I will say one thing. This
+was quite slow and it's been one of the
+[00:05:47.270] (0.01s) was quite slow and it's been one of the
+[00:05:47.280] (1.75s) was quite slow and it's been one of the
+slowest I've experienced it while I've
+[00:05:49.029] (0.01s) slowest I've experienced it while I've
+[00:05:49.039] (1.51s) slowest I've experienced it while I've
+been using Codeex. And I think that is
+[00:05:50.550] (0.01s) been using Codeex. And I think that is
+[00:05:50.560] (1.43s) been using Codeex. And I think that is
+to do with the model it's using right
+[00:05:51.990] (0.01s) to do with the model it's using right
+[00:05:52.000] (2.63s) to do with the model it's using right
+here, which is GPT5 Codeex on medium
+[00:05:54.629] (0.01s) here, which is GPT5 Codeex on medium
+[00:05:54.639] (0.95s) here, which is GPT5 Codeex on medium
+reasoning. Now, we're going to talk
+[00:05:55.590] (0.01s) reasoning. Now, we're going to talk
+[00:05:55.600] (2.07s) reasoning. Now, we're going to talk
+about reasoning a little bit later on,
+[00:05:57.670] (0.01s) about reasoning a little bit later on,
+[00:05:57.680] (2.47s) about reasoning a little bit later on,
+but this is a relatively new model at
+[00:06:00.150] (0.01s) but this is a relatively new model at
+[00:06:00.160] (1.59s) but this is a relatively new model at
+the time of recording this video. So,
+[00:06:01.749] (0.01s) the time of recording this video. So,
+[00:06:01.759] (1.51s) the time of recording this video. So,
+what I'm going to actually do is switch
+[00:06:03.270] (0.01s) what I'm going to actually do is switch
+[00:06:03.280] (3.19s) what I'm going to actually do is switch
+this to GPT5 Medium for the rest of
+[00:06:06.469] (0.01s) this to GPT5 Medium for the rest of
+[00:06:06.479] (2.87s) this to GPT5 Medium for the rest of
+these videos because I find that to be a
+[00:06:09.350] (0.01s) these videos because I find that to be a
+[00:06:09.360] (1.83s) these videos because I find that to be a
+lot quicker for the kind of simple tasks
+[00:06:11.189] (0.01s) lot quicker for the kind of simple tasks
+[00:06:11.199] (1.51s) lot quicker for the kind of simple tasks
+that I'm going to be giving Codeex to
+[00:06:12.710] (0.01s) that I'm going to be giving Codeex to
+[00:06:12.720] (2.87s) that I'm going to be giving Codeex to
+do. I do still think though that this
+[00:06:15.590] (0.01s) do. I do still think though that this
+[00:06:15.600] (2.87s) do. I do still think though that this
+Codeex 5 model right here or rather GPT5
+[00:06:18.469] (0.01s) Codeex 5 model right here or rather GPT5
+[00:06:18.479] (3.03s) Codeex 5 model right here or rather GPT5
+CEX model is really good for slightly
+[00:06:21.510] (0.01s) CEX model is really good for slightly
+[00:06:21.520] (2.07s) CEX model is really good for slightly
+more complex coding tasks. I will say
+[00:06:23.590] (0.01s) more complex coding tasks. I will say
+[00:06:23.600] (1.91s) more complex coding tasks. I will say
+that. But for the sake of this course,
+[00:06:25.510] (0.01s) that. But for the sake of this course,
+[00:06:25.520] (2.47s) that. But for the sake of this course,
+we're going to keep it on the GPT5
+[00:06:27.990] (0.01s) we're going to keep it on the GPT5
+[00:06:28.000] (3.03s) we're going to keep it on the GPT5
+standard medium model. All right. So
+[00:06:31.029] (0.01s) standard medium model. All right. So
+[00:06:31.039] (2.15s) standard medium model. All right. So
+let's have a look at the changes that
+[00:06:33.189] (0.01s) let's have a look at the changes that
+[00:06:33.199] (1.91s) let's have a look at the changes that
+it's made. So if we go into components,
+[00:06:35.110] (0.01s) it's made. So if we go into components,
+[00:06:35.120] (1.75s) it's made. So if we go into components,
+we can see that new modal file right
+[00:06:36.870] (0.01s) we can see that new modal file right
+[00:06:36.880] (3.83s) we can see that new modal file right
+here. And if we scroll down, we can see
+[00:06:40.710] (0.01s) here. And if we scroll down, we can see
+[00:06:40.720] (3.75s) here. And if we scroll down, we can see
+this modal. And the template is going to
+[00:06:44.469] (0.01s) this modal. And the template is going to
+[00:06:44.479] (1.67s) this modal. And the template is going to
+be right down here somewhere. There it
+[00:06:46.150] (0.01s) be right down here somewhere. There it
+[00:06:46.160] (4.15s) be right down here somewhere. There it
+is. Okay. So that's the modal. And then
+[00:06:50.309] (0.01s) is. Okay. So that's the modal. And then
+[00:06:50.319] (2.47s) is. Okay. So that's the modal. And then
+it created a test file as well. Right
+[00:06:52.790] (0.01s) it created a test file as well. Right
+[00:06:52.800] (3.83s) it created a test file as well. Right
+here. It also updated the CSS and the
+[00:06:56.629] (0.01s) here. It also updated the CSS and the
+[00:06:56.639] (1.99s) here. It also updated the CSS and the
+new pair form so that it's going to show
+[00:06:58.629] (0.01s) new pair form so that it's going to show
+[00:06:58.639] (2.87s) new pair form so that it's going to show
+that model when we submit it. And there
+[00:07:01.510] (0.01s) that model when we submit it. And there
+[00:07:01.520] (1.67s) that model when we submit it. And there
+is the model right here. So let's
+[00:07:03.189] (0.01s) is the model right here. So let's
+[00:07:03.199] (2.39s) is the model right here. So let's
+preview this now in a browser. All
+[00:07:05.589] (0.01s) preview this now in a browser. All
+[00:07:05.599] (1.75s) preview this now in a browser. All
+right. So I've already entered in some
+[00:07:07.350] (0.01s) right. So I've already entered in some
+[00:07:07.360] (1.59s) right. So I've already entered in some
+data into this form. I'm just going to
+[00:07:08.950] (0.01s) data into this form. I'm just going to
+[00:07:08.960] (1.51s) data into this form. I'm just going to
+create this and hopefully we will see a
+[00:07:10.469] (0.01s) create this and hopefully we will see a
+[00:07:10.479] (2.87s) create this and hopefully we will see a
+modal now which we do right there. So it
+[00:07:13.350] (0.01s) modal now which we do right there. So it
+[00:07:13.360] (3.27s) modal now which we do right there. So it
+looks okay. And if we click on the close
+[00:07:16.629] (0.01s) looks okay. And if we click on the close
+[00:07:16.639] (1.27s) looks okay. And if we click on the close
+button right here, hopefully it's going
+[00:07:17.909] (0.01s) button right here, hopefully it's going
+[00:07:17.919] (2.55s) button right here, hopefully it's going
+to close as well. Yeah, it does. Now, I
+[00:07:20.469] (0.01s) to close as well. Yeah, it does. Now, I
+[00:07:20.479] (1.67s) to close as well. Yeah, it does. Now, I
+also want to test that it doesn't show
+[00:07:22.150] (0.01s) also want to test that it doesn't show
+[00:07:22.160] (3.03s) also want to test that it doesn't show
+when we don't have the form uh filled in
+[00:07:25.189] (0.01s) when we don't have the form uh filled in
+[00:07:25.199] (2.47s) when we don't have the form uh filled in
+correctly. And yep, we don't have that
+[00:07:27.670] (0.01s) correctly. And yep, we don't have that
+[00:07:27.680] (1.35s) correctly. And yep, we don't have that
+model now because we've not filled in
+[00:07:29.029] (0.01s) model now because we've not filled in
+[00:07:29.039] (1.83s) model now because we've not filled in
+these details. But if we fill these in
+[00:07:30.870] (0.01s) these details. But if we fill these in
+[00:07:30.880] (2.79s) these details. But if we fill these in
+again, then hopefully yeah, it does
+[00:07:33.670] (0.01s) again, then hopefully yeah, it does
+[00:07:33.680] (2.96s) again, then hopefully yeah, it does
+show. Awesome.
+

@@ -1,0 +1,18 @@
+{
+  "Video #5: CLI Commands & Resuming Sessions": {
+    "url": "https://www.youtube.com/watch?v=jAaF58zobxE",
+    "error": "yt-dlp failed: ERROR: [youtube] jAaF58zobxE: Video unavailable\n"
+  },
+  "Video #6: Using the AGENTS.md file": {
+    "url": "https://www.youtube.com/watch?v=w3Oi4LzWkqg",
+    "error": "yt-dlp failed: ERROR: [youtube] w3Oi4LzWkqg: Video unavailable\n"
+  },
+  "Video #7: Codex IDE Extension": {
+    "url": "https://www.youtube.com/watch?v=6vF-YvE-qJQ",
+    "error": "yt-dlp failed: ERROR: [youtube] 6vF-YvE-qJQ: Video unavailable\n"
+  },
+  "Video #8: Context, Reasoning & TODO's": {
+    "url": "https://www.youtube.com/watch?v=DwMEeqw_hvI",
+    "error": "yt-dlp failed: ERROR: [youtube] DwMEeqw_hvI: Video unavailable\n"
+  }
+}

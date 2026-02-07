@@ -1,0 +1,18 @@
+{
+  "Video #5: CLI Commands & Resuming Sessions": {
+    "url": "https://www.youtube.com/watch?v=htNz7uazonY",
+    "error": "Failed to parse JSON: Expecting value: line 1 column 1 (char 0)\nOutput was: NA"
+  },
+  "Video #6: Using the AGENTS.md file": {
+    "url": "https://www.youtube.com/watch?v=NlNuoH5PPl4",
+    "error": "Failed to parse JSON: Expecting value: line 1 column 1 (char 0)\nOutput was: NA"
+  },
+  "Video #7: Codex IDE Extension": {
+    "url": "https://www.youtube.com/watch?v=6vF-YvE-qJQ",
+    "error": "yt-dlp failed: ERROR: [youtube] 6vF-YvE-qJQ: Video unavailable\n"
+  },
+  "Video #8: Context, Reasoning & TODO's": {
+    "url": "https://www.youtube.com/watch?v=kbv6Rn7lHkI",
+    "error": "Failed to parse JSON: Expecting value: line 1 column 1 (char 0)\nOutput was: NA"
+  }
+}

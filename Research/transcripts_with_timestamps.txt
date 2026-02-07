@@ -1,0 +1,714 @@
+# Net Ninja OpenAI Codex Tutorial - Transcripts with Timestamps
+================================================================================
+
+# Video #9: MCP Servers
+URL: https://www.youtube.com/watch?v=X7lgIa6guKg
+Video ID: X7lgIa6guKg
+Total segments: 385
+
+## Transcript with Timestamps:
+================================================================================
+[00:00:00.000] All
+[00:00:01.520] right then, gang. In this lesson, I want
+[00:00:03.439] to talk about something called MCP and
+[00:00:06.080] MCP servers, which can give Claude code
+[00:00:08.800] the ability to connect and communicate
+[00:00:10.639] with external data sources, services,
+[00:00:13.120] and APIs. For example, when I'm working
+[00:00:15.759] with Claude in this project right now,
+[00:00:17.359] it knows about my project, and it can
+[00:00:19.760] use all its built-in tools to make
+[00:00:21.359] changes and run bash commands and
+[00:00:23.199] whatnot. But those tools only extend to
+[00:00:25.920] the scope of this codebase, right? And
+[00:00:27.359] there's no tools for claude code to
+[00:00:28.880] interact with external data sources,
+[00:00:31.359] third party services or APIs. I can't
+[00:00:33.920] tell it for example to reach out to a
+[00:00:35.520] database to analyze my tables or even
+[00:00:37.840] create a new one for me because it
+[00:00:40.000] doesn't have the tools to do that. But
+[00:00:41.520] that's where MCP servers come into play.
+[00:00:44.399] So just very briefly, MCP stands for
+[00:00:46.879] model context protocol. It was designed
+[00:00:49.120] by Anthropic who made claude code and it
+[00:00:51.840] defines a way that AI models can
+[00:00:53.520] interact with external sources. And we
+[00:00:55.680] do this by providing them with
+[00:00:57.039] additional tools and context through MCP
+[00:00:59.760] servers. And different MCP servers come
+[00:01:02.320] with different tools to do different
+[00:01:03.680] things and interact with different
+[00:01:05.600] sources. So you can think of an MCP
+[00:01:08.560] server as something you can essentially
+[00:01:10.560] plug into Claude code or whatever client
+[00:01:12.960] you're using and then Claude directed by
+[00:01:15.520] the AI model can use whatever tools the
+[00:01:17.840] server provides to interact with some
+[00:01:20.320] external data source. For example, the
+[00:01:22.640] Superbase MCP server contains tools to
+[00:01:25.360] do things like list tables, deploy edge
+[00:01:28.000] functions, and even execute SQL
+[00:01:30.000] commands. So, if I installed the
+[00:01:32.000] Superbase MCP server, Claude would have
+[00:01:34.720] access to all those tools. And I could
+[00:01:36.560] say to Claude code, read the blogs table
+[00:01:39.280] in Superbase, make an interface to model
+[00:01:41.759] the records. And in response, Claude
+[00:01:43.600] would check for any tools it can use to
+[00:01:45.439] do this. And it would find one in this
+[00:01:47.200] Superbase MCP server. It would then use
+[00:01:49.520] that tool which is just a function
+[00:01:51.040] defined within the server to reach out
+[00:01:53.200] to the database and find the blogs
+[00:01:55.040] table. It would read it and then return
+[00:01:57.360] the format of that table to claude code
+[00:01:59.520] and then using that data claude code
+[00:02:01.439] could decide how to make the interface.
+[00:02:03.520] So when we use MCP servers, it's not the
+[00:02:06.320] AI itself or the client like Claude code
+[00:02:08.640] that reaches out directly to these
+[00:02:10.160] external sources. It's the MCP server
+[00:02:12.720] that does that and then it provides
+[00:02:14.560] claude code or whatever client you might
+[00:02:16.239] be using with the ability to call and
+[00:02:18.319] use those tools. Another MCP server
+[00:02:21.599] called Playright provides AI models with
+[00:02:23.680] the tools to open a browser, navigate
+[00:02:25.520] through web pages, inspect elements,
+[00:02:27.599] take screenshots. The context 7 MCP
+[00:02:30.560] server provides tools to get up-to-date
+[00:02:32.800] documentation from a lot of frameworks
+[00:02:35.120] and libraries which you can then ask
+[00:02:36.560] Claude code to use when implementing new
+[00:02:38.400] features using those frameworks or
+[00:02:39.840] libraries. And there's loads more too
+[00:02:41.680] which you can find on websites like this
+[00:02:43.360] one, pulsemcp.com.
+[00:02:45.120] So definitely check that out. We're
+[00:02:47.040] going to install these two servers right
+[00:02:48.480] here, context 7 and playright. And over
+[00:02:51.280] the next couple of lessons, we're going
+[00:02:52.560] to put them to use in our workflow.
+[00:02:54.319] First though, how do we actually add the
+[00:02:56.480] servers? Well, if we take a look at the
+[00:02:58.879] claude code docs on the MCP installation
+[00:03:02.159] section, you can see that we can add
+[00:03:03.519] them locally on our computer or by
+[00:03:05.599] connecting to them remotely. Now we'll
+[00:03:08.080] be adding the servers locally. So we'll
+[00:03:09.760] be using this option at the top. And the
+[00:03:12.319] way we do this is by using the command
+[00:03:14.000] claude mcp add and then whatever the
+[00:03:16.239] server name is then the command and any
+[00:03:18.239] arguments. Also if you're on Windows
+[00:03:20.640] then you're currently you'll need to add
+[00:03:22.720] one more thing which if we scroll down
+[00:03:24.640] here you're going to see in a big yellow
+[00:03:26.080] warning box and that is to add cmd and
+[00:03:29.200] then forward slash c. So the cmd part
+[00:03:31.519] opens the windows command line to run
+[00:03:33.519] the command. The forward/ C part makes
+[00:03:36.560] sure the shell gets closed after it's
+[00:03:38.560] been run. Now, normally when we use an
+[00:03:40.959] MCP server, the server docs gives us the
+[00:03:44.239] whole string to copy and paste in a
+[00:03:45.920] terminal, which is then going to add the
+[00:03:47.599] server. But just be aware that you might
+[00:03:49.599] need to add the cmd/ cart if you're on
+[00:03:52.560] Windows for servers that use npx.
+[00:03:55.280] Otherwise, it might not work correctly.
+[00:03:57.760] Anyway, let's head back to the context 7
+[00:04:00.239] MCP page and we're going to see what it
+[00:04:02.640] says there about the installation. So,
+[00:04:05.120] if we click on this MCP link up at the
+[00:04:07.680] top, it should take us to the GitHub
+[00:04:09.680] page for the server, which it does. And
+[00:04:11.840] then, if you scroll right down, we
+[00:04:13.519] should eventually see a bunch of options
+[00:04:15.120] for adding the server to different
+[00:04:17.359] clients. One of those options should be
+[00:04:19.759] Clawed Code. So, click on that to expand
+[00:04:21.600] it. And we're going to get a few
+[00:04:22.960] different options. The first two are for
+[00:04:25.280] remote server connections. The one at
+[00:04:27.120] the bottom is for a local connection. So
+[00:04:29.440] we say claude mcp add. Then the server
+[00:04:32.000] name which is context 7. Then we have
+[00:04:33.919] this double dash. Then the npx command.
+[00:04:36.800] So we're going to copy this now and
+[00:04:38.400] paste it into the terminal. And then
+[00:04:39.840] we're also going to make a few edits. So
+[00:04:41.840] then I've pasted this into my terminal
+[00:04:43.600] already and I'm just going to add
+[00:04:44.720] another few things in. The first thing
+[00:04:46.560] we'll do is we're going to add another
+[00:04:48.320] flag to this just before the double dash
+[00:04:50.639] and that is the scope flag. So when we
+[00:04:53.120] add MCP servers with claude code, we can
+[00:04:55.520] add them to three different scopes.
+[00:04:57.360] Project scope where the MCP setup gets
+[00:05:00.000] pushed to remotes and everyone working
+[00:05:01.520] on the project can use the MCPs added to
+[00:05:03.680] the project. Local scope which is where
+[00:05:06.160] only you can use the MCP server on this
+[00:05:08.560] particular project and global scope
+[00:05:10.560] which is when the MCP is added globally
+[00:05:12.479] to claude code and you can use it for
+[00:05:14.160] any project on your computer. Now the
+[00:05:16.320] default scope is local but I want to
+[00:05:18.000] make it a project scope so that we can
+[00:05:19.919] see the MCP configuration here in the
+[00:05:21.919] project directory and mostly I use
+[00:05:24.080] either project or global scope. I very
+[00:05:26.720] rarely use local scope. Anyway to add
+[00:05:29.680] this scope we use the scope flag
+[00:05:32.479] followed by project to specify project
+[00:05:35.440] scope. And again this could also be
+[00:05:37.440] local or global. Now before we go any
+[00:05:39.919] further I will say this. If you're
+[00:05:41.280] running Claude Code natively on Windows,
+[00:05:43.360] it can be a little bit buggy when you're
+[00:05:45.199] adding MCP servers, at least at the time
+[00:05:47.360] of recording this video. If you're on a
+[00:05:49.280] Mac, then you probably won't have to
+[00:05:50.720] jump through any hoops or workarounds,
+[00:05:52.320] and you can just hit enter right now,
+[00:05:54.080] and this would work. If you're on
+[00:05:55.759] Windows, though, you have to do a few
+[00:05:57.840] more things for it to work properly.
+[00:05:59.680] First, we have to add the cmd and then
+[00:06:02.479] forward/ C bit just before the rest of
+[00:06:04.880] this npx command like we talked about
+[00:06:07.199] earlier. Secondly, if we run this right
+[00:06:09.680] now, we're going to get an error, which
+[00:06:10.960] I'll show you by hitting enter. And that
+[00:06:13.520] error says there's an unknown option Y,
+[00:06:16.400] which comes right after the npx bit.
+[00:06:18.639] Now, the Y flag is for auto accepting
+[00:06:20.960] defaults to prompts when some package is
+[00:06:23.120] installed, and it needs to be there in
+[00:06:24.960] this case. So, how do we get around
+[00:06:27.120] this? Well, one solution is to run the
+[00:06:29.600] whole thing without the Y flag first,
+[00:06:31.919] which we'll do now. And when we do that,
+[00:06:34.560] it's going to work. and claude code
+[00:06:36.720] makes this MCP.json file in the root of
+[00:06:40.080] the project. Now if we take a look at
+[00:06:42.240] that, we'll see this JSON object with an
+[00:06:44.240] MCP servers property inside. And it's
+[00:06:46.639] within this property that all project
+[00:06:48.400] level servers get added. So we can see
+[00:06:50.639] this context 7 one right here that we
+[00:06:53.039] just added. And inside that the servers
+[00:06:55.039] configured with these different
+[00:06:56.240] properties. The type is standard in out
+[00:06:58.800] since this is a local MCP connection
+[00:07:00.880] that we added. The command is cmd and
+[00:07:03.360] that's because on Windows we added that
+[00:07:05.199] extra cmd part. Then we have some
+[00:07:07.520] arguments including the forward sl bit
+[00:07:10.000] which we also added because we're on
+[00:07:12.240] Windows. Now again if you're on a Mac
+[00:07:14.319] this will probably look a little bit
+[00:07:15.840] different and you won't need to make any
+[00:07:17.440] changes. But on Windows because we
+[00:07:19.520] removed that hyphen y flag we should now
+[00:07:22.000] manually add this in to the arguments
+[00:07:24.160] array after the npx one. So let's do
+[00:07:26.960] that now and then save the file. Right
+[00:07:30.080] then. So hopefully now that's all going
+[00:07:31.919] to work when we start up Claude Code.
+[00:07:33.840] But I do think this whole workound when
+[00:07:35.520] using Windows is a little bit clunky and
+[00:07:38.080] I'm hoping that it's something that can
+[00:07:39.599] be made simpler in the future and maybe
+[00:07:41.280] when you're watching this video it will
+[00:07:42.880] be. Anyway, now let's try using this.
+[00:07:45.520] Now when I've just tried using this MCP
+[00:07:47.440] server, I got some kind of connection
+[00:07:49.360] error. It failed. It didn't work for
+[00:07:51.039] whatever reason. So I'm actually going
+[00:07:53.280] to use the remote server from Context 7.
+[00:07:56.000] It's strange because when I tried this
+[00:07:58.240] out before recording, it did work.
+[00:07:59.919] everything was fine. Uh, but this is the
+[00:08:01.919] problem sometimes because Claude Code is
+[00:08:03.840] new, MCP servers are new, they're
+[00:08:05.520] changing a lot. Sometimes things can
+[00:08:07.919] just not work and it might take a little
+[00:08:09.759] while for things to level out. So, what
+[00:08:12.240] I'm going to do now is go back to the
+[00:08:13.520] docs and look for the other command I
+[00:08:15.440] need to run for a remote server. So,
+[00:08:17.759] we're going to go ahead with this one
+[00:08:19.039] right here, which uses HTTP as the
+[00:08:21.360] transport system. So, let's copy this.
+[00:08:24.000] All right. All right. So, I've pasted
+[00:08:24.960] that into my terminal. But I'm going to
+[00:08:26.240] add one more thing and that is the scope
+[00:08:28.000] flag after the server name. So, after
+[00:08:30.479] context 7, do double dash then scope and
+[00:08:32.880] then project to add this at a project
+[00:08:35.599] level. Press enter. Hopefully, now it's
+[00:08:37.839] going to add that server for us. And if
+[00:08:39.919] we close this terminal and take a look
+[00:08:41.519] over here, we should see the mcp.json
+[00:08:43.760] file. And yeah, we see that context 7
+[00:08:45.920] property inside. This time the type is
+[00:08:47.680] HTTP because we're using a remote
+[00:08:49.920] connection. And this is the URL for the
+[00:08:52.640] server as well. Cool. So now we need to
+[00:08:55.120] start Claude backup, which I'm going to
+[00:08:56.720] do over here by typing claude and then
+[00:08:58.560] press enter. Let's get rid of the file
+[00:09:01.040] tree. And then inside here, I'm going to
+[00:09:03.279] say forward/mcp.
+[00:09:05.360] And this time hopefully we will see the
+[00:09:07.600] concept 7. Okay, it failed to connect.
+[00:09:10.240] What I'm going to do is press enter and
+[00:09:12.480] then I'm going to reconnect to this to
+[00:09:14.480] see if it does connect this time. Okay,
+[00:09:16.320] looks like it's worked. So forward/mcp.
+[00:09:19.120] Now we can see a green tick next to
+[00:09:20.560] that. We're connected to context 7 and
+[00:09:23.200] we can start using it. So let me escape
+[00:09:25.440] out of that. Okay. So now I'm going to
+[00:09:28.000] get Claude code to use context 7 by
+[00:09:30.160] typing in this prompt and it says, can
+[00:09:31.920] you check the latest Tailwind docs to
+[00:09:33.519] see if the theme variables are correctly
+[00:09:35.279] configured in the global CSS file. Use
+[00:09:38.240] context 7. I'm also going to reference
+[00:09:40.080] that CSS file so it knows where to look.
+[00:09:42.240] So that's source app and then
+[00:09:44.080] globals.css.
+[00:09:46.720] And then I'm going to press enter. But
+[00:09:48.080] before I do that, notice I said use
+[00:09:49.760] context 7. That's so it explicitly knows
+[00:09:52.399] to use the MCP server to get the
+[00:09:54.640] up-to-ate information. So let me press
+[00:09:56.880] enter to do this. And now it wants to
+[00:09:59.839] use this resolve library ID tool from
+[00:10:02.800] context 7. And then it wants to use an
+[00:10:06.080] additional tool and it wants my
+[00:10:07.360] permission to do this. So I'm going to
+[00:10:08.720] press yes right here. And now you can
+[00:10:11.440] see right here it says looking at your
+[00:10:12.959] Tailwind CSS configuration. your theme
+[00:10:14.880] variables are correctly configured blahy
+[00:10:17.279] blahy blah it's properly structured okay
+[00:10:19.680] so everything is as it should be awesome
+[00:10:22.320] so one thing I like to do with context 7
+[00:10:24.720] is tell claude code to use it whenever
+[00:10:26.640] it needs to implement some feature using
+[00:10:29.120] a third party framework or library
+[00:10:31.440] because a lot of the time it can use
+[00:10:33.760] legacy code so I want to make sure that
+[00:10:35.440] it uses the up-to-date documentation
+[00:10:37.760] every time that it creates some code
+[00:10:40.000] using those frameworks and that's not
+[00:10:41.600] just clawed code by the way that's any
+[00:10:43.600] AI tool tool or model, they can all use
+[00:10:45.839] legacy code because they're trained on
+[00:10:47.519] that legacy code. So, what I'm going to
+[00:10:49.519] do is add a memory using the hash over
+[00:10:51.839] here. So, if I press hash, we're going
+[00:10:53.760] to add a memory and then I'm going to
+[00:10:55.040] paste in this memory that says use
+[00:10:56.720] context 7 to check up toate docs when
+[00:10:58.720] needed for implementing new libraries or
+[00:11:00.720] frameworks or adding features using
+[00:11:02.720] them. So, if I press enter, we're going
+[00:11:04.560] to add that to the project memory. And
+[00:11:06.959] if we then open this file up, we should
+[00:11:10.240] see that at the bottom now. Yep, there
+[00:11:12.399] it is. Awesome.
+[00:11:14.079] Okay then. So now we're going to add
+[00:11:15.839] another server called Playright which
+[00:11:17.440] provides Claude Code with the tools to
+[00:11:19.040] do things like open a browser, click on
+[00:11:21.279] links, take screenshots, etc. So I'm on
+[00:11:24.000] the Playright MCP page right here. And
+[00:11:26.560] for Claude Code, it says run this
+[00:11:28.640] command, which because we're on Windows,
+[00:11:30.880] we're going to have to tweak again. I
+[00:11:32.560] also want to make sure we're using
+[00:11:34.160] project scope when we add it. So copy
+[00:11:36.320] this command, then head back to your
+[00:11:37.839] terminal. So then I've already added
+[00:11:39.839] this command in as well as two other
+[00:11:41.680] things. the scope flag first of all over
+[00:11:44.000] here to say we want to add this at
+[00:11:46.399] project level and then also the cmd
+[00:11:49.680] slash cart because we're running this on
+[00:11:51.760] Windows this time we don't need to add
+[00:11:53.680] the y flag for this particular server
+[00:11:56.079] all right so now let's hit enter
+[00:11:58.480] hopefully that's going to add the
+[00:11:59.920] playright server to the mcpjson file so
+[00:12:03.920] let's take a look at that over here and
+[00:12:05.680] yeah we can see we've got the context 7
+[00:12:07.680] one now and also the playright one and
+[00:12:09.839] this time the type is standard in out
+[00:12:11.839] the command cmd then the arguments down
+[00:12:14.480] here. Awesome. So then now we need to
+[00:12:17.519] start cla back up again so that we can
+[00:12:19.920] try using this. Okay, so I've started
+[00:12:22.320] clawed up and the first thing I'm going
+[00:12:23.680] to do is use the MCP tool to make sure
+[00:12:25.839] that they're connected correctly. Yep.
+[00:12:27.760] Okay, cool. And now I'm going to escape
+[00:12:31.040] and I'm just going to ask Claude Code to
+[00:12:33.680] maybe open a browser and navigate to
+[00:12:38.160] netinja.dev
+[00:12:40.079] dev and give me a summary of the site.
+[00:12:45.440] So this is just to show you that it can
+[00:12:47.279] navigate to a site using playright or
+[00:12:49.279] playright can on its behalf and provide
+[00:12:51.760] feedback that we need. So it's going to
+[00:12:54.079] ask for permission first of all. So
+[00:12:56.079] we'll say yes. And then on my other
+[00:12:58.800] screen it's opened up netinja.dev which
+[00:13:01.600] we can see right here. So it's just
+[00:13:03.680] going to do its browsing. I'm going to
+[00:13:05.279] take that back off screen. All right. So
+[00:13:08.399] now it's come back with a little bit of
+[00:13:10.399] information. It says, "Net Ninja is a
+[00:13:12.480] comprehensive coding education platform
+[00:13:14.639] created by Sha focused on web
+[00:13:17.200] development training. The site positions
+[00:13:18.880] itself as a coding dojo where aspiring
+[00:13:21.920] developers become coding ninjas. So I'm
+[00:13:24.079] quite pleased with that. It gives us
+[00:13:25.519] this other information about it as well
+[00:13:27.120] which is quite extensive to be honest.
+[00:13:29.440] But Playright can do more than just
+[00:13:31.200] this. And what I'd like to do is use
+[00:13:33.760] Playright to give us feedback on the UX
+[00:13:36.639] of components that we make when it views
+[00:13:38.560] them in the browser. So, in the next
+[00:13:41.440] lesson, what we're going to be doing is
+[00:13:42.880] making our own sub agent with claw code,
+[00:13:45.839] and we're going to be using the
+[00:13:47.120] playright MCP from within that sub agent
+[00:13:49.600] to do just
+================================================================================
+
+# Video #10: Delegating Tasks to the Cloud
+URL: https://www.youtube.com/watch?v=9tGpIwE-sro
+Video ID: 9tGpIwE-sro
+Total segments: 104
+
+## Transcript with Timestamps:
+================================================================================
+[00:00:00.880] All right then, my friends. In this
+[00:00:02.159] lesson, we're going to look at one more
+[00:00:03.600] feature of the Codex extension, and that
+[00:00:05.600] is the ability to delegate tasks from
+[00:00:07.520] your local project to Codex Cloud. So,
+[00:00:10.559] we can do that by coming down here and
+[00:00:12.400] changing this option from local to run
+[00:00:14.400] in the cloud. You can also select a
+[00:00:16.480] cloud environment to fire this task in
+[00:00:18.240] as well if you have multiple
+[00:00:19.439] environments set up for different repos.
+[00:00:21.680] So, I've been pushing all my local
+[00:00:23.279] changes up to the remote repo throughout
+[00:00:25.119] this course. And that means the main
+[00:00:26.960] branch on the remote is up to date and
+[00:00:28.720] it incorporates all my changes. However,
+[00:00:30.720] if you have local changes to your repo
+[00:00:32.640] that you want Codex Cloud to use as
+[00:00:34.320] well, you can tell it to do that by
+[00:00:36.000] selecting your local branch to work
+[00:00:37.440] from. Anyway, now I'd like to fire off a
+[00:00:40.079] new task to run remotely on codeex so I
+[00:00:43.200] can open a PR directly later from it.
+[00:00:45.920] But I want to do that from VS Code so
+[00:00:47.760] I'm not having to switch to a browser to
+[00:00:49.840] set it off. So then we can just say
+[00:00:52.160] something like can you implement a
+[00:00:55.120] responsive
+[00:00:56.719] drop-down navbar for mobile screens and
+[00:01:02.160] then we can hit enter and when we do
+[00:01:04.400] that codeex is going to send that task
+[00:01:06.720] off to the cloud where it can run
+[00:01:08.400] remotely in an isolated container. So
+[00:01:11.439] let's go and have a look what it's done.
+[00:01:13.600] All right then. So now we can see that
+[00:01:15.040] task is down here and it's completed
+[00:01:17.040] because I gave it just a couple of
+[00:01:18.560] minutes to run before I started
+[00:01:20.159] recording again. So if we click on this
+[00:01:22.479] task, we should be able to see the code
+[00:01:24.159] changes it made to the various files.
+[00:01:26.560] And normally I would take a good look at
+[00:01:28.400] these changes first before opening a PR
+[00:01:30.320] for them. But right now I'm just going
+[00:01:31.759] to hit the create PR button to get the
+[00:01:33.360] ball rolling. Then when it's created
+[00:01:35.439] that pull request, we should be able to
+[00:01:37.040] click the button again to go and view
+[00:01:38.799] it. So then from here we could review
+[00:01:41.920] the code and merge it if we're happy.
+[00:01:44.159] But I'm just going to switch back to VS
+[00:01:46.000] Code to preview the changes first of
+[00:01:48.079] all. So then if we click on this cloud
+[00:01:50.960] task from inside the codeex panel in VS
+[00:01:53.280] Code, we can actually see that same
+[00:01:54.720] summary of changes from here as well. So
+[00:01:56.799] it's brought down that information from
+[00:01:58.560] Codex cloud and we can see it locally in
+[00:02:00.560] the project including the actual code
+[00:02:02.399] changes as well which we can view. And
+[00:02:04.799] actually, you can also click on this
+[00:02:06.640] button right here to apply the changes
+[00:02:08.319] to your local workspace. But just be
+[00:02:10.080] aware that it's going to apply those
+[00:02:11.599] changes to whatever branch you're
+[00:02:13.120] currently on. But you can revert the
+[00:02:15.280] changes by clicking on this button right
+[00:02:16.800] here. Anyway, with those changes
+[00:02:18.720] applied, we could view the application
+[00:02:20.879] in a browser to preview what it looks
+[00:02:22.720] like. Okay, so I've opened up the dev
+[00:02:25.760] tools so I can make this smaller and see
+[00:02:27.360] what it looks like on smaller screens.
+[00:02:28.959] And hopefully at some point we should
+[00:02:30.560] see this mobile menu kick in, which we
+[00:02:32.879] do. And if we click on that, then we see
+[00:02:34.959] the links right here. Click it again and
+[00:02:36.720] it goes away. Let's make this smaller to
+[00:02:38.879] make sure it still works and looks okay.
+[00:02:40.959] Yep. All looking all right. And if we
+[00:02:42.640] click on a link, well then, yeah, it
+[00:02:44.720] still works. Awesome.
+[00:02:47.280] Okay, so now I'm happy with the changes
+[00:02:49.519] and I could go ahead and merge them into
+[00:02:51.440] the main branch, which is what I'm going
+[00:02:52.959] to do. But hopefully now you can see how
+[00:02:55.200] the Codex extension and the Codex cloud
+[00:02:57.840] can kind of work together a little bit.
+[00:02:59.519] Now, honestly, I think the link between
+[00:03:01.120] the two things is just a little bit
+[00:03:02.720] rough around the edges at the moment. It
+[00:03:04.800] could be smoother, and it would be nice
+[00:03:06.480] to have more of the cloud features
+[00:03:08.000] displayed in the extension, such as
+[00:03:09.760] opening a PR directly from the Codeex
+[00:03:12.159] panel, but like I said before, Codeex as
+[00:03:14.080] a whole product feels like it's very
+[00:03:16.159] much still in the early stages, and I
+[00:03:18.319] would expect more features and
+[00:03:19.840] improvements to be made in the future.
+[00:03:22.000] Anyway, next up we're going to see how
+[00:03:24.000] to fire off parallel tasks using the
+[00:03:26.239] Codex cloud which can all be working on
+[00:03:28.640] the code at the same time.
+================================================================================
+
+# Video #11: Running Tasks in Parallel
+URL: https://www.youtube.com/watch?v=Xt7BZYhJXkg
+Video ID: Xt7BZYhJXkg
+Total segments: 196
+
+## Transcript with Timestamps:
+================================================================================
+[00:00:00.960] Okay then my friends, we have covered
+[00:00:02.639] quite a lot when it comes to Codex. Now
+[00:00:04.319] we've seen how Codex cloud runs remote
+[00:00:06.240] tasks in isolated containers. We've used
+[00:00:08.960] the Codex CLI to work locally on a
+[00:00:10.960] project and we've also used the Codex
+[00:00:12.880] extension to work both locally and to
+[00:00:14.960] trigger remote tasks as well. On top of
+[00:00:17.199] that, we've seen how Codex can review
+[00:00:18.800] pull requests directly on GitHub. Before
+[00:00:21.119] we finish the series, I want to quickly
+[00:00:22.720] show you one of the big benefits of
+[00:00:24.000] using the Codex Cloud, and that is that
+[00:00:25.920] we can fire off multiple tasks at once
+[00:00:28.160] to all run in parallel with each other.
+[00:00:30.320] We don't have to just run one task at a
+[00:00:32.320] time and wait for each one to finish. We
+[00:00:34.480] can run four, five, or more tasks at one
+[00:00:36.880] time if we want to. And each of these
+[00:00:38.800] tasks will have their own isolated
+[00:00:40.879] container that they run within. So,
+[00:00:42.640] they're not going to be stepping on each
+[00:00:44.000] other's toes. Now, the only thing to
+[00:00:47.200] think about when it comes to running
+[00:00:48.480] multiple tasks at once is the
+[00:00:50.079] possibility of conflict when it comes to
+[00:00:52.399] merging a few of those features one
+[00:00:54.719] after the other because each task could
+[00:00:57.199] edit the same lines of code
+[00:00:58.480] theoretically. But if your tasks are
+[00:01:00.320] working on entirely different features,
+[00:01:02.239] that possibility will be much lower. So
+[00:01:04.559] then to demo this, I'm actually going to
+[00:01:06.159] start by asking codeex a question which
+[00:01:08.479] I'm going to paste in. And it says, can
+[00:01:11.040] you look at the codebase and suggest
+[00:01:12.799] three different reusable UI components
+[00:01:15.040] we can make for the project as three
+[00:01:17.439] different tasks on codeex. Then I'm
+[00:01:20.479] going to hit the ask button. Now when I
+[00:01:22.400] do this, Codeex will look at the project
+[00:01:24.159] code and it's going to come up with
+[00:01:25.920] three ideas. So again, I'm going to
+[00:01:27.360] pause the recording right here while it
+[00:01:28.799] does its work and then I'll start up
+[00:01:30.799] again when it sends an answer. All
+[00:01:33.200] right. All right, so this is finished
+[00:01:34.159] and it's come up with three different
+[00:01:35.680] ideas for me. And look at this. Each
+[00:01:37.840] idea has its own little button right
+[00:01:39.520] here to start that task, which is really
+[00:01:41.360] nice. Codeex basically generates a
+[00:01:44.000] prompt for us to have it make this
+[00:01:47.040] particular component in each case. So
+[00:01:49.600] the first one is to create a hero
+[00:01:51.680] section component. The second one is to
+[00:01:55.119] create a pair card component for lists.
+[00:01:57.920] And the third one is something to do
+[00:01:59.680] with the tag inputs on the form. Okay.
+[00:02:02.079] Okay. So, yeah, we have a tag input with
+[00:02:04.399] a really unique behavior where we had
+[00:02:06.159] those pills, right? So, it's basically
+[00:02:07.920] saying we could extract that into a tag
+[00:02:10.080] input component. So, let's fire off all
+[00:02:12.319] of these tasks concurrently by clicking
+[00:02:14.640] on each one like that. And when we do
+[00:02:18.400] that, if we go back to the dashboard,
+[00:02:21.280] then we should see all three of those
+[00:02:23.120] tasks now right here. So, it's working
+[00:02:24.959] on each one independently in its own
+[00:02:28.080] container, but they're all going on at
+[00:02:30.080] once. So, it would be hard for me to do
+[00:02:32.720] this locally, even with AI. I'm sure
+[00:02:34.720] there would be ways to do it. However,
+[00:02:36.959] right here, it's really easy for me to
+[00:02:39.040] just fire off three tasks all at once.
+[00:02:42.560] All right, so it looks like two of them
+[00:02:44.000] have finished. So, we could click on one
+[00:02:45.519] of these and we could take a look at the
+[00:02:47.840] code. Sometimes it seems to leave a
+[00:02:50.560] little snapshot of what it's done. I
+[00:02:52.239] guess in this case, we didn't really
+[00:02:53.599] need to because we're just refactoring
+[00:02:55.040] and putting things in the wrong
+[00:02:56.080] components. Uh, but yeah, I mean, we
+[00:02:58.080] could go through the code and we could
+[00:02:59.519] create a PR for this. And then we could
+[00:03:02.239] go back over here. We could look at this
+[00:03:04.319] one. Was it this one or was it this one?
+[00:03:06.959] Not quite sure. Okay, this one as well.
+[00:03:08.879] Yeah. So, we could create a PR for this
+[00:03:11.120] one as well. And then we could go back
+[00:03:13.360] over here. It's still working on this
+[00:03:14.720] task. But you get the point. You could
+[00:03:16.319] go in there, create a PR for that. You
+[00:03:17.840] could preview everything locally if you
+[00:03:19.519] wanted to again in your local workspace.
+[00:03:22.879] And then you could go ahead and review
+[00:03:24.480] the code on GitHub, merge it and all
+[00:03:26.319] that kind of jazz. So this is one of the
+[00:03:27.840] really good things about Codeex. I can
+[00:03:30.000] just spin up tasks from anywhere on my
+[00:03:32.000] phone, on my laptop when the thought
+[00:03:33.840] comes. I don't have to be even in my
+[00:03:35.760] code and I can have these different
+[00:03:37.440] tasks running in parallel. Then I can
+[00:03:39.360] just come back at a later point in time,
+[00:03:41.360] review the code, test it out, and then
+[00:03:43.440] merge it into the repo if I want to.
+[00:03:47.200] All right, then. So I just want to
+[00:03:48.720] finish this series with a few words
+[00:03:50.640] about Codex and Agentic coding in
+[00:03:52.959] general really. So first of all when it
+[00:03:55.360] comes to using Codex locally with the
+[00:03:57.200] CLI tool and the extension I would say
+[00:03:59.200] that it is still very much a work in
+[00:04:00.959] progress and I would expect plenty of
+[00:04:02.720] changes over the next months because I
+[00:04:04.560] definitely think the experience could be
+[00:04:06.080] smoothed out a little bit especially
+[00:04:07.760] when it comes to the connection with
+[00:04:09.360] cloud service. Secondly, when it comes
+[00:04:11.599] to Codex Cloud, I would say the main
+[00:04:13.840] selling point for me is that I can spin
+[00:04:15.360] up remote tasks from anywhere and I can
+[00:04:18.079] spin up multiple tasks as well. I don't
+[00:04:20.400] have to be working on my project locally
+[00:04:22.000] to fire those tasks off. I could just do
+[00:04:23.680] it from my laptop on my phone when the
+[00:04:26.160] ideas hit me. I can run multiple tasks
+[00:04:28.720] and multiple variations of those tasks
+[00:04:30.720] which get to work while I'm not working
+[00:04:32.560] and then I could just review them and
+[00:04:34.080] bring them down to my local workspace
+[00:04:35.840] when I'm back at my desk. So, that's
+[00:04:37.520] nice. Thirdly, I would say that no
+[00:04:39.680] matter what AI tool or coding agent that
+[00:04:42.000] you use, always check the work that it
+[00:04:44.080] produces and stay in the loop. AI can
+[00:04:46.960] get things wrong and it sometimes takes
+[00:04:49.360] me three or four iterations of different
+[00:04:51.759] prompts to get the results that I want.
+[00:04:53.680] Much like I might nudge a junior
+[00:04:55.280] developer in the right direction a few
+[00:04:56.720] times if they're going off track. And
+[00:04:58.639] finally, I would say this. Do not over
+[00:05:00.639] rely on AI to code everything for you. I
+[00:05:03.360] personally think it's really important
+[00:05:04.720] to keep your manual coding skills and
+[00:05:06.400] your knowledge of the field fresh and
+[00:05:08.800] over reliance on AI to write all of your
+[00:05:11.039] code will definitely hamper that. I
+[00:05:13.440] think at the start of 2025 a lot of AI
+[00:05:16.240] experts predicted that by the end of the
+[00:05:18.240] year AI would be writing virtually all
+[00:05:20.400] the code that we produce. Well, that
+[00:05:22.800] certainly doesn't feel true right now to
+[00:05:24.560] me and I don't think it's going to be
+[00:05:26.320] true over the next several months
+[00:05:27.600] either. Besides, even if AI does start
+[00:05:30.400] writing all the code, you should still
+[00:05:32.400] understand the code it generates in
+[00:05:34.000] order to review it, debug it, and adapt
+[00:05:36.160] the code. And essentially, you need to
+[00:05:38.320] know how your application works. So, for
+[00:05:40.800] that reason, I think continuing to code
+[00:05:42.720] manually and learning new skills
+[00:05:44.160] yourself is especially important these
+[00:05:46.320] days.
+[00:05:47.919] So, then my friends, I really, really
+[00:05:49.600] hope you enjoyed this series and you
+[00:05:51.199] learned something along the way. If you
+[00:05:52.960] did, please, please, please don't forget
+[00:05:54.720] to share, subscribe, and like. That
+[00:05:56.560] really means a lot. And if you want to
+[00:05:58.880] access all of my YouTube courses without
+[00:06:00.960] adverts, also get access to premium
+[00:06:03.280] courses and early access courses as
+[00:06:05.600] well, you can do at netinja.dev.
+[00:06:08.560] You can sign up for Net Ninja Pro, which
+[00:06:10.720] is just $9 a month and also half price
+[00:06:13.600] for the first month with this promo code
+[00:06:16.400] right here. And for that, like I said,
+[00:06:18.319] you get access to every course without
+[00:06:20.639] adverts, without YouTube adverts. You
+[00:06:22.639] also get access to exclusive courses not
+[00:06:25.120] found anywhere else. you get access to
+[00:06:27.199] my premium courses on Udemy and also
+[00:06:30.400] early access to all of my YouTube
+[00:06:32.080] courses as well. So, the link to this
+[00:06:34.240] page to sign up is going to be down
+[00:06:36.319] below. Again, I really hope you enjoyed
+[00:06:38.479] this series and I'm going to see you in
+[00:06:40.000] the very next one.
+[00:07:05.360] 3.
+[00:07:15.039] Hey
+================================================================================
