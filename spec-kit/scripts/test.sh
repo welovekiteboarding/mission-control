@@ -5,7 +5,15 @@ cd "$(dirname "$0")/.."
 
 echo "Running Python tests..."
 
-if ! python3 - <<'PY'
+VENV_DIR=".venv"
+VENV_PY="$VENV_DIR/bin/python"
+
+if [ ! -x "$VENV_PY" ]; then
+    echo "Creating local virtual environment at $VENV_DIR ..."
+    python3 -m venv "$VENV_DIR"
+fi
+
+if ! "$VENV_PY" - <<'PY'
 import importlib.util
 import sys
 missing = []
@@ -17,12 +25,12 @@ if missing:
 sys.exit(0)
 PY
 then
-    echo "pytest/pytest-cov not installed; installing..."
-    python3 -m pip install --quiet pytest pytest-cov
+    echo "Installing pytest/pytest-cov into local virtual environment..."
+    "$VENV_PY" -m pip install --quiet pytest pytest-cov
 fi
 
 # Run pytest with coverage
-python3 -m pytest --cov=specify_cli --cov-report=term-missing --tb=short || {
+"$VENV_PY" -m pytest --cov=specify_cli --cov-report=term-missing --tb=short || {
     EXIT_CODE=$?
     if [ $EXIT_CODE -eq 5 ]; then
         echo "No tests collected - this is okay"
