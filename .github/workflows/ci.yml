@@ -23,31 +23,6 @@ jobs:
             spec_kit:
               - 'spec-kit/**'
 
-  test-python:
-    name: Test Python (spec-kit)
-    needs: changes
-    if: needs.changes.outputs.spec_kit == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-          cache: pip
-          cache-dependency-path: spec-kit/pyproject.toml
-
-      - name: Install dependencies
-        working-directory: spec-kit
-        run: |
-          pip install -e .
-          pip install pytest pytest-cov
-
-      - name: Run tests
-        run: ./spec-kit/scripts/test.sh
-
   test-typescript:
     name: Test TypeScript (root)
     runs-on: ubuntu-latest

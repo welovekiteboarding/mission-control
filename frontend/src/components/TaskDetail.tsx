@@ -68,6 +68,10 @@ export const TaskDetail = ({ taskId }: TaskDetailProps) => {
       <div className="grid gap-6 lg:grid-cols-2">
         <section className="space-y-4">
           <h4 className="text-lg font-semibold">Comments</h4>
+          <p className="text-sm text-white/60">
+            Use comments for quick progress updates and handoffs in the task thread. Example:
+            &nbsp;"Blocked on API token; retrying after key rotation."
+          </p>
           <form
             onSubmit={(event) => {
               event.preventDefault();
@@ -129,6 +133,10 @@ export const TaskDetail = ({ taskId }: TaskDetailProps) => {
 
         <section className="space-y-4">
           <h4 className="text-lg font-semibold">Documents</h4>
+          <p className="text-sm text-white/60">
+            Use documents for structured notes you want to keep with this task. Example:
+            &nbsp;title "Poller Retry Plan" with a markdown checklist in the summary.
+          </p>
           <form
             onSubmit={(event) => {
               event.preventDefault();
