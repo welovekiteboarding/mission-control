@@ -51,4 +51,4 @@ Work style: concise, direct, minimal tokens. Be explicit about next actions and 
 
 ## Web / Research
 - Prefer official docs when required.
-- Cite sources when requested.
+- Cite sources when requested..
