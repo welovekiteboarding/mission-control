@@ -7,6 +7,14 @@
 
 Implement Mission Control as a thin coordination layer on top of OpenClaw: Convex backend + React UI + notification poller + daily standup, with staged agent activation (1→3→5→7→9→10). Slack delivery is implemented first; Telegram framework is present but disabled until explicitly requested. All development follows strict TDD and no‑guessing rules with explicit research gaps.
 
+## Current Implementation Status (2026-02-08)
+
+- Local implementation completed for most backend/poller/frontend components with passing CI checks.
+- Frontend is still using an in-memory Convex-style provider; real frontend-to-Convex network wiring is still pending.
+- Integration and deployment milestones remain open:
+  - Integration Gate (MacBook with local OpenClaw runtime)
+  - Deployment Gate (VPS smoke deployment after integration passes)
+
 ## Technical Context
 
 **Language/Version**: TypeScript (Node.js for poller), React (UI), Convex (TypeScript functions)  
